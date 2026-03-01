@@ -1,0 +1,11 @@
+# Autonomous Build Log
+## Decision: Add ranking monitoring to core engine
+
+Reasoning: Client needs to see ROI. Score is input, ranking change is output.
+Must track before/after to prove value.
+
+Implementation:
+- SERP scraping for target keywords
+- Daily rank tracking
+- Competitor position monitoring
+- Change alerts
