@@ -198,41 +198,100 @@ import Layout from '../../layouts/Layout.astro';
       <!-- CTA -->
       <div class="text-center bg-slate-900 rounded-2xl p-8 text-white">
         <h3 class="text-xl font-semibold mb-2">Want the Full Report?</h3>
-        <p class="text-slate-400 mb-6">
+        <p class="text-slate-400 mb-4">
           Detailed competitor analysis, actionable checklist, and 30-day improvement plan.
         </p>
+        <p class="text-sm text-green-400 mb-6">
+          ✓ Full report sent to your email
+        </p>
         
-        <a 
-          href="./pricing" 
-          class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700"
-        >
-          View Pricing →
-        </a>
+        <div class="flex justify-center gap-4">
+          <a 
+            href="./pricing" 
+            class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700"
+          >
+            View Pricing →
+          </a>
+          <button 
+            id="retryBtn"
+            class="border border-slate-600 text-slate-300 px-6 py-3 rounded-lg hover:bg-slate-800"
+          >
+            Check Another Firm
+          </button>
+        </div>
       </div>
     </div>
 
   </main>
 
   <script>
-    document.getElementById('geoAuditForm').addEventListener('submit', async (e) => {
+    const form = document.getElementById('geoAuditForm');
+    const loadingState = document.getElementById('loadingState');
+    const resultsState = document.getElementById('resultsState');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Show loading
-      document.getElementById('geoAuditForm').classList.add('hidden');
-      document.getElementById('loadingState').classList.remove('hidden');
+      const formData = new FormData(form);
+      const data = {
+        firmName: formData.get('firmName'),
+        address: formData.get('address'),
+        email: formData.get('email'),
+        practiceArea: formData.get('practiceArea')
+      };
+
+      // UI State: Loading
+      form.classList.add('hidden');
+      loadingState.classList.remove('hidden');
       
-      // Simulate API call (replace with real Apify integration)
-      await new Promise(r => setTimeout(r, 3000));
-      
-      // Show results
-      document.getElementById('loadingState').classList.add('hidden');
-      document.getElementById('resultsState').classList.remove('hidden');
-      
-      // TODO: Real implementation:
-      // 1. Call Apify to scrape GMB data
-      // 2. Calculate GEO score
-      // 3. Store in Supabase
-      // 4. Send email with full report
+      try {
+        const response = await fetch('./api/geo-audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) throw new Error('Analysis failed');
+        
+        const result = await response.json();
+        
+        // Update results UI
+        document.getElementById('geoScore').textContent = result.geoScore;
+        document.getElementById('rankPosition').textContent = '#' + result.currentRank;
+        document.getElementById('potentialRank').textContent = '#' + result.potentialRank;
+        document.getElementById('competitorCount').textContent = result.competitorCount;
+        
+        // Update breakdown
+        document.getElementById('coordScore').textContent = 
+          `${result.breakdown.coordinatePrecision.score}/25`;
+        document.getElementById('parkingScore').textContent = 
+          `${result.breakdown.parkingAccessibility.score}/25`;
+        document.getElementById('schemaScore').textContent = 
+          `${result.breakdown.schemaMarkup.score}/30`;
+        document.getElementById('poiScore').textContent = 
+          `${result.breakdown.localContext.score}/20`;
+        
+        // Show results
+        loadingState.classList.add('hidden');
+        resultsState.classList.remove('hidden');
+        
+        // Scroll to results
+        resultsState.scrollIntoView({ behavior: 'smooth' });
+        
+      } catch (error) {
+        console.error('Error:', error);
+        loadingState.classList.add('hidden');
+        form.classList.remove('hidden');
+        alert('Analysis failed. Please try again or contact us.');
+      }
+    });
+
+    // Retry button
+    document.getElementById('retryBtn')?.addEventListener('click', () => {
+      resultsState.classList.add('hidden');
+      form.classList.remove('hidden');
+      form.reset();
     });
   </script>
 </Layout>

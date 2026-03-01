@@ -1,0 +1,56 @@
+---
+// Shared Header/Navigation Component
+---
+
+<header class="border-b border-slate-200 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <a href="./" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
+          G
+        </div>
+        <span class="font-semibold text-lg hidden sm:block">StackMatrices GEO</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="./" class="text-slate-600 hover:text-blue-600 font-medium">Overview</a>
+        <a href="./audit" class="text-slate-600 hover:text-blue-600 font-medium">Free Audit</a>
+        <a href="./houston/immigration" class="text-slate-600 hover:text-blue-600 font-medium">Houston Report</a>
+        <a href="./pricing" class="text-slate-600 hover:text-blue-600 font-medium">Pricing</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <a href="./audit" class="hidden sm:block bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
+        Get GEO Score
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-slate-100">
+      <nav class="flex flex-col gap-4">
+        <a href="./" class="text-slate-600 hover:text-blue-600 font-medium">Overview</a>
+        <a href="./audit" class="text-slate-600 hover:text-blue-600 font-medium">Free Audit</a>
+        <a href="./houston/immigration" class="text-slate-600 hover:text-blue-600 font-medium">Houston Report</a>
+        <a href="./pricing" class="text-slate-600 hover:text-blue-600 font-medium">Pricing</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
