@@ -15,14 +15,26 @@
 - ✅ 基础Schema生成器
 - ✅ Apify SERP监控
 - ✅ 地理精度评分算法
+- ✅ SaaS架构预埋（多租户设计）
+- ✅ Service→SaaS路线图
 
-### v1.x.x (未来更新)
-**待更新项：**
-- [ ] Google算法响应机制（等待首次算法更新触发）
-- [ ] 多语言Schema支持（西语/中文）
-- [ ] 语音搜索优化（"Hey Google, find immigration lawyer near me"）
-- [ ] AI生成内容检测绕过策略
-- [ ] 视频SEO（律师介绍视频Schema）
+### v1.1.0 (计划中)
+- [ ] 用户认证系统（Clerk集成）
+- [ ] 多租户数据隔离
+- [ ] GEO Score Checker自助工具
+- [ ] Stripe订阅集成
+
+### v2.0.0 (6-12个月)
+- [ ] 客户自助平台上线
+- [ ] 分层定价（Free/Starter/Pro/Enterprise）
+- [ ] 知识库部分开放
+- [ ] 社区论坛
+
+### v3.0.0 (12-24个月)
+- [ ] 完全自助SaaS
+- [ ] 模板市场
+- [ ] 认证体系
+- [ ] API生态
 
 ## 废弃策略记录
 | 策略 | 废弃时间 | 原因 | 替代方案 |
