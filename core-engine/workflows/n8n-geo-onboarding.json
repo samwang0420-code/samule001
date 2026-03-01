@@ -1,0 +1,194 @@
+{
+  "name": "GEO Client Onboarding",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input: Client data from manual trigger or form\nreturn {\n  json: {\n    firmName: $input.first().json.firmName || 'Test Law Firm',\n    address: $input.first().json.address || '123 Main St, Houston, TX',\n    email: $input.first().json.email || 'test@example.com',\n    practiceArea: $input.first().json.practiceArea || 'immigration',\n    clientId: 'client_' + Date.now()\n  }\n};"
+      },
+      "name": "Prepare Input",
+      "type": "n8n-nodes-base.code",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "https://api.apify.com/v2/acts/compass~google-maps-scraper/runs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "search": "={{ $json.firmName }} {{ $json.address }}",
+          "maxCrawledPlaces": 1,
+          "includeReviews": true,
+          "includeImages": true
+        },
+        "options": {}
+      },
+      "name": "Apify Trigger",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract run ID and poll for completion\nconst runId = $input.first().json.data.id;\nconst runUrl = `https://api.apify.com/v2/acts/compass~google-maps-scraper/runs/${runId}`;\n\nreturn {\n  json: {\n    runId: runId,\n    runUrl: runUrl,\n    datasetId: $input.first().json.data.defaultDatasetId,\n    clientId: $('Prepare Input').first().json.clientId\n  }\n};"
+      },
+      "name": "Extract Run ID",
+      "type": "n8n-nodes-base.code",
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "unit": "seconds",
+        "amount": 10
+      },
+      "name": "Wait 10s",
+      "type": "n8n-nodes-base.wait",
+      "position": [850, 500]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.runUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "name": "Check Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1050, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if completed\nconst status = $input.first().json.data.status;\nconst isComplete = status === 'SUCCEEDED';\n\nif (isComplete) {\n  return { json: { complete: true, data: $input.first().json.data } };\n} else {\n  return { json: { complete: false, status: status } };\n}"
+      },
+      "name": "Is Complete?",
+      "type": "n8n-nodes-base.code",
+      "position": [1250, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [{ "value1": "={{ $json.complete }}", "value2": true }]
+        }
+      },
+      "name": "If Complete",
+      "type": "n8n-nodes-base.if",
+      "position": [1450, 500]
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://api.apify.com/v2/datasets/' + $json.data.defaultDatasetId + '/items' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "name": "Fetch Results",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1650, 400]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": {
+          "table": {
+            "schema": "public",
+            "table": "audit_logs"
+          }
+        },
+        "dataMode": "define",
+        "columns": {
+          "values": [
+            { "column": "client_id", "value": "={{ $('Prepare Input').first().json.clientId }}" },
+            { "column": "firm_name", "value": "={{ $('Prepare Input').first().json.firmName }}" },
+            { "column": "raw_data", "value": "={{ JSON.stringify($json) }}" },
+            { "column": "created_at", "value": "={{ $now }}" }
+          ]
+        }
+      },
+      "name": "Save to DB",
+      "type": "n8n-nodes-base.supabase",
+      "position": [1850, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate GEO Score\nconst placeData = $input.first().json[0];\n\nfunction calculateScore(data) {\n  let score = 0;\n  \n  // Coordinate precision (25)\n  if (data.location?.lat && data.location?.lng) score += 20;\n  \n  // Parking info (25)\n  const desc = (data.description || '').toLowerCase();\n  if (desc.includes('parking')) score += 20;\n  else score += 5;\n  \n  // Schema readiness (30)\n  if (data.title) score += 5;\n  if (data.address) score += 5;\n  if (data.phone) score += 5;\n  if (data.website) score += 5;\n  if (data.reviews?.length > 0) score += 10;\n  \n  // Local context (20)\n  if (desc.includes('houston') || desc.includes('court')) score += 15;\n  else score += 5;\n  \n  return score;\n}\n\nconst geoScore = calculateScore(placeData);\n\nreturn {\n  json: {\n    clientId: $('Prepare Input').first().json.clientId,\n    firmName: placeData.title,\n    geoScore: geoScore,\n    placeData: placeData,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "name": "Calculate Score",
+      "type": "n8n-nodes-base.code",
+      "position": [2050, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate notification\nconst score = $input.first().json.geoScore;\nconst firm = $input.first().json.firmName;\n\nlet message = '';\nif (score >= 80) {\n  message = `✅ ${firm}: Strong GEO score (${score}/100). Minor optimizations recommended.`;\n} else if (score >= 60) {\n  message = `⚠️ ${firm}: Average GEO score (${score}/100). Significant improvements possible.`;\n} else {\n  message = `🔴 ${firm}: Poor GEO score (${score}/100). Major optimization needed.`;\n}\n\nreturn {\n  json: {\n    message: message,\n    score: score,\n    clientId: $input.first().json.clientId\n  }\n};"
+      },
+      "name": "Format Notification",
+      "type": "n8n-nodes-base.code",
+      "position": [2250, 400]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.GEO_NOTIFICATION_CHANNEL }}",
+        "text": "={{ $json.message }}",
+        "options": {}
+      },
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.slack",
+      "position": [2450, 400]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [[{"node": "Prepare Input", "type": "main", "index": 0}]]
+    },
+    "Prepare Input": {
+      "main": [[{"node": "Apify Trigger", "type": "main", "index": 0}]]
+    },
+    "Apify Trigger": {
+      "main": [[{"node": "Extract Run ID", "type": "main", "index": 0}]]
+    },
+    "Extract Run ID": {
+      "main": [[{"node": "Wait 10s", "type": "main", "index": 0}]]
+    },
+    "Wait 10s": {
+      "main": [[{"node": "Check Status", "type": "main", "index": 0}]]
+    },
+    "Check Status": {
+      "main": [[{"node": "Is Complete?", "type": "main", "index": 0}]]
+    },
+    "Is Complete?": {
+      "main": [[{"node": "If Complete", "type": "main", "index": 0}]]
+    },
+    "If Complete": {
+      "main": [
+        [{"node": "Fetch Results", "type": "main", "index": 0}],
+        [{"node": "Wait 10s", "type": "main", "index": 0}]
+      ]
+    },
+    "Fetch Results": {
+      "main": [[{"node": "Save to DB", "type": "main", "index": 0}]]
+    },
+    "Save to DB": {
+      "main": [[{"node": "Calculate Score", "type": "main", "index": 0}]]
+    },
+    "Calculate Score": {
+      "main": [[{"node": "Format Notification", "type": "main", "index": 0}]]
+    },
+    "Format Notification": {
+      "main": [[{"node": "Send Notification", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 300
+  },
+  "staticData": null,
+  "tags": ["geo", "automation"]
+}
