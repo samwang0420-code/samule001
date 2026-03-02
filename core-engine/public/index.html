@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEO Dashboard - AI-Powered Local SEO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            opacity: 0.9;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .status.active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            padding: 40px 0;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 GEO Dashboard</h1>
+            <p>AI-Powered Local SEO for Medical Practices</p>
+        </header>
+        
+        <!-- Stats Overview -->
+        <div class="grid" id="stats">
+            <div class="stat-card">
+                <h3 id="totalClients">0</h3>
+                <p>Active Clients</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="avgScore">0</h3>
+                <p>Avg GEO Score</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="aiCitations">0</h3>
+                <p>AI Citations</p>
+            </div>
+        </div>
+        
+        <!-- New Analysis Form -->
+        <div class="card">
+            <h2>🚀 Start New Analysis</h2>
+            
+            <form id="analysisForm">
+                <div class="form-group">
+                    <label>Business Name</label>
+                    <input type="text" id="businessName" placeholder="e.g., Glow Med Spa" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Full Address</label>
+                    <input type="text" id="address" placeholder="e.g., 123 Main St, Houston, TX 77001" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Industry</label>
+                    <select id="industry">
+                        <option value="medical">Medical Spa</option>
+                        <option value="dentistry">Dentistry</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="plasticsurgery">Plastic Surgery</option>
+                        <option value="general">General Medical</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Services (comma separated)</label>
+                    <input type="text" id="services" placeholder="e.g., Botox, Fillers, Laser Hair Removal">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email (for reports)</label>
+                    <input type="email" id="email" placeholder="client@example.com">
+                </div>
+                
+                <button type="submit" class="btn">Start GEO Analysis</button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Running GEO Analysis... This may take 1-2 minutes</p>
+            </div>
+        </div>
+        
+        <!-- Clients List -->
+        <div class="card">
+            <h2>📊 Active Clients</h2>
+            
+            <div id="clientsTableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Industry</th>
+                            <th>GEO Score</th>
+                            <th>AI Citation</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTable">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: #999;">No clients yet. Start your first analysis above.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- API Status -->
+        <div class="card">
+            <h2>🔧 System Status</h2>
+            
+            <div id="systemStatus">
+                <p>Checking services...⏳</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>StackMatrices GEO Platform v2.0</p>
+            <p><a href="/docs" style="color: white;">API Documentation</a> |
+               <a href="mailto:support@stackmatrices.com" style="color: white;">Support</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        const API_BASE = '/api';
+        
+        // Load stats on page load
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/clients`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('totalClients').textContent = data.data.length;
+                    renderClientsTable(data.data);
+                }
+            } catch (e) {
+                console.error('Failed to load stats:', e);
+            }
+        }
+        
+        // Render clients table
+        function renderClientsTable(clients) {
+            const tbody = document.getElementById('clientsTable');
+            
+            if (clients.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #999;">
+                            No clients yet. Start your first analysis above.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = clients.map(client => `
+                <tr>
+                    <td>${client.name}</td>
+                    <td>${client.industry || 'Medical'}</td>
+                    <td><strong>${client.geoScore || '-'}/100</strong></td>
+                    <td>${client.aiCitation || '-'}%</td>
+                    <td><span class="status ${client.status || 'active'}">${client.status || 'Active'}</span></td>
+                    <td>
+                        <a href="/outputs/${client.id}/MEDICAL-GEO-REPORT.md" target="_blank">View Report</a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Check system status
+        async function checkSystemStatus() {
+            const container = document.getElementById('systemStatus');
+            
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div>
+                            <strong>API Server:</strong> 
+                            <span style="color: green;">✅ Running</span>
+                        </div>
+                        <div>
+                            <strong>Version:</strong> ${data.version}
+                        </div>
+                        <div>
+                            <strong>Last Updated:</strong> ${new Date(data.timestamp).toLocaleString()}
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                container.innerHTML = `
+                    <div class="alert alert-error">
+                        ⚠️ API server not responding. Please check system status.
+                    </div>
+                `;
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('analysisForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                businessName: document.getElementById('businessName').value,
+                address: document.getElementById('address').value,
+                industry: document.getElementById('industry').value,
+                services: document.getElementById('services').value.split(',').map(s => s.trim()).filter(s => s),
+                email: document.getElementById('email').value,
+                async: true
+            };
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            document.querySelector('#analysisForm button').disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE}/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'geo-api-key-demo'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`✅ Analysis started!\n\nClient ID: ${data.data.clientId}\n\nYou will receive an email when complete.`);
+                    
+                    // Reset form
+                    document.getElementById('analysisForm').reset();
+                    
+                    // Reload stats
+                    setTimeout(loadStats, 2000);
+                } else {
+                    alert(`❌ Error: ${data.error}`);
+                }
+                
+            } catch (e) {
+                alert(`❌ Error: ${e.message}`);
+            } finally {
+                document.getElementById('loading').classList.remove('active');
+                document.querySelector('#analysisForm button').disabled = false;
+            }
+        });
+        
+        // Initialize
+        loadStats();
+        checkSystemStatus();
+        
+        // Refresh stats every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>

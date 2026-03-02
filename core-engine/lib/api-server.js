@@ -8,6 +8,7 @@ import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs/promises';
 import * as geoEngine from '../geo.js';
 import * as aiCitation from './ai-citation-monitor.js';
 import * as reportGenerator from './report-generator.js';
@@ -356,6 +357,26 @@ async function loadRankingHistory(clientId, days) {
   // 从数据库或文件加载
   return []; // Placeholder
 }
+
+// ==========================================
+// 静态文件服务
+// ==========================================
+
+// Serve static files from public directory
+const publicDir = path.join(__dirname, '../public');
+app.use(express.static(publicDir));
+
+// Serve index.html for root path
+app.get('/', (req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
+});
+
+// Catch-all: serve index.html for any non-API route (SPA support)
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api/')) {
+    res.sendFile(path.join(publicDir, 'index.html'));
+  }
+});
 
 // 启动服务器
 app.listen(PORT, () => {
