@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "https://testlawfirm.com#legal-service",
+      "name": "Test Law Firm",
+      "description": "Test Law Firm - Immigration attorney serving Houston area.",
+      "url": "https://testlawfirm.com",
+      "telephone": "+1-713-555-9039",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.788180778463648,
+        "longitude": -95.35964739368998
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main St",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Houston"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "3.7",
+        "reviewCount": 98
+      }
+    }
+  ]
+}

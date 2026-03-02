@@ -1,0 +1,24 @@
+{
+  "title": "Test Law Firm",
+  "address": "123 Main St, Houston, TX",
+  "location": {
+    "lat": 29.788180778463648,
+    "lng": -95.35964739368998
+  },
+  "description": "Test Law Firm - Immigration attorney serving Houston area.",
+  "phone": "+1-713-555-9039",
+  "website": "https://testlawfirm.com",
+  "totalScore": "3.7",
+  "reviewsCount": 98,
+  "reviews": [
+    {
+      "text": "Great service, easy to find parking."
+    },
+    {
+      "text": "Very professional."
+    }
+  ],
+  "openingHours": "Mon-Fri: 9:00 AM - 5:00 PM",
+  "city": "Houston",
+  "state": "TX"
+}
