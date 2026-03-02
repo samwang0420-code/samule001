@@ -1,0 +1,309 @@
+{
+  "title": "UHD Testing Services",
+  "address": "One Main Street, Suite OMB S530, Houston, TX 77002",
+  "location": {
+    "lat": 29.7661188,
+    "lng": -95.3592477
+  },
+  "phone": "(713) 221-8027",
+  "website": "http://www.uhd.edu/sssl/testing",
+  "totalScore": 4,
+  "reviewsCount": 3,
+  "reviews": [
+    {
+      "text": "The staff was very professional with a pleasant attitude. She explained the process and provided all pertinent information. The wait time was short. The company received the results in a timely manner.",
+      "rating": 5,
+      "date": "2020-02-07T21:05:13.169Z"
+    },
+    {
+      "text": null,
+      "rating": 5,
+      "date": "2019-05-13T20:14:50.233Z"
+    },
+    {
+      "text": null,
+      "rating": 2,
+      "date": "2017-05-11T04:08:55.811Z"
+    }
+  ],
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "8 AM to 5 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "8 AM to 5 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "8 AM to 5 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "8 AM to 5 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "8 AM to 5 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "Closed"
+    },
+    {
+      "day": "Sunday",
+      "hours": "Closed"
+    }
+  ],
+  "categories": [
+    "Educational testing service"
+  ],
+  "images": null,
+  "neighborhood": "Downtown Houston",
+  "placeId": "ChIJaaWH8y6_QIYRclk7TfbCqwQ",
+  "url": "https://www.google.com/maps/search/?api=1&query=UHD%20Testing%20Services&query_place_id=ChIJaaWH8y6_QIYRclk7TfbCqwQ",
+  "_raw": {
+    "title": "UHD Testing Services",
+    "price": null,
+    "categoryName": "Educational testing service",
+    "address": "One Main Street, Suite OMB S530, Houston, TX 77002",
+    "neighborhood": "Downtown Houston",
+    "street": "One Main Street, Suite OMB S530",
+    "city": "Houston",
+    "postalCode": "77002",
+    "state": "TX",
+    "countryCode": "US",
+    "website": "http://www.uhd.edu/sssl/testing",
+    "phone": "(713) 221-8027",
+    "phoneUnformatted": "+17132218027",
+    "claimThisBusiness": true,
+    "location": {
+      "lat": 29.7661188,
+      "lng": -95.3592477
+    },
+    "locatedIn": "University of Houston-Downtown (UHD)",
+    "floor": "Floor 1",
+    "plusCode": "QJ8R+C8 Downtown Houston, Houston, TX",
+    "totalScore": 4,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJaaWH8y6_QIYRclk7TfbCqwQ",
+    "categories": [
+      "Educational testing service"
+    ],
+    "fid": "0x8640bf2ef387a569:0x4abc2f64d3b5972",
+    "cid": "336576960282712434",
+    "reviewsCount": 3,
+    "reviewsDistribution": {
+      "oneStar": 0,
+      "twoStar": 1,
+      "threeStar": 0,
+      "fourStar": 0,
+      "fiveStar": 2
+    },
+    "imagesCount": 1,
+    "imageCategories": [
+      "All",
+      "Street View & 360°"
+    ],
+    "scrapedAt": "2026-03-02T05:44:13.897Z",
+    "googleFoodUrl": null,
+    "hotelAds": [],
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "8 AM to 5 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "8 AM to 5 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "8 AM to 5 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "8 AM to 5 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "8 AM to 5 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "Closed"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [
+      {
+        "category": "People also search for",
+        "title": "PSI Testing Center",
+        "reviewsCount": 21,
+        "totalScore": 2.1
+      },
+      {
+        "category": "People also search for",
+        "title": "University of Houston - Clear Lake Testing Center",
+        "reviewsCount": 2,
+        "totalScore": 3
+      },
+      {
+        "category": "People also search for",
+        "title": "Houston DNA & Drug Testing",
+        "reviewsCount": 1,
+        "totalScore": 1
+      },
+      {
+        "category": "People also search for",
+        "title": "Houston Medical Testing Services Inc",
+        "reviewsCount": 13,
+        "totalScore": 3.4
+      },
+      {
+        "category": "People also search for",
+        "title": "UHD Academic Building (ACAD)",
+        "reviewsCount": 26,
+        "totalScore": 4.3
+      }
+    ],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=UHD%20Testing%20Services&query_place_id=ChIJaaWH8y6_QIYRclk7TfbCqwQ",
+    "searchPageUrl": "https://www.google.com/maps/search/Test%20Business%20123%20Main%20St,%20Houston,%20TX?hl=en",
+    "searchString": "Test Business 123 Main St, Houston, TX",
+    "language": "en",
+    "rank": 1,
+    "isAdvertisement": false,
+    "imageUrl": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=kvUgZr0c9NVK853QZ3_r7w&cb_client=search.gws-prod.gps&w=408&h=240&yaw=201.60802&pitch=0&thumbfov=100",
+    "kgmid": "/g/11b7xjvjr4",
+    "subTitle": null,
+    "description": null,
+    "menu": null,
+    "reserveTableUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "similarHotelsNearby": null,
+    "hotelReviewSummary": null,
+    "additionalOpeningHours": null,
+    "openingHoursBusinessConfirmationText": null,
+    "questionsAndAnswers": [],
+    "updatesFromCustomers": null,
+    "inputPlaceId": null,
+    "inputStartUrl": null,
+    "userPlaceNote": null,
+    "webResults": [],
+    "tableReservationLinks": [],
+    "bookingLinks": [],
+    "orderOnline": {
+      "pickUps": [],
+      "deliveries": []
+    },
+    "orderBy": [],
+    "restaurantData": {
+      "tableReservationProvider": null
+    },
+    "ownerUpdates": [],
+    "imageUrls": [],
+    "images": null,
+    "reviews": [
+      {
+        "reviewerId": "109171546362182721277",
+        "reviewerUrl": "https://www.google.com/maps/contrib/109171546362182721277?hl=en-US",
+        "name": "Wanda Lane",
+        "reviewerNumberOfReviews": 7,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLYXgtByJXr1SVpvlxFpTXoJ3B8rq7XD5xc_4PJ6inMMlSaGg=s1920-c-rp-mo-br100",
+        "text": "The staff was very professional with a pleasant attitude. She explained the process and provided all pertinent information. The wait time was short. The company received the results in a timely manner.",
+        "textTranslated": null,
+        "publishAt": "6 years ago",
+        "publishedAtDate": "2020-02-07T21:05:13.169Z",
+        "likesCount": 0,
+        "reviewId": "ChdDSUhNMG9nS0VJQ0FnSUNzdVlHX3JRRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNzdVlHX3JRRRAB!2m1!1s0x0:0x4abc2f64d3b5972!3m1!1s2@1:CIHM0ogKEICAgICsuYG_rQE%7CCgsIiaL38QUQ-JrxUA%7C?hl=en-US",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "117869269446160605095",
+        "reviewerUrl": "https://www.google.com/maps/contrib/117869269446160605095?hl=en-US",
+        "name": "Jose Figueroa",
+        "reviewerNumberOfReviews": 17,
+        "isLocalGuide": true,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWmVZyhU62ExeUweN5omcE1ykaZnlihIVXU6l9dATBbHoa6uC1NaA=s1920-c-rp-mo-ba2-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "6 years ago",
+        "publishedAtDate": "2019-05-13T20:14:50.233Z",
+        "likesCount": 0,
+        "reviewId": "ChZDSUhNMG9nS0VJQ0FnSURZM3VIdE9REAE",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURZM3VIdE9REAE!2m1!1s0x0:0x4abc2f64d3b5972!3m1!1s2@1:CIHM0ogKEICAgIDY3uHtOQ%7CCgsIuqDn5gUQiJivbw%7C?hl=en-US",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "111551583005949278886",
+        "reviewerUrl": "https://www.google.com/maps/contrib/111551583005949278886?hl=en-US",
+        "name": "jayla white",
+        "reviewerNumberOfReviews": 0,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKrGCqw3OyVz007bMSQ9d5xpUlcOqAS2Ji7dbzxzHazh7WrbA=s1920-c-rp-mo-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "8 years ago",
+        "publishedAtDate": "2017-05-11T04:08:55.811Z",
+        "likesCount": 0,
+        "reviewId": "ChdDSUhNMG9nS0VJQ0FnSUNnZ2VXZF9nRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNnZ2VXZF9nRRAB!2m1!1s0x0:0x4abc2f64d3b5972!3m1!1s2@1:CIHM0ogKEICAgICggeWd_gE%7CCgwI18fPyAUQwMHbggM%7C?hl=en-US",
+        "reviewOrigin": "Google",
+        "stars": 2,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      }
+    ],
+    "leadsEnrichment": []
+  }
+}
