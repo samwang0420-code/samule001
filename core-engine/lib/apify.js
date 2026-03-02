@@ -7,8 +7,13 @@
 import fetch from 'node-fetch';
 
 const APIFY_TOKEN = process.env.APIFY_TOKEN;
-const GOOGLE_MAPS_ACTOR = 'compass~google-maps-scraper';
-const SERP_ACTOR = 'apify~google-serp-scraper';
+const GOOGLE_MAPS_ACTOR = 'compass/crawler-google-places';
+const SERP_ACTOR = 'apify/google-search-scraper';
+
+// Convert actor ID to URL format (replace / with ~)
+function getActorUrlId(actorId) {
+  return actorId.replace('/', '~');
+}
 
 // Check if Apify is configured
 export const isConfigured = !!APIFY_TOKEN;
@@ -24,8 +29,9 @@ export async function scrapeGoogleMaps(searchQuery, options = {}) {
   console.log('🌐 Calling Apify Google Maps API...');
   
   // 1. Start the actor run
+  const actorUrlId = getActorUrlId(GOOGLE_MAPS_ACTOR);
   const runResponse = await fetch(
-    `https://api.apify.com/v2/acts/${GOOGLE_MAPS_ACTOR}/runs`,
+    `https://api.apify.com/v2/acts/${actorUrlId}/runs`,
     {
       method: 'POST',
       headers: {
@@ -80,8 +86,9 @@ export async function scrapeSERP(keyword, location = 'Houston, Texas, United Sta
 
   console.log(`🔍 Scraping SERP: "${keyword}"`);
   
+  const actorUrlId = getActorUrlId(SERP_ACTOR);
   const runResponse = await fetch(
-    `https://api.apify.com/v2/acts/${SERP_ACTOR}/runs`,
+    `https://api.apify.com/v2/acts/${actorUrlId}/runs`,
     {
       method: 'POST',
       headers: {
@@ -114,9 +121,10 @@ export async function scrapeSERP(keyword, location = 'Houston, Texas, United Sta
  * Wait for Apify run to complete
  */
 async function waitForCompletion(runId, maxAttempts = 60) {
+  const actorUrlId = getActorUrlId(GOOGLE_MAPS_ACTOR);
   for (let i = 0; i < maxAttempts; i++) {
     const response = await fetch(
-      `https://api.apify.com/v2/acts/${GOOGLE_MAPS_ACTOR}/runs/${runId}`,
+      `https://api.apify.com/v2/acts/${actorUrlId}/runs/${runId}`,
       {
         headers: { 'Authorization': `Bearer ${APIFY_TOKEN}` }
       }

@@ -1,0 +1,23 @@
+{
+  "total": 62,
+  "max": 100,
+  "breakdown": {
+    "coordinatePrecision": 22,
+    "parkingAccessibility": 10,
+    "schemaMarkup": 30,
+    "localContext": 0
+  },
+  "currentRank": 8,
+  "potentialRank": 9,
+  "competitorCount": 127,
+  "analysis": {
+    "strengths": [
+      "Precise coordinates",
+      "Complete data fields"
+    ],
+    "weaknesses": [
+      "Missing parking information",
+      "Weak local context connections"
+    ]
+  }
+}

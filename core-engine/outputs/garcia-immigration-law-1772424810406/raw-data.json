@@ -1,0 +1,24 @@
+{
+  "title": "Garcia Immigration Law",
+  "address": "3505 Westheimer Rd, Houston, TX",
+  "location": {
+    "lat": 29.720330555555556,
+    "lng": -95.33457066186557
+  },
+  "description": "Garcia Immigration Law - Immigration attorney serving Houston area.",
+  "phone": "+1-713-555-7939",
+  "website": "https://garciaimmigrationlaw.com",
+  "totalScore": "3.0",
+  "reviewsCount": 72,
+  "reviews": [
+    {
+      "text": "Great service, easy to find parking."
+    },
+    {
+      "text": "Very professional."
+    }
+  ],
+  "openingHours": "Mon-Fri: 9:00 AM - 5:00 PM",
+  "city": "Houston",
+  "state": "TX"
+}

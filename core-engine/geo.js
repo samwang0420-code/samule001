@@ -42,7 +42,9 @@ const commands = {
     });
     console.log(output);
     
-    // Extract client ID from output
+    // Extract output dir from run.js output
+    const outputDirMatch = output.match(/Saved to:\s+(.*\/outputs\/[^\s]+)/);
+    const outputDir = outputDirMatch ? outputDirMatch[1].replace(__dirname, '.') : `./outputs/${clientId}`;
     const clientIdMatch = output.match(/Client ID:\s+(client_\d+)/);
     const clientId = clientIdMatch ? clientIdMatch[1] : null;
     
@@ -78,12 +80,12 @@ const commands = {
     console.log('║                   ONBOARDING COMPLETE                    ║');
     console.log('╠══════════════════════════════════════════════════════════╣');
     console.log(`║ Client ID: ${clientId.padEnd(46)} ║`);
-    console.log(`║ Output:    ./outputs/${clientId.padEnd(38)} ║`);
+    console.log(`║ Output:    ${outputDir.padEnd(50)} ║`);
     console.log(`║ Monitor:   Run daily checks with ./scheduler.sh daily   ║`);
     console.log('╚══════════════════════════════════════════════════════════╝\n');
     
     console.log('Next Steps:');
-    console.log(`  1. Review output in ./outputs/${clientId}/`);
+    console.log(`  1. Review output in ${outputDir}/`);
     console.log(`  2. Deploy schema to client website`);
     console.log(`  3. Add competitors: ./geo.js competitor add "${clientId}" "Name" "Address"`);
     console.log(`  4. Generate report: ./geo.js report "${clientId}"`);
@@ -276,7 +278,15 @@ Examples:
     process.exit(0);
   }
   
-  const cmd = commands[command];
+  // Map kebab-case commands to camelCase
+  const commandMap = {
+    'test-apify': 'testApify',
+    'test-db': 'testDb'
+  };
+  
+  const mappedCommand = commandMap[command] || command;
+  const cmd = commands[mappedCommand];
+  
   if (!cmd) {
     console.error(`Unknown command: ${command}`);
     console.log('Run "./geo.js help" for usage');
