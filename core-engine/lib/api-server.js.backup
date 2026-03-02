@@ -1,7 +1,6 @@
 /**
  * GEO API Server - REST API with Full Workflow
  * 实现问卷→客户→分析的完整流程
- * 支持数据库模式(优先)和文件存储模式(降级)
  */
 
 import express from 'express';
@@ -19,7 +18,7 @@ const app = express();
 const PORT = process.env.API_PORT || 3000;
 
 // Initialize Supabase client (with fallback)
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL || 'https://cqtqanpuqmvicjjwqnwu.supabase.co';
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
 
 let supabase = null;
@@ -30,11 +29,9 @@ try {
     supabase = createClient(supabaseUrl, supabaseKey);
     useDatabase = true;
     console.log('✅ Supabase client initialized');
-  } else {
-    console.log('⚠️ Supabase credentials not found, using file storage mode');
   }
 } catch (e) {
-  console.log('⚠️ Supabase initialization failed, using file storage mode:', e.message);
+  console.log('⚠️ Supabase initialization failed, using file storage mode');
   useDatabase = false;
 }
 
@@ -59,21 +56,11 @@ function authenticate(req, res, next) {
 // 健康检查
 // ==========================================
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(), 
-    version: '2.0.0',
-    database: useDatabase ? 'connected' : 'file-storage-mode'
-  });
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), version: '2.0.0' });
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(), 
-    version: '2.0.0',
-    database: useDatabase ? 'connected' : 'file-storage-mode'
-  });
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), version: '2.0.0' });
 });
 
 // ==========================================
@@ -135,19 +122,21 @@ app.post('/api/analyze', authenticate, async (req, res) => {
     };
     
     // 保存到 Supabase (如果可用)
-    let dbError = null;
+    let submissionError = null;
     if (useDatabase && supabase) {
       const result = await supabase
         .from('questionnaire_submissions')
         .insert(submissionData);
-      dbError = result.error;
-      if (dbError) {
-        console.log('DB insert failed, will use file backup:', dbError.message);
-      }
+      submissionError = result.error;
+    } else {
+      submissionError = new Error('Database not available');
     }
     
-    // 同时保存到文件（作为备份或主存储）
-    await saveSubmissionToFile(submissionData);
+    if (submissionError) {
+      console.error('Failed to save submission:', submissionError);
+      // 降级到文件存储
+      await saveToFile(submissionData);
+    }
     
     // 异步执行：问卷 → 客户 → 分析
     processSubmission(submissionData, clientId).catch(err => {
@@ -162,8 +151,7 @@ app.post('/api/analyze', authenticate, async (req, res) => {
         clientId, 
         businessName, 
         status: 'processing',
-        eta: '5-10 minutes',
-        storageMode: useDatabase && !dbError ? 'database' : 'file'
+        eta: '5-10 minutes'
       }
     });
     
@@ -182,21 +170,20 @@ async function processSubmission(submission, clientId) {
   try {
     // Step 1: 创建客户记录
     const client = await createClientFromSubmission(submission, clientId);
-    console.log(`[${clientId}] Client created: ${client.id || clientId}`);
+    console.log(`[${clientId}] Client created: ${client.id}`);
     
-    // Step 2: 更新问卷记录，关联客户 (仅数据库模式)
-    if (useDatabase && supabase) {
-      await linkSubmissionToClient(submission.id, client.id || clientId);
-      console.log(`[${clientId}] Submission linked to client`);
-    }
+    // Step 2: 更新问卷记录，关联客户
+    await linkSubmissionToClient(submission.id, client.id);
+    console.log(`[${clientId}] Submission linked to client`);
     
     // Step 3: 创建分析任务
-    const jobId = await createAnalysisJob(client.id || clientId, submission.id);
+    const jobId = await createAnalysisJob(client.id, submission.id);
     console.log(`[${clientId}] Analysis job created: ${jobId}`);
     
     // Step 4: 执行分析 (异步)
-    await runAnalysis(client, submission, jobId);
-    console.log(`[${clientId}] Analysis completed`);
+    runAnalysis(client, submission, jobId).catch(err => {
+      console.error(`[${clientId}] Analysis failed:`, err);
+    });
     
   } catch (error) {
     console.error(`[${clientId}] Process failed:`, error);
@@ -207,7 +194,6 @@ async function processSubmission(submission, clientId) {
 // 创建客户记录
 async function createClientFromSubmission(submission, clientId) {
   const clientData = {
-    id: clientId,
     client_code: clientId,
     business_name: submission.business_name,
     industry: submission.industry,
@@ -240,15 +226,15 @@ async function createClientFromSubmission(submission, clientId) {
     
     if (!error && data) {
       // 同时保存到文件作为备份
-      await saveClientToFile({ ...clientData, ...data });
-      return { ...clientData, ...data };
+      await saveClientToFile({ ...clientData, id: data.id });
+      return data;
     }
     console.log('DB insert failed, using file storage:', error?.message);
   }
   
   // 降级到文件存储
   await saveClientToFile(clientData);
-  return clientData;
+  return { id: clientId, ...clientData };
 }
 
 // 关联问卷和客户
@@ -270,9 +256,7 @@ async function linkSubmissionToClient(submissionId, clientId) {
 
 // 创建分析任务
 async function createAnalysisJob(clientId, submissionId) {
-  const jobId = `job_${Date.now()}`;
   const jobData = {
-    id: jobId,
     client_id: clientId,
     submission_id: submissionId,
     status: 'pending',
@@ -285,21 +269,20 @@ async function createAnalysisJob(clientId, submissionId) {
     created_at: new Date().toISOString()
   };
   
-  // 保存到数据库(如果可用)
   if (useDatabase && supabase) {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('analysis_jobs')
-      .insert(jobData);
+      .insert(jobData)
+      .select()
+      .single();
     
-    if (error) {
-      console.log('Failed to create job in DB:', error?.message);
+    if (!error && data) {
+      return data.id;
     }
+    console.log('Failed to create job in DB:', error?.message);
   }
   
-  // 同时保存到文件
-  await saveJobToFile(jobData);
-  
-  return jobId;
+  return `job_${Date.now()}`;
 }
 
 // ==========================================
@@ -323,7 +306,7 @@ async function runAnalysis(client, submission, jobId) {
       serviceArea: submission.service_area
     };
     
-    // 保存分析参数到文件
+    // 保存分析参数到文件 (供medical-pipeline.js使用)
     const analysisDir = path.join(__dirname, '../outputs', client.id);
     await fs.mkdir(analysisDir, { recursive: true });
     await fs.writeFile(
@@ -339,7 +322,7 @@ async function runAnalysis(client, submission, jobId) {
       
       const { stdout, stderr } = await execAsync(
         `node ${pipelinePath} --clientId=${client.id}`,
-        { timeout: 300000 }
+        { timeout: 300000 } // 5分钟超时
       );
       
       console.log(`[${client.id}] Pipeline output:`, stdout);
@@ -347,6 +330,7 @@ async function runAnalysis(client, submission, jobId) {
       
     } catch (pipelineError) {
       console.log(`[${client.id}] Pipeline not available, using auto-analysis...`);
+      // 降级：使用内置的简单分析
       await runSimpleAnalysis(client, submission);
     }
     
@@ -355,6 +339,9 @@ async function runAnalysis(client, submission, jobId) {
       completed_at: new Date().toISOString(),
       results: { message: 'Analysis completed' }
     });
+    
+    // 发送邮件通知 (可选)
+    await sendCompletionEmail(client, submission);
     
     console.log(`[${client.id}] Analysis completed successfully`);
     
@@ -376,8 +363,8 @@ async function runSimpleAnalysis(client, submission) {
     clientId: client.id,
     businessName: client.business_name,
     analysisDate: new Date().toISOString(),
-    geoScore: Math.floor(Math.random() * 30) + 60,
-    aiCitation: Math.floor(Math.random() * 40) + 30,
+    geoScore: Math.floor(Math.random() * 30) + 60, // 60-90
+    aiCitation: Math.floor(Math.random() * 40) + 30, // 30-70
     keywordOpportunities: client.target_keywords?.slice(0, 5) || [],
     recommendations: [
       'Optimize Google Business Profile',
@@ -395,7 +382,7 @@ async function runSimpleAnalysis(client, submission) {
   );
   
   // 更新客户记录的分析结果 (如果数据库可用)
-  if (useDatabase && supabase) {
+  if (useDatabase && supabase && client.id) {
     await supabase
       .from('clients')
       .update({ geo_score: results.geoScore })
@@ -407,7 +394,6 @@ async function runSimpleAnalysis(client, submission) {
 
 // 更新任务状态
 async function updateJobStatus(jobId, status, updates = {}) {
-  // 更新数据库(如果可用)
   if (useDatabase && supabase) {
     const { error } = await supabase
       .from('analysis_jobs')
@@ -415,36 +401,46 @@ async function updateJobStatus(jobId, status, updates = {}) {
       .eq('id', jobId);
     
     if (error) {
-      console.error(`Failed to update job ${jobId} in DB:`, error);
+      console.error(`Failed to update job ${jobId}:`, error);
     }
-  }
-  
-  // 更新文件
-  try {
-    const jobPath = path.join(__dirname, '../outputs/jobs', `${jobId}.json`);
-    let jobData = {};
-    try {
-      jobData = JSON.parse(await fs.readFile(jobPath, 'utf8'));
-    } catch (e) {}
-    
-    jobData.status = status;
-    Object.assign(jobData, updates);
-    
-    await fs.mkdir(path.dirname(jobPath), { recursive: true });
-    await fs.writeFile(jobPath, JSON.stringify(jobData, null, 2));
-  } catch (e) {
-    console.error(`Failed to update job ${jobId} in file:`, e);
   }
 }
 
 // ==========================================
-// 4. API 端点
+// 4. 辅助函数
+// ==========================================
+
+async function saveToFile(data) {
+  const outputDir = path.join(__dirname, '../outputs/submissions');
+  await fs.mkdir(outputDir, { recursive: true });
+  await fs.writeFile(
+    path.join(outputDir, `${data.id}.json`),
+    JSON.stringify(data, null, 2)
+  );
+}
+
+async function saveClientToFile(client) {
+  const outputDir = path.join(__dirname, '../outputs', client.client_code || client.id);
+  await fs.mkdir(outputDir, { recursive: true });
+  await fs.writeFile(
+    path.join(outputDir, 'client.json'),
+    JSON.stringify(client, null, 2)
+  );
+}
+
+async function sendCompletionEmail(client, submission) {
+  // 邮件通知逻辑 (可选)
+  console.log(`[${client.id}] Would send email to: ${submission.contact_email}`);
+}
+
+// ==========================================
+// 5. API 端点
 // ==========================================
 
 // 获取客户列表
 app.get('/api/clients', authenticate, async (req, res) => {
   try {
-    // 优先从数据库获取(如果可用)
+    // 优先从数据库获取 (如果可用)
     if (useDatabase && supabase) {
       const { data: clients, error } = await supabase
         .from('clients')
@@ -452,6 +448,7 @@ app.get('/api/clients', authenticate, async (req, res) => {
         .order('created_at', { ascending: false });
       
       if (!error && clients) {
+        // 格式化响应
         const formattedClients = clients.map(c => ({
           id: c.id,
           clientCode: c.client_code,
@@ -465,7 +462,7 @@ app.get('/api/clients', authenticate, async (req, res) => {
           createdAt: c.created_at
         }));
         
-        return res.json({ success: true, data: formattedClients, source: 'database' });
+        return res.json({ success: true, data: formattedClients });
       }
       
       console.log('DB query failed, using file fallback:', error?.message);
@@ -473,7 +470,7 @@ app.get('/api/clients', authenticate, async (req, res) => {
     
     // 降级到文件系统
     const clientsFromFile = await getClientsFromFile();
-    return res.json({ success: true, data: clientsFromFile, source: 'file' });
+    return res.json({ success: true, data: clientsFromFile });
     
   } catch (error) {
     console.error('Error:', error);
@@ -486,7 +483,7 @@ app.get('/api/clients/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     
-    // 从数据库获取(如果可用)
+    // 从数据库获取 (如果可用)
     if (useDatabase && supabase) {
       const { data: client, error } = await supabase
         .from('clients')
@@ -495,6 +492,7 @@ app.get('/api/clients/:id', authenticate, async (req, res) => {
         .single();
       
       if (!error && client) {
+        // 获取分析结果
         const { data: jobs } = await supabase
           .from('analysis_jobs')
           .select('*')
@@ -503,8 +501,10 @@ app.get('/api/clients/:id', authenticate, async (req, res) => {
         
         return res.json({ 
           success: true, 
-          data: { ...client, analysisJobs: jobs || [] },
-          source: 'database'
+          data: { 
+            ...client, 
+            analysisJobs: jobs || [] 
+          } 
         });
       }
       
@@ -514,7 +514,7 @@ app.get('/api/clients/:id', authenticate, async (req, res) => {
     // 尝试从文件获取
     const clientFromFile = await getClientFromFile(id);
     if (clientFromFile) {
-      return res.json({ success: true, data: clientFromFile, source: 'file' });
+      return res.json({ success: true, data: clientFromFile });
     }
     
     return res.status(404).json({ error: 'Client not found' });
@@ -534,7 +534,7 @@ app.get('/api/submissions', authenticate, async (req, res) => {
         .order('created_at', { ascending: false });
       
       if (!error) {
-        return res.json({ success: true, data: submissions || [], source: 'database' });
+        return res.json({ success: true, data: submissions || [] });
       }
       
       console.log('DB query failed:', error?.message);
@@ -542,7 +542,7 @@ app.get('/api/submissions', authenticate, async (req, res) => {
     
     // 从文件获取
     const submissionsFromFile = await getSubmissionsFromFile();
-    res.json({ success: true, data: submissionsFromFile, source: 'file' });
+    res.json({ success: true, data: submissionsFromFile });
     
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -559,22 +559,20 @@ app.get('/api/jobs', authenticate, async (req, res) => {
         .order('created_at', { ascending: false });
       
       if (!error) {
-        return res.json({ success: true, data: jobs || [], source: 'database' });
+        return res.json({ success: true, data: jobs || [] });
       }
       
       console.log('DB query failed:', error?.message);
     }
     
-    // 从文件获取
-    const jobsFromFile = await getJobsFromFile();
-    res.json({ success: true, data: jobsFromFile, source: 'file' });
+    res.json({ success: true, data: [] });
     
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// 手动触发分析
+// 手动触发分析 (用于重新分析)
 app.post('/api/clients/:id/analyze', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
@@ -582,7 +580,7 @@ app.post('/api/clients/:id/analyze', authenticate, async (req, res) => {
     let client = null;
     let submission = null;
     
-    // 从数据库获取(如果可用)
+    // 从数据库获取 (如果可用)
     if (useDatabase && supabase) {
       const result = await supabase
         .from('clients')
@@ -600,6 +598,7 @@ app.post('/api/clients/:id/analyze', authenticate, async (req, res) => {
     if (!client) {
       client = await getClientFromFile(id);
       if (client) {
+        // 构造submission对象
         submission = {
           id: 'file_' + Date.now(),
           business_name: client.business_name,
@@ -646,7 +645,7 @@ app.post('/api/execute', authenticate, async (req, res) => {
     
     let client = null;
     
-    // 从数据库加载(如果可用)
+    // 从数据库加载 (如果可用)
     if (useDatabase && supabase) {
       const result = await supabase
         .from('clients')
@@ -685,37 +684,7 @@ app.post('/api/execute', authenticate, async (req, res) => {
   }
 });
 
-// ==========================================
-// 5. 文件存储辅助函数
-// ==========================================
-
-async function saveSubmissionToFile(data) {
-  const outputDir = path.join(__dirname, '../outputs/submissions');
-  await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(
-    path.join(outputDir, `${data.id}.json`),
-    JSON.stringify(data, null, 2)
-  );
-}
-
-async function saveClientToFile(client) {
-  const outputDir = path.join(__dirname, '../outputs', client.client_code || client.id);
-  await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(
-    path.join(outputDir, 'client.json'),
-    JSON.stringify(client, null, 2)
-  );
-}
-
-async function saveJobToFile(job) {
-  const outputDir = path.join(__dirname, '../outputs/jobs');
-  await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(
-    path.join(outputDir, `${job.id}.json`),
-    JSON.stringify(job, null, 2)
-  );
-}
-
+// 从文件获取客户列表 (降级方案)
 async function getClientsFromFile() {
   const outputsDir = path.join(__dirname, '../outputs');
   let clients = [];
@@ -724,7 +693,7 @@ async function getClientsFromFile() {
     const entries = await fs.readdir(outputsDir, { withFileTypes: true });
     clients = await Promise.all(
       entries
-        .filter(e => e.isDirectory() && (e.name.startsWith('geo_') || e.name.startsWith('CLI_')))
+        .filter(e => e.isDirectory() && e.name.startsWith('geo_'))
         .map(async (e) => {
           try {
             const data = JSON.parse(
@@ -735,26 +704,18 @@ async function getClientsFromFile() {
               .catch(() => '{}')
             );
             return {
-              id: data.id || e.name,
-              clientCode: data.client_code || e.name,
+              id: e.name,
               name: data.business_name || data.firmName || e.name,
               industry: data.industry || 'medical',
-              website: data.website,
-              email: data.email,
-              geoScore: results.geoScore || data.geo_score || 0,
-              aiCitation: results.aiCitation || data.ai_citation || 0,
-              status: data.status || 'active',
-              createdAt: data.created_at || new Date().toISOString()
+              geoScore: results.geoScore || 0,
+              aiCitation: results.aiCitation || 0,
+              status: 'active'
             };
           } catch (err) {
             return { id: e.name, name: e.name, industry: 'medical', status: 'active' };
           }
         })
     );
-    
-    // 按创建时间排序
-    clients.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
   } catch (e) {
     clients = [];
   }
@@ -762,6 +723,7 @@ async function getClientsFromFile() {
   return clients;
 }
 
+// 从文件获取客户详情 (降级方案)
 async function getClientFromFile(clientId) {
   try {
     const clientPath = path.join(__dirname, '../outputs', clientId, 'client.json');
@@ -772,79 +734,14 @@ async function getClientFromFile(clientId) {
   }
 }
 
-async function getSubmissionsFromFile() {
-  const submissionsDir = path.join(__dirname, '../outputs/submissions');
-  let submissions = [];
-  
-  try {
-    const entries = await fs.readdir(submissionsDir, { withFileTypes: true });
-    submissions = await Promise.all(
-      entries
-        .filter(e => e.isFile() && e.name.endsWith('.json'))
-        .map(async (e) => {
-          try {
-            const data = JSON.parse(
-              await fs.readFile(path.join(submissionsDir, e.name), 'utf8')
-            );
-            return data;
-          } catch (err) {
-            return null;
-          }
-        })
-    );
-    
-    submissions = submissions.filter(s => s !== null);
-    submissions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    
-  } catch (e) {
-    submissions = [];
-  }
-  
-  return submissions;
-}
-
-async function getJobsFromFile() {
-  const jobsDir = path.join(__dirname, '../outputs/jobs');
-  let jobs = [];
-  
-  try {
-    const entries = await fs.readdir(jobsDir, { withFileTypes: true });
-    jobs = await Promise.all(
-      entries
-        .filter(e => e.isFile() && e.name.endsWith('.json'))
-        .map(async (e) => {
-          try {
-            const data = JSON.parse(
-              await fs.readFile(path.join(jobsDir, e.name), 'utf8')
-            );
-            return data;
-          } catch (err) {
-            return null;
-          }
-        })
-    );
-    
-    jobs = jobs.filter(j => j !== null);
-    jobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    
-  } catch (e) {
-    jobs = [];
-  }
-  
-  return jobs;
-}
-
-// ==========================================
-// Fallback
-// ==========================================
-
+// Fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.listen(PORT, () => {
   console.log(`GEO API Server running on port ${PORT}`);
-  console.log(`Storage mode: ${useDatabase ? 'Database + File Backup' : 'File Storage Only'}`);
+  console.log(`Supabase URL: ${supabaseUrl}`);
 });
 
 export default app;
