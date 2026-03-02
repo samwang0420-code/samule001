@@ -462,6 +462,73 @@
         // Load all data
         function loadAllData() {
             loadClients();
+            initCharts();
+        }
+        
+        // Initialize Charts
+        function initCharts() {
+            // Score Trend Chart
+            const scoreCtx = document.getElementById('scoreChart');
+            if (scoreCtx) {
+                new Chart(scoreCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Day 1', 'Day 5', 'Day 10', 'Day 15', 'Day 20', 'Day 25', 'Day 30'],
+                        datasets: [{
+                            label: 'GEO Score',
+                            data: [65, 68, 70, 72, 75, 76, 78],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 50,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Citation Chart
+            const citationCtx = document.getElementById('citationChart');
+            if (citationCtx) {
+                new Chart(citationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'AI Citations',
+                            data: [12, 19, 25, 32],
+                            backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#f5576c'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         // Execute optimization
