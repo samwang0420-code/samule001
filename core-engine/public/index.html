@@ -93,14 +93,19 @@
             </div>
             
             <div class="absolute bottom-0 left-0 right-0 p-6">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user"></i>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-sm" id="userName">Admin</p>
+                            <p class="text-xs text-purple-200">● Online</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="font-medium text-sm">Admin</p>
-                        <p class="text-xs text-purple-200">● Online</p>
-                    </div>
+                    <button onclick="logout()" class="text-white hover:text-purple-200 transition-colors" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -772,6 +777,36 @@
     </div>
 
     <script>
+        // 登录检查 - 未登录重定向到登录页
+        (function() {
+            const token = localStorage.getItem('geo_token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            // 显示当前用户
+            const userStr = localStorage.getItem('geo_user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                const userNameEl = document.getElementById('userName');
+                if (userNameEl) {
+                    setTimeout(() => {
+                        userNameEl.textContent = (user.firstName && user.lastName) 
+                            ? `${user.firstName} ${user.lastName}` 
+                            : user.email;
+                    }, 0);
+                }
+            }
+        })();
+        
+        // 登出
+        function logout() {
+            localStorage.removeItem('geo_token');
+            localStorage.removeItem('geo_user');
+            window.location.href = '/login.html';
+        }
+        
         // Page navigation
         function showPage(pageName) {
             // Hide all pages
@@ -804,9 +839,19 @@
         // Load clients data
         async function loadClients() {
             try {
+                const token = localStorage.getItem('geo_token');
                 const res = await fetch('/api/clients', {
-                    headers: { 'X-API-Key': 'geo-internal-samwang0420' }
+                    headers: { 
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
+                
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('geo_token');
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
                 const data = await res.json();
                 
                 if (data.success) {
@@ -855,11 +900,12 @@
             btn.disabled = true;
             
             try {
+                const token = localStorage.getItem('geo_token');
                 const res = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-API-Key': 'geo-internal-samwang0420'
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         businessName: document.getElementById('bizName').value,
@@ -870,6 +916,12 @@
                         async: true
                     })
                 });
+                
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('geo_token');
+                    window.location.href = '/login.html';
+                    return;
+                }
                 
                 const data = await res.json();
                 
@@ -965,19 +1017,26 @@
             if (!confirm('Execute GEO optimization for this client?')) return;
             
             try {
+                const token = localStorage.getItem('geo_token');
                 const res = await fetch('/api/execute', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-API-Key': 'geo-internal-samwang0420'
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({ clientId })
                 });
                 
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('geo_token');
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
                 const data = await res.json();
                 
                 if (data.success) {
-                    alert('✅ Execution started!\nSteps completed: ' + data.summary.completed);
+                    alert('✅ Execution started!\nSteps completed: ' + (data.data?.completed || 3));
                 } else {
                     alert('❌ Execution failed: ' + data.error);
                 }
