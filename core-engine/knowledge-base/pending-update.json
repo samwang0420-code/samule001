@@ -1,0 +1,27 @@
+{
+  "id": "update_1772424682747",
+  "createdAt": "2026-03-02T04:11:22.747Z",
+  "changes": [
+    {
+      "type": "ADOPT",
+      "component": "geo-score",
+      "strategyId": "strat_1772424423702",
+      "description": "Add parking info to GMB",
+      "evidence": "50 clients, avg ranking change: -2.3",
+      "risk": "LOW"
+    },
+    {
+      "type": "ADOPT",
+      "component": "citation-engine",
+      "strategyId": "strat_1772424530167",
+      "description": "Add FAQ Schema markup",
+      "evidence": "30 clients, avg ranking change: -1.5",
+      "risk": "LOW"
+    }
+  ],
+  "affectedComponents": [
+    "geo-score",
+    "citation-engine"
+  ],
+  "riskLevel": "LOW"
+}

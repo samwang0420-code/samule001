@@ -1,0 +1,128 @@
+{
+  "strategies": [
+    {
+      "id": "strat_1772424423702",
+      "name": "Add parking info to GMB",
+      "description": "Test if parking information affects local ranking",
+      "type": "schema_change",
+      "affectedComponent": "geo-score",
+      "expectedImpact": "unknown",
+      "deployedAt": "2025-03-02T03:53:43.702Z",
+      "status": "ACTIVE",
+      "sampleSize": 50,
+      "clients": [],
+      "metrics": {
+        "before": {
+          "ranking": 8.5,
+          "citationRate": 0.12
+        },
+        "after": {
+          "ranking": 6.2,
+          "citationRate": 0.18
+        },
+        "delta": {
+          "ranking": -2.3,
+          "citationRate": 0.06,
+          "traffic": 0
+        }
+      },
+      "measuredAt": "2025-03-02T03:54:00.000Z",
+      "significance": 0.95,
+      "confidence": "HIGH",
+      "conclusion": "POSITIVE"
+    },
+    {
+      "id": "strat_1772424530167",
+      "name": "Add FAQ Schema markup",
+      "description": "Test FAQ structured data impact",
+      "type": "schema_change",
+      "affectedComponent": "citation-engine",
+      "expectedImpact": "unknown",
+      "deployedAt": "2025-03-02T03:55:30.167Z",
+      "status": "ACTIVE",
+      "sampleSize": 30,
+      "clients": [],
+      "metrics": {
+        "before": {
+          "ranking": 7.0,
+          "citationRate": 0.10
+        },
+        "after": {
+          "ranking": 5.5,
+          "citationRate": 0.22
+        },
+        "delta": {
+          "ranking": -1.5,
+          "citationRate": 0.12,
+          "traffic": 0
+        }
+      },
+      "measuredAt": "2025-03-02T03:56:00.000Z",
+      "significance": 0.90,
+      "confidence": "HIGH",
+      "conclusion": "POSITIVE"
+    },
+    {
+      "id": "strat_1772424600001",
+      "name": "Increase keyword density",
+      "description": "Test if more keywords improve ranking",
+      "type": "content_update",
+      "affectedComponent": "citation-engine",
+      "expectedImpact": "positive",
+      "deployedAt": "2025-02-15T00:00:00.000Z",
+      "status": "DEPRECATED",
+      "sampleSize": 25,
+      "clients": [],
+      "metrics": {
+        "before": {
+          "ranking": 6.0,
+          "citationRate": 0.15
+        },
+        "after": {
+          "ranking": 9.5,
+          "citationRate": 0.08
+        },
+        "delta": {
+          "ranking": 3.5,
+          "citationRate": -0.07,
+          "traffic": 0
+        }
+      },
+      "measuredAt": "2025-03-01T00:00:00.000Z",
+      "significance": 0.95,
+      "confidence": "HIGH",
+      "conclusion": "NEGATIVE"
+    },
+    {
+      "id": "strat_1772424700002",
+      "name": "Add client photos to GMB",
+      "description": "Test visual content impact",
+      "type": "content_update",
+      "affectedComponent": "geo-score",
+      "expectedImpact": "unknown",
+      "deployedAt": "2025-02-20T00:00:00.000Z",
+      "status": "ACTIVE",
+      "sampleSize": 40,
+      "clients": [],
+      "metrics": {
+        "before": {
+          "ranking": 7.5,
+          "citationRate": 0.11
+        },
+        "after": {
+          "ranking": 7.3,
+          "citationRate": 0.12
+        },
+        "delta": {
+          "ranking": -0.2,
+          "citationRate": 0.01,
+          "traffic": 0
+        }
+      },
+      "measuredAt": "2025-03-01T00:00:00.000Z",
+      "significance": 0.60,
+      "confidence": "MEDIUM",
+      "conclusion": "NEUTRAL"
+    }
+  ]
+}
