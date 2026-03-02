@@ -12,8 +12,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import db from './lib/db.js';
 import * as apify from './lib/apify.js';
-import * as citationEngine from './lib/citation-engine.js';
-import * as perplexity from './lib/perplexity-reverser.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
