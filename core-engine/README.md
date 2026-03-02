@@ -1,46 +1,14 @@
-# 🏰 护城河核心系统 - Core Engine v1.2 (Apify集成)
+# 🏰 护城河核心系统 v1.2 - 真实数据接入
 
-## 架构
-```
-输入: 律所名称 + 地址
-    ↓
-┌─────────────────────────────────────────────────────────┐
-│  数据层 (渐进式)                                        │
-│    ├── Apify: 真实Google Maps数据 (配置后自动启用)      │
-│    └── Demo: 模拟数据 (无API成本)                       │
-│                                                         │
-│  分析层                                                 │
-│    ├── GEO评分算法 (0-100)                              │
-│    ├── Schema生成器                                     │
-│    └── 排名预测                                         │
-│                                                         │
-│  存储层 (渐进式)                                        │
-│    ├── Supabase: 云端持久化 (配置后自动启用)            │
-│    └── 本地: JSON文件输出                               │
-└─────────────────────────────────────────────────────────┘
-    ↓
-输出: Schema代码 + 部署指南 + 数据文件
-```
+## 当前状态
 
-## 两种运行模式
-
-### 模式 1: Demo (零成本)
-```bash
-# 无需任何配置
-./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX"
-```
-使用模拟数据，测试工作流。
-
-### 模式 2: Live (真实数据)
-```bash
-# 1. 配置环境变量
-cp .env.example .env
-# 编辑 .env 添加 APIFY_TOKEN
-
-# 2. 运行
-./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX"
-```
-自动使用真实Google Maps数据。
+| 组件 | 状态 | 说明 |
+|------|------|------|
+| **GEO分析引擎** | ✅ | 评分算法 + Schema生成 |
+| **数据库** | ✅ | Supabase集成，数据持久化 |
+| **Apify抓取** | ✅ | 真实Google Maps数据 |
+| **SERP监控** | ✅ | 排名追踪 |
+| **CLI界面** | ✅ | 统一命令入口 |
 
 ## 快速开始
 
@@ -50,89 +18,119 @@ cd core-engine
 npm install
 ```
 
-### 2. 测试连接
-```bash
-# 测试 Apify (真实数据)
-./geo.js test-apify
+### 2. 配置 (可选，但推荐)
 
-# 测试数据库 (持久化)
-./geo.js test-db
+**数据库 (Supabase)**
+```bash
+# 1. 创建 .env 文件
+cp .env.example .env
+
+# 2. 填入 Supabase 信息
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_KEY=your-anon-key
+
+# 3. 测试连接
+npm run test-db
 ```
 
-### 3. 运行分析
+**Apify (真实数据)**
 ```bash
-# Demo 模式 (无需配置)
-./geo.js onboard "Firm Name" "Address"
+# 1. 获取 token: https://console.apify.com
+# 2. 添加到 .env
+APIFY_TOKEN=your-apify-token
 
-# Live 模式 (需要 APIFY_TOKEN)
-./geo.js onboard "Firm Name" "Address"
+# 3. 测试连接
+npm run test-apify
+```
+
+### 3. 运行
+
+**Demo模式** (无API配置，模拟数据)
+```bash
+./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX"
+```
+
+**Live模式** (有Apify，真实数据)
+```bash
+./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX"
+# 自动从Google Maps抓取真实数据
 ```
 
 ## 命令
 
-| 命令 | 用途 |
-|------|------|
-| `./geo.js onboard "Firm" "Address"` | 新客户接入 |
-| `./geo.js status` | 系统状态 |
-| `./geo.js report "client_id"` | 生成报告 |
-| `./geo.js test-apify` | 测试Apify连接 |
-| `./geo.js test-db` | 测试数据库连接 |
-| `./geo.js monitor add "client" "keyword"` | 添加关键词追踪 |
-| `./geo.js competitor add "client" "name" "address"` | 添加竞争对手 |
-
-## 环境配置
-
-### 必需 (用于Live模式)
 ```bash
-# .env
-APIFY_TOKEN=your_apify_token_here
+# 客户接入
+./geo.js onboard "Firm Name" "Address"
+
+# 系统状态
+./geo.js status
+
+# 测试连接
+npm run test-db      # 测试数据库
+npm run test-apify   # 测试Apify
+
+# 排名监控
+./geo.js monitor add "client_id" "keyword"
+./geo.js monitor run
+./geo.js monitor report "client_id"
+
+# 竞品追踪
+./geo.js competitor add "client_id" "Competitor Name" "Address"
+./geo.js competitor analyze "client_id"
 ```
 
-获取: https://apify.com
+## 架构
 
-### 可选 (用于数据持久化)
-```bash
-# .env
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_KEY=your-anon-key
+```
+┌─────────────────────────────────────────────────────────┐
+│  CLI (geo.js)                                           │
+├─────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
+│  │  GEO Engine │  │   Monitor   │  │ Competitor  │     │
+│  │  (run.js)   │  │ (monitor.js)│  │(competitor.js)    │
+│  └──────┬──────┘  └─────────────┘  └─────────────┘     │
+├─────────┼───────────────────────────────────────────────┤
+│  ┌──────┴──────┐  ┌─────────────┐                       │
+│  │  Apify API  │  │  Supabase   │                       │
+│  │  (真实数据)  │  │   (数据库)   │                       │
+│  └─────────────┘  └─────────────┘                       │
+└─────────────────────────────────────────────────────────┘
 ```
 
-获取: https://supabase.com
+## 渐进式模式
 
-## 特点
+| 配置 | 数据 | 存储 |
+|------|------|------|
+| 无 | 模拟数据 | 本地文件 |
+| Apify | 真实Google Maps | 本地文件 |
+| Supabase | 模拟/真实 | 数据库 |
+| Apify + Supabase | 真实Google Maps | 数据库 + 本地 |
 
-### ✅ 渐进式集成
-- 零配置即可运行 (Demo模式)
-- 配置APIFY后自动升级 (Live模式)
-- 配置Supabase后自动持久化
-- 平滑迁移，无停机
+## 成本
 
-### ✅ 成本可控
-- Demo模式: $0/月
-- Live模式: ~$50/月 (Apify $40 + 服务器 $5 + DB $0)
-
-### ✅ 数据质量
-- Demo: 快速测试，无需成本
-- Live: 真实Google Maps数据，精确坐标，真实评论
-
-## Apify数据内容
-
-使用Live模式获取:
-- 精确GPS坐标 (建筑级)
-- 完整地址信息
-- 电话号码、网站、邮箱
-- 营业时间
-- 用户评论 (文本+评分)
-- 商家描述
-- 类别标签
-- 服务区域
+| 组件 | 月费用 |
+|------|--------|
+| DigitalOcean | $5 |
+| Supabase (免费档) | $0 |
+| Apify | ~$40 (按量) |
+| **总计** | **$45-50** |
 
 ## Git
 
 ```
-[待提交] Apify集成: 真实数据抓取
+4c679ca Apify集成: 真实Google Maps数据抓取, SERP排名抓取
+9cd6664 数据库接入: Supabase集成,数据持久化
+28dba2d 护城河完整系统: CLI + 监控 + 定时任务
 ```
+
+## 下一步
+
+1. ✅ 数据库接入
+2. ✅ Apify真实数据
+3. ⏳ 排名监控自动化 (定时任务)
+4. ⏳ 竞品追踪自动化
+5. ⏳ 报告生成器
 
 ---
 
-**系统已支持渐进式数据接入。配置 APIFY_TOKEN 启用真实数据。**
+**系统已支持真实数据抓取。配置 APIFY_TOKEN 启用。**
