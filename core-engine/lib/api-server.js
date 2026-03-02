@@ -468,6 +468,9 @@ app.post('/api/analyze', authenticateApiKey, async (req, res) => {
 // 获取客户列表
 app.get('/api/clients', authenticateToken, async (req, res) => {
   try {
+    let allClients = [];
+    
+    // 从数据库获取(如果可用)
     if (useDatabase && supabase) {
       const { data: clients, error } = await supabase
         .from('clients')
@@ -482,12 +485,25 @@ app.get('/api/clients', authenticateToken, async (req, res) => {
           geoScore: c.geo_score || 0,
           status: c.status
         }));
-        return res.json({ success: true, data: formatted });
+        allClients = [...formatted];
       }
     }
     
+    // 从文件获取(补充)
     const clientsFromFile = await getClientsFromFile();
-    res.json({ success: true, data: clientsFromFile });
+    
+    // 合并数据(去重)
+    const seenIds = new Set(allClients.map(c => c.id));
+    for (const c of clientsFromFile) {
+      if (!seenIds.has(c.id)) {
+        allClients.push(c);
+      }
+    }
+    
+    // 按创建时间排序
+    allClients.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    res.json({ success: true, data: allClients });
     
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -598,6 +614,8 @@ async function createClientFromSubmission(submission, clientId) {
     created_at: new Date().toISOString()
   };
   
+  console.log(`[${clientId}] Creating client in database...`);
+  
   if (useDatabase && supabase) {
     const { data, error } = await supabase
       .from('clients')
@@ -606,11 +624,14 @@ async function createClientFromSubmission(submission, clientId) {
       .single();
     
     if (!error && data) {
+      console.log(`[${clientId}] Client created in database:`, data.id);
       await saveClientToFile({ ...clientData, ...data });
       return { ...clientData, ...data };
     }
+    console.error(`[${clientId}] Failed to create client in DB:`, error?.message);
   }
   
+  console.log(`[${clientId}] Saving client to file only`);
   await saveClientToFile(clientData);
   return clientData;
 }
