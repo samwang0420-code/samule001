@@ -26,7 +26,7 @@ async function showDashboard() {
   console.log(`  Database: ${health.database ? '✅ Connected' : '❌ Disconnected'}`);
   console.log(`  Apify: ${health.apify ? '✅ Configured' : '⚠️  Not Configured'}`);
   console.log(`  Disk Space: ${health.diskSpace}`);
-  console.log(`  Uptime: ${health.uptime}\n');
+  console.log(`  Uptime: ${health.uptime}\n`);
   
   // 2. 客户统计
   console.log('👥 CLIENTS');
