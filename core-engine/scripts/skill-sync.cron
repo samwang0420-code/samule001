@@ -1,0 +1,12 @@
+# Skill Sync Cron Job
+# Check for shared skills every hour and sync to Git
+
+0 * * * * root cd /root/.openclaw/workspace-geo-arch/core-engine && /usr/bin/node scripts/skill-sync.js >> /var/log/skill-sync.log 2>&1
+
+# Daily summary at 9 AM
+0 9 * * * root echo "=== Daily Skill Sync Check $(date) ===" >> /var/log/skill-sync.log
+
+# Installation:
+# sudo cp skill-sync.cron /etc/cron.d/skill-sync
+# sudo chmod 644 /etc/cron.d/skill-sync
+# sudo service cron restart
