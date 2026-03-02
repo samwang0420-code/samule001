@@ -1,0 +1,395 @@
+<!-- GEO Analysis Request Form - Professional English Version -->
+<style>
+.geo-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.geo-form-container h2 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.geo-form-container .subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 32px;
+    font-size: 16px;
+}
+
+.geo-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.geo-form-group {
+    margin-bottom: 20px;
+}
+
+.geo-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+}
+
+.geo-form-group input,
+.geo-form-group select,
+.geo-form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.geo-form-group input:focus,
+.geo-form-group select:focus,
+.geo-form-group textarea:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.geo-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.geo-form-group .hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+.geo-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.geo-form-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.geo-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 32px;
+}
+
+.geo-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.geo-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.geo-form-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.geo-success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.geo-success-message.active {
+    display: block;
+}
+
+.geo-success-icon {
+    width: 64px;
+    height: 64px;
+    background: #d1fae5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.geo-success-icon::after {
+    content: "✓";
+    color: #059669;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.geo-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .geo-form-row,
+    .geo-form-row-3 {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="geo-form-container">
+    <h2>GEO + SEO Analysis Request</h2>
+    <p class="subtitle">Get a complete audit of your local search presence</p>
+    
+    <form id="geoAnalysisForm">
+        
+        <!-- Section 1: Company Information -->
+        <div class="geo-section-title">Company Information</div>
+        
+        <div class="geo-form-group">
+            <label>Official Website *</label>
+            <input type="url" name="website" required 
+                placeholder="https://www.yourcompany.com">
+        </div>
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Company Name *</label>
+                <input type="text" name="businessName" required
+                    placeholder="Official company name">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Industry *</label>
+                <select name="industry" required>
+                    <option value="">Select Industry...</option>
+                    <option value="medical-spa">Medical Spa</option>
+                    <option value="dentistry">Dentistry</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="plastic-surgery">Plastic Surgery</option>
+                    <option value="other-medical">Other Medical</option>
+                    <option value="medical-service">Medical Service Provider</option>
+                    <option value="marketing-agency">Marketing Agency</option>
+                    <option value="software">Software / SaaS</option>
+                    <option value="consulting">Consulting</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Business Description *</label>
+            <textarea name="businessDescription" rows="3" required
+                placeholder="Please describe your core business, services, and target customers in detail... For example: We provide one-stop marketing solutions for medical aesthetic clinics, including SEO optimization, social media management, and customer management systems."></textarea>
+        </div>
+        
+        <div class="geo-form-row-3">
+            <div class="geo-form-group">
+                <label>Company Size</label>
+                <select name="companySize">
+                    <option value="">Select...</option>
+                    <option value="1-10">1-10 employees</option>
+                    <option value="11-50">11-50 employees</option>
+                    <option value="51-200">51-200 employees</option>
+                    <option value="201-500">201-500 employees</option>
+                    <option value="500+">500+ employees</option>
+                </select>
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Year Established</label>
+                <input type="number" name="yearEstablished" min="1900" max="2026"
+                    placeholder="2020">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Service Area</label>
+                <input type="text" name="serviceArea"
+                    placeholder="e.g., Nationwide, West Coast, New York...">
+            </div>
+        </div>
+        
+        <!-- Section 2: SEO & GEO Targets -->
+        <div class="geo-section-title">SEO & GEO Targets</div>
+        
+        <div class="geo-form-group">
+            <label>Target Keywords * (3-5 keywords you want to rank for)</label>
+            <textarea name="keywords" rows="2" required
+                placeholder="e.g., medical spa marketing, clinic management software, plastic surgery promotion, customer management system..."></textarea>
+            <p class="hint">Please provide keywords you want to rank for in search engines, separated by commas. Include location and business terms.</p>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Main Competitors</label>
+            <textarea name="competitors" rows="2"
+                placeholder="e.g., competitor1.com, competitor2.com, or company names"></textarea>
+            <p class="hint">List 2-3 main competitors to help us analyze market positioning.</p>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Current Challenges</label>
+            <textarea name="challenges" rows="2"
+                placeholder="e.g., low website traffic, high customer acquisition cost, low brand awareness, competitors ranking higher..."></textarea>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Expected Outcomes</label>
+            <textarea name="goals" rows="2"
+                placeholder="e.g., improve keyword rankings to first page, increase website inquiries by 30%, boost brand search volume..."></textarea>
+        </div>
+        
+        <!-- Section 3: Contact Information -->
+        <div class="geo-section-title">Contact Information</div>
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Contact Name *</label>
+                <input type="text" name="contactName" required
+                    placeholder="Your full name">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Job Title</label>
+                <input type="text" name="jobTitle"
+                    placeholder="e.g., Marketing Director, Founder, Operations Manager...">
+            </div>
+        </div>
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required
+                    placeholder="your@company.com">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Phone</label>
+                <input type="tel" name="phone"
+                    placeholder="+1 (555) 123-4567">
+            </div>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>WeChat / WhatsApp / Other Contact (Optional)</label>
+            <input type="text" name="messaging"
+                placeholder="WeChat ID or other instant messaging">
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Additional Notes</label>
+            <textarea name="notes" rows="2"
+                placeholder="Any other information you'd like us to know..."></textarea>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="geo-submit-btn">
+            Request Free Analysis
+        </button>
+        
+        <p class="geo-form-footer">
+            Your information is secure. Report delivered within 24-48 hours. No credit card required.
+        </p>
+    </form>
+    
+    <!-- Success Message -->
+    <div id="geoSuccessMessage" class="geo-success-message">
+        <div class="geo-success-icon"></div>
+        <h2>Request Submitted Successfully!</h2>
+        <p>Thank you for your submission. Our team will analyze your website and send a comprehensive GEO + SEO report to your email within 24-48 hours.</p>
+        
+        <p style="margin-top: 24px; color: #6b7280;">
+            Questions? Contact us at support@yourcompany.com
+        </p>
+    </div>
+</div>
+
+<script>
+document.getElementById('geoAnalysisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = this.querySelector('.geo-submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="geo-loading"></span>Submitting...';
+    btn.disabled = true;
+    
+    const formData = new FormData(this);
+    
+    const payload = {
+        website: formData.get('website'),
+        businessName: formData.get('businessName'),
+        industry: formData.get('industry'),
+        businessDescription: formData.get('businessDescription'),
+        companySize: formData.get('companySize'),
+        yearEstablished: formData.get('yearEstablished'),
+        serviceArea: formData.get('serviceArea'),
+        keywords: formData.get('keywords').split(',').map(k => k.trim()).filter(k => k),
+        competitors: formData.get('competitors') 
+            ? formData.get('competitors').split(',').map(c => c.trim()).filter(c => c)
+            : [],
+        challenges: formData.get('challenges'),
+        goals: formData.get('goals'),
+        contactName: formData.get('contactName'),
+        jobTitle: formData.get('jobTitle'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        messaging: formData.get('messaging'),
+        notes: formData.get('notes')
+    };
+    
+    fetch('https://dashboard.gspr-hub.site/api/analyze', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'geo-internal-samwang0420'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Submission failed');
+        return res.json();
+    })
+    .then(result => {
+        document.getElementById('geoAnalysisForm').style.display = 'none';
+        document.getElementById('geoSuccessMessage').classList.add('active');
+    })
+    .catch(err => {
+        alert('Error submitting request. Please try again or contact support.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+</script>

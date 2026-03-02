@@ -1,0 +1,289 @@
+<!-- GEO Analysis Request Form - 可直接嵌入官网使用 -->
+<!-- 复制以下代码到你们官网的页面中 -->
+
+<style>
+.geo-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.geo-form-container h2 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.geo-form-container .subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 32px;
+    font-size: 16px;
+}
+
+.geo-form-group {
+    margin-bottom: 20px;
+}
+
+.geo-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+}
+
+.geo-form-group input,
+.geo-form-group select,
+.geo-form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.geo-form-group input:focus,
+.geo-form-group select:focus,
+.geo-form-group textarea:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.geo-form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.geo-form-group .hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+.geo-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.geo-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 24px;
+}
+
+.geo-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.geo-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.geo-form-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.geo-success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.geo-success-message.active {
+    display: block;
+}
+
+.geo-success-icon {
+    width: 64px;
+    height: 64px;
+    background: #d1fae5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+}
+
+.geo-success-icon::after {
+    content: "✓";
+    color: #059669;
+    font-weight: bold;
+}
+
+.geo-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .geo-form-row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="geo-form-container">
+    <!-- 标题 -->
+    <h2>GEO + SEO Analysis Request</h2>
+    <p class="subtitle">Complete audit of your local search presence</p>
+    
+    <!-- 表单 -->
+    <form id="geoAnalysisForm">
+        
+        <!-- Website URL -->
+        <div class="geo-form-group">
+            <label>Website URL *</label>
+            <input type="url" name="website" required 
+                placeholder="https://www.yourcompany.com">
+        </div>
+        
+        <!-- Business Name + Industry -->
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Business Name *</label>
+                <input type="text" name="businessName" required
+                    placeholder="Your Company">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Industry *</label>
+                <select name="industry" required>
+                    <option value="">Select...</option>
+                    <option value="medical-spa">Medical Spa</option>
+                    <option value="dentistry">Dentistry</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="plastic-surgery">Plastic Surgery</option>
+                    <option value="service">Service Business</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Target Keywords -->
+        <div class="geo-form-group">
+            <label>Target Keywords * (3-5 keywords you want to rank for)</label>
+            <textarea name="keywords" rows="2" required
+                placeholder="best botox houston, med spa near me, fillers houston tx..."></textarea>
+            <p class="hint">Separate with commas. Include location terms for local SEO.</p>
+        </div>
+        
+        <!-- Competitors -->
+        <div class="geo-form-group">
+            <label>Main Competitors (optional)</label>
+            <textarea name="competitors" rows="2"
+                placeholder="Competitor A (competitora.com), Competitor B..."></textarea>
+        </div>
+        
+        <!-- Contact Name + Email -->
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Contact Name *</label>
+                <input type="text" name="contactName" required
+                    placeholder="John Doe">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required
+                    placeholder="john@company.com">
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="geo-submit-btn">
+            Request Analysis
+        </button>
+        
+        <!-- Footer -->
+        <p class="geo-form-footer">
+            Report delivered within 24-48 hours. Free analysis, no credit card required.
+        </p>
+    </form>
+    
+    <!-- Success Message -->
+    <div id="geoSuccessMessage" class="geo-success-message">
+        <div class="geo-success-icon"></div>
+        <h2>Request Received</h2>
+        <p>We'll analyze your website and send the report to your email within 24-48 hours.</p>
+    </div>
+</div>
+
+<script>
+document.getElementById('geoAnalysisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = this.querySelector('.geo-submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="geo-loading"></span>Submitting...';
+    btn.disabled = true;
+    
+    const formData = new FormData(this);
+    
+    const payload = {
+        website: formData.get('website'),
+        businessName: formData.get('businessName'),
+        industry: formData.get('industry'),
+        keywords: formData.get('keywords').split(',').map(k => k.trim()).filter(k => k),
+        competitors: formData.get('competitors') 
+            ? formData.get('competitors').split(',').map(c => c.trim()).filter(c => c)
+            : [],
+        contactName: formData.get('contactName'),
+        email: formData.get('email')
+    };
+    
+    fetch('https://dashboard.gspr-hub.site/api/analyze', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'geo-internal-samwang0420'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Submission failed');
+        return res.json();
+    })
+    .then(result => {
+        document.getElementById('geoAnalysisForm').style.display = 'none';
+        document.getElementById('geoSuccessMessage').classList.add('active');
+    })
+    .catch(err => {
+        alert('Error submitting request. Please try again.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+</script>

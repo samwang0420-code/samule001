@@ -1,0 +1,396 @@
+<!-- GEO Analysis Request Form - 完整版（含详细主体信息） -->
+<style>
+.geo-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.geo-form-container h2 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.geo-form-container .subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 32px;
+    font-size: 16px;
+}
+
+.geo-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.geo-form-group {
+    margin-bottom: 20px;
+}
+
+.geo-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+}
+
+.geo-form-group input,
+.geo-form-group select,
+.geo-form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.geo-form-group input:focus,
+.geo-form-group select:focus,
+.geo-form-group textarea:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.geo-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.geo-form-group .hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+.geo-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.geo-form-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.geo-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 32px;
+}
+
+.geo-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.geo-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.geo-form-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.geo-success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.geo-success-message.active {
+    display: block;
+}
+
+.geo-success-icon {
+    width: 64px;
+    height: 64px;
+    background: #d1fae5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.geo-success-icon::after {
+    content: "✓";
+    color: #059669;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.geo-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .geo-form-row,
+    .geo-form-row-3 {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="geo-form-container">
+    <h2>GEO + SEO Analysis Request</h2>
+    <p class="subtitle">Get a complete audit of your local search presence</p>
+    
+    <form id="geoAnalysisForm">
+        
+        <!-- 第1部分：公司主体信息 -->
+        <div class="geo-section-title">Company Information</div>
+        
+        <div class="geo-form-group">
+            <label>Official Website * (公司官网)</label>
+            <input type="url" name="website" required 
+                placeholder="https://www.yourcompany.com">
+        </div>
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Company Name * (公司名称)</label>
+                <input type="text" name="businessName" required
+                    placeholder="Official company name">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Industry * (行业类型)</label>
+                <select name="industry" required>
+                    <option value="">Select Industry...</option>
+                    <option value="medical-spa">Medical Spa (医美诊所)</option>
+                    <option value="dentistry">Dentistry (牙科)</option>
+                    <option value="dermatology">Dermatology (皮肤科)</option>
+                    <option value="plastic-surgery">Plastic Surgery (整形外科)</option>
+                    <option value="other-medical">Other Medical (其他医疗)</option>
+                    <option value="medical-service">Medical Service Provider (医疗服务商)</option>
+                    <option value="marketing-agency">Marketing Agency (营销机构)</option>
+                    <option value="software">Software/SaaS (软件)</option>
+                    <option value="consulting">Consulting (咨询)</option>
+                    <option value="other">Other (其他)</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Business Description * (主营业务描述)</label>
+            <textarea name="businessDescription" rows="3" required
+                placeholder="请详细描述您的核心业务、服务范围、目标客户群体...例如：我们为医美诊所提供一站式营销解决方案，包括SEO优化、社交媒体运营、客户管理系统等。"></textarea>
+        </div>
+        
+        <div class="geo-form-row-3">
+            <div class="geo-form-group">
+                <label>Company Size (公司规模)</label>
+                <select name="companySize">
+                    <option value="">Select...</option>
+                    <option value="1-10">1-10人</option>
+                    <option value="11-50">11-50人</option>
+                    <option value="51-200">51-200人</option>
+                    <option value="201-500">201-500人</option>
+                    <option value="500+">500人以上</option>
+                </select>
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Year Established (成立年份)</label>
+                <input type="number" name="yearEstablished" min="1900" max="2026"
+                    placeholder="2020">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Service Area (服务地区)</label>
+                <input type="text" name="serviceArea"
+                    placeholder="如：全国、华东区、上海...">
+            </div>
+        </div>
+        
+        <!-- 第2部分：SEO目标 -->
+        <div class="geo-section-title">SEO & GEO Targets</div>
+        
+        <div class="geo-form-group">
+            <label>Target Keywords * (目标关键词，3-5个)</label>
+            <textarea name="keywords" rows="2" required
+                placeholder="例如：医美营销、诊所管理系统、整形医院推广、客户管理软件..."></textarea>
+            <p class="hint">请提供您希望在搜索引擎上排名的关键词，用逗号分隔。建议包含地域词和业务词。</p>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Main Competitors (主要竞争对手)</label>
+            <textarea name="competitors" rows="2"
+                placeholder="例如： competitor1.com, competitor2.com, 或者公司名称"></textarea>
+            <p class="hint">列出2-3个您的主要竞争对手，帮助我们分析市场定位。</p>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Current Challenges (当前面临的挑战)</label>
+            <textarea name="challenges" rows="2"
+                placeholder="例如：网站流量低、客户获取成本高、品牌知名度不足、竞争对手排名靠前..."></textarea>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Expected Outcomes (期望达成的目标)</label>
+            <textarea name="goals" rows="2"
+                placeholder="例如：提升关键词排名到首页、增加网站询盘量30%、提高品牌搜索量..."></textarea>
+        </div>
+        
+        <!-- 第3部分：联系信息 -->
+        <div class="geo-section-title">Contact Information</div>
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Contact Name * (联系人姓名)</label>
+                <input type="text" name="contactName" required
+                    placeholder="您的姓名">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Job Title (职位)</label>
+                <input type="text" name="jobTitle"
+                    placeholder="如：市场总监、创始人、运营经理...">
+            </div>
+        </div>
+        
+        
+        <div class="geo-form-row">
+            <div class="geo-form-group">
+                <label>Email * (电子邮箱)</label>
+                <input type="email" name="email" required
+                    placeholder="your@company.com">
+            </div>
+            
+            <div class="geo-form-group">
+                <label>Phone (联系电话)</label>
+                <input type="tel" name="phone"
+                    placeholder="+86 138-xxxx-xxxx">
+            </div>
+        </div>
+        
+        <div class="geo-form-group">
+            <label>WeChat / WhatsApp / 其他联系方式 (可选)</label>
+            <input type="text" name="messaging"
+                placeholder="微信ID或其他即时通讯方式">
+        </div>
+        
+        <div class="geo-form-group">
+            <label>Additional Notes (其他备注)</label>
+            <textarea name="notes" rows="2"
+                placeholder="如有其他需要说明的信息，请在此填写..."></textarea>
+        </div>
+        
+        <!-- 提交按钮 -->
+        <button type="submit" class="geo-submit-btn">
+            Request Free Analysis
+        </button>
+        
+        <p class="geo-form-footer">
+            🔒 Your information is secure. Report delivered within 24-48 hours. No credit card required.
+        </p>
+    </form>
+    
+    <!-- 成功消息 -->
+    <div id="geoSuccessMessage" class="geo-success-message">
+        <div class="geo-success-icon"></div>
+        <h2>Request Submitted Successfully!</h2>
+        <p>Thank you for your submission. Our team will analyze your website and send a comprehensive GEO + SEO report to your email within 24-48 hours.</p>
+        
+        <p style="margin-top: 24px; color: #6b7280;">
+            Questions? Contact us at support@yourcompany.com
+        </p>
+    </div>
+</div>
+
+<script>
+document.getElementById('geoAnalysisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = this.querySelector('.geo-submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="geo-loading"></span>Submitting...';
+    btn.disabled = true;
+    
+    const formData = new FormData(this);
+    
+    const payload = {
+        website: formData.get('website'),
+        businessName: formData.get('businessName'),
+        industry: formData.get('industry'),
+        businessDescription: formData.get('businessDescription'),
+        companySize: formData.get('companySize'),
+        yearEstablished: formData.get('yearEstablished'),
+        serviceArea: formData.get('serviceArea'),
+        keywords: formData.get('keywords').split(',').map(k => k.trim()).filter(k => k),
+        competitors: formData.get('competitors') 
+            ? formData.get('competitors').split(',').map(c => c.trim()).filter(c => c)
+            : [],
+        challenges: formData.get('challenges'),
+        goals: formData.get('goals'),
+        contactName: formData.get('contactName'),
+        jobTitle: formData.get('jobTitle'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        messaging: formData.get('messaging'),
+        notes: formData.get('notes')
+    };
+    
+    fetch('https://dashboard.gspr-hub.site/api/analyze', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'geo-internal-samwang0420'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Submission failed');
+        return res.json();
+    })
+    .then(result => {
+        document.getElementById('geoAnalysisForm').style.display = 'none';
+        document.getElementById('geoSuccessMessage').classList.add('active');
+    })
+    .catch(err => {
+        alert('Error submitting request. Please try again or contact support.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+</script>
