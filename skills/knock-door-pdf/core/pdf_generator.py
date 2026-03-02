@@ -365,15 +365,53 @@ class PDFReportGenerator:
                           fontSize=10, textColor=self.C_RED, alignment=TA_CENTER,
                           fontName='Helvetica-Bold', spaceAfter=16)))
         
-        # 竞品表格 - 使用行业特定竞品名称
+        # Competitor table - use dynamic scores from data if available
         comp_names = self.config['competitors']
-        comp_data = [
-            ['Brand', 'AI Visibility', 'ChatGPT', 'Claude', 'Perplexity', 'Google'],
-            [comp_names[0], '78/100', 'Yes', 'Yes', 'Yes', 'Yes'],
-            [comp_names[1], '65/100', 'Yes', 'Yes', 'Yes', 'Partial'],
-            [comp_names[2], '52/100', 'Partial', 'Yes', 'Yes', 'No'],
-            ['YOU', '28/100', 'No', 'No', 'Yes', 'Partial'],
-        ]
+        
+        # Get dynamic competitor data from data dict
+        dynamic_competitors = data.get('competitors', [])
+        client_ai_score = data.get('scores', {}).get('ai_visibility', {}).get('score', 28)
+        
+        # Build table data dynamically
+        if dynamic_competitors and len(dynamic_competitors) >= 3:
+            # Use dynamic scores from data
+            comp_data = [
+                ['Brand', 'AI Visibility', 'ChatGPT', 'Claude', 'Perplexity', 'Google'],
+                [
+                    dynamic_competitors[0].get('name', comp_names[0]),
+                    f"{dynamic_competitors[0].get('ai_visibility', 78)}/100",
+                    'Yes' if dynamic_competitors[0].get('chatgpt', True) else 'No',
+                    'Yes' if dynamic_competitors[0].get('claude', True) else 'No',
+                    'Yes' if dynamic_competitors[0].get('perplexity', True) else 'No',
+                    'Yes' if dynamic_competitors[0].get('google', True) else 'Partial'
+                ],
+                [
+                    dynamic_competitors[1].get('name', comp_names[1]),
+                    f"{dynamic_competitors[1].get('ai_visibility', 65)}/100",
+                    'Yes' if dynamic_competitors[1].get('chatgpt', True) else 'No',
+                    'Yes' if dynamic_competitors[1].get('claude', True) else 'No',
+                    'Yes' if dynamic_competitors[1].get('perplexity', True) else 'No',
+                    'Yes' if dynamic_competitors[1].get('google', True) else 'Partial'
+                ],
+                [
+                    dynamic_competitors[2].get('name', comp_names[2]),
+                    f"{dynamic_competitors[2].get('ai_visibility', 52)}/100",
+                    'Yes' if dynamic_competitors[2].get('chatgpt', False) else 'No',
+                    'Yes' if dynamic_competitors[2].get('claude', True) else 'No',
+                    'Yes' if dynamic_competitors[2].get('perplexity', True) else 'No',
+                    'Yes' if dynamic_competitors[2].get('google', True) else 'No'
+                ],
+                ['YOU', f'{client_ai_score}/100', 'No', 'No', 'Yes', 'Partial'],
+            ]
+        else:
+            # Fallback to static data with client score
+            comp_data = [
+                ['Brand', 'AI Visibility', 'ChatGPT', 'Claude', 'Perplexity', 'Google'],
+                [comp_names[0], '78/100', 'Yes', 'Yes', 'Yes', 'Yes'],
+                [comp_names[1], '65/100', 'Yes', 'Yes', 'Yes', 'Partial'],
+                [comp_names[2], '52/100', 'Partial', 'Yes', 'Yes', 'No'],
+                ['YOU', f'{client_ai_score}/100', 'No', 'No', 'Yes', 'Partial'],
+            ]
         
         comp_table = Table(comp_data, colWidths=[3.5*cm, 2.5*cm, 2*cm, 2*cm, 2.5*cm, 2*cm])
         comp_table.setStyle(TableStyle([
@@ -689,20 +727,101 @@ class PDFReportGenerator:
             return None
 
 
-def generate_report(data, client_name="Client", industry="default", output_dir="output"):
+def generate_report(data, content=None, client_name="Client", industry="default", output_dir="output"):
     """
-    生成敲门砖PDF报告
+    生成敲门砖PDF报告 - 完全动态内容支持
     
     Args:
         data: 评估数据字典
+            {
+                'url': 'https://client.com',
+                'overall': {'grade': 'C', 'combined_score': 54},
+                'scores': {
+                    'technical_seo': {'score': 65},
+                    'content_seo': {'score': 72},
+                    'offsite_seo': {'score': 58},
+                    'user_experience': {'score': 78},
+                    'ai_visibility': {'score': 28}
+                }
+            }
+        content: 动态内容字典（可选，覆盖行业默认配置）
+            {
+                'industry_name': 'Medical Aesthetics',  # 行业显示名称
+                'keywords': 'Botox / Fillers / Laser',  # 关键词
+                'pain_points': [  # 3条痛点
+                    'AI搜索时您的机构未被推荐',
+                    '潜在客户询问时AI推荐了竞品',
+                    '高意向客户在Perplexity搜索时您的诊所invisible'
+                ],
+                'competitors': ['Competitor A', 'Competitor B', 'Competitor C'],  # 3个竞品
+                'metrics': {  # 计算基准
+                    'monthly_traffic': 30000,
+                    'avg_deal': 8000,
+                    'conversion_rate': 0.03
+                },
+                'geo_hooks': [  # 3个GEO钩子
+                    'AI推荐竞争对手的服务',
+                    '您的项目未被AI索引',
+                    '客户询问时被推荐到竞品'
+                ],
+                'action_items': [  # 4个行动项（可选，默认生成）
+                    'Deploy llms.txt for your industry',
+                    'Medical Schema Markup',
+                    'Local Entity Graph',
+                    'Review & Reputation Audit'
+                ]
+            }
         client_name: 客户名称
-        industry: 行业类型 ('medical_beauty', 'dental', 'default')
+        industry: 行业类型 ('medical_beauty', 'dental', 'default') - 仅在content为None时使用
         output_dir: 输出目录
     
     Returns:
         pdf文件路径
+    
+    Examples:
+        # 方式1：使用默认行业配置（向后兼容）
+        pdf_path = generate_report(data, client_name="ABC Clinic", industry="medical_beauty")
+        
+        # 方式2：完全动态内容（推荐）
+        pdf_path = generate_report(
+            data=data,
+            content={
+                'industry_name': 'Plastic Surgery',
+                'keywords': 'Rhinoplasty / Breast Augmentation / Facelift',
+                'pain_points': [...],
+                'competitors': ['Dr. Smith Aesthetics', 'Beverly Hills Clinic', 'Elite Plastic Surgery'],
+                'metrics': {'monthly_traffic': 25000, 'avg_deal': 15000, 'conversion_rate': 0.025},
+                'geo_hooks': [...]
+            },
+            client_name="Elite Aesthetic Center"
+        )
     """
     gen = PDFReportGenerator(output_dir=output_dir, industry=industry)
+    
+    # 如果提供了动态内容，覆盖默认配置
+    if content:
+        # 合并动态内容到配置
+        if 'industry_name' in content:
+            gen.config['name'] = content['industry_name']
+        if 'keywords' in content:
+            gen.config['keywords'] = content['keywords']
+        if 'pain_points' in content:
+            gen.config['pain_points'] = content['pain_points']
+        if 'competitors' in content:
+            gen.config['competitors'] = content['competitors']
+        if 'metrics' in content:
+            metrics = content['metrics']
+            if 'monthly_traffic' in metrics:
+                gen.config['monthly_traffic'] = metrics['monthly_traffic']
+            if 'avg_deal' in metrics:
+                gen.config['avg_deal'] = metrics['avg_deal']
+            if 'conversion_rate' in metrics:
+                gen.config['conversion_rate'] = metrics['conversion_rate']
+        if 'geo_hooks' in content:
+            gen.config['geo_hooks'] = content['geo_hooks']
+        if 'action_items' in content:
+            gen.config['action_items'] = content['action_items']
+    
     return gen.generate(data, client_name=client_name)
 
 

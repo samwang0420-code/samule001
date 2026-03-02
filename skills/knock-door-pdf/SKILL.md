@@ -1,32 +1,30 @@
 # Knock-Door PDF Skill
 
-高转化率GEO/SEO评估报告PDF生成器，支持医美、牙医等行业定制。
+High-conversion GEO/SEO assessment report PDF generator with fully dynamic content support.
 
-## 核心功能
+## Core Features
 
-- 6页完整评估报告
-- 行业特定内容（医美/牙医/通用SaaS）
-- 五维度分析（技术/内容/本地/UX/AI可见性）
-- 竞品AI捕获率对比
-- 商业损失量化（行业基准数据）
-- GEO Recovery Plan（行业特定行动项）
+- ✅ **Fully Dynamic Content**: All copy, data, and competitors are customizable
+- ✅ **Smart Defaults**: Auto-use industry templates when parameters not provided  
+- ✅ **6-Page Complete Report**: Cover → Pain Points → Competitors → Loss → Score → Solution
+- ✅ **Multi-Industry Support**: Medical aesthetics, dental, SaaS, or fully custom
 
-## 快速开始
+## Quick Start
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 pip install reportlab matplotlib
 ```
 
-### 生成报告
+### Method 1: Fully Dynamic Content (Recommended)
 
 ```python
 from skills.knock_door_pdf.core.pdf_generator import generate_report
 
-# 准备评估数据
+# Assessment data (scores)
 assessment_data = {
-    'url': 'https://example.com',
+    'url': 'https://elite-aesthetic.com',
     'overall': {'grade': 'C', 'combined_score': 54},
     'scores': {
         'technical_seo': {'score': 65},
@@ -37,127 +35,228 @@ assessment_data = {
     }
 }
 
-# 生成报告
+# Fully customizable content
+custom_content = {
+    'industry_name': 'Plastic Surgery',
+    'keywords': 'Rhinoplasty / Breast Augmentation / Facelift',
+    'pain_points': [
+        'When patients ask ChatGPT "best plastic surgeon in Beverly Hills", your practice is not mentioned',
+        'AI recommends your competitors for "breast augmentation consultation" queries',
+        'High-value facelift patients are being diverted to competing practices through AI referrals'
+    ],
+    'competitors': ['Dr. Smith Aesthetics', 'Beverly Hills Clinic', 'Elite Plastic Surgery'],
+    'metrics': {
+        'monthly_traffic': 25000,
+        'avg_deal': 18500,
+        'conversion_rate': 0.025
+    },
+    'geo_hooks': [
+        'AI recommends competitor clinics for your signature procedures',
+        'Your before/after portfolio is not indexed by AI search engines',
+        'Patients asking about specific procedures are directed to competitors'
+    ],
+    'action_items': [
+        'Deploy Medical Schema Markup for all procedures',
+        'Create AI-readable service catalog (llms.txt)',
+        'Build local entity graph for Beverly Hills + Plastic Surgery',
+        'Implement review aggregation with outcome data'
+    ]
+}
+
+# Generate PDF
 pdf_path = generate_report(
     data=assessment_data,
-    client_name="客户名称",
-    industry="medical_beauty",  # 医美: medical_beauty, 牙医: dental, 通用: default
+    content=custom_content,
+    client_name="Elite Aesthetic Center",
+    output_dir="./output"
+)
+
+print(f"PDF generated: {pdf_path}")
+```
+
+### Method 2: Use Industry Templates (Quick)
+
+```python
+from skills.knock_door_pdf.core.pdf_generator import generate_report
+
+assessment_data = {
+    'url': 'https://example-clinic.com',
+    'overall': {'grade': 'D', 'combined_score': 38},
+    'scores': {
+        'technical_seo': {'score': 45},
+        'content_seo': {'score': 52},
+        'offsite_seo': {'score': 35},
+        'user_experience': {'score': 68},
+        'ai_visibility': {'score': 12}
+    }
+}
+
+# Use built-in template, only change scores
+pdf_path = generate_report(
+    data=assessment_data,
+    client_name="ABC Medical Spa",
+    industry="medical_beauty",  # Use medical aesthetics template
     output_dir="./output"
 )
 ```
 
-## 支持行业
+## Content Parameter Details
 
-| 行业 | industry参数 | 特点 |
-|------|-------------|------|
-| 医美 | `medical_beauty` | 玻尿酸/热玛吉/超声刀关键词，客单价8K |
-| 牙医 | `dental` | 种植牙/隐形矫正关键词，客单价15K |
-| 通用 | `default` | SaaS工具关键词，客单价5K |
-
-## 行业特定内容
-
-### 医美行业 (medical_beauty)
-
-**痛点洞察：**
-- AI搜索"附近医美诊所"时，您的机构未被推荐
-- 潜在客户询问"最好的玻尿酸品牌"时，AI推荐了竞品
-- 高意向求美者在Perplexity搜索时，您的诊所invisible
-
-**计算基准：**
-- 月流量：30,000
-- 平均客单价：¥8,000
-- 转化率：3%
-
-**行动项：**
-- Deploy llms.txt for 医美（服务目录：玻尿酸/热玛吉/超声刀）
-- Medical Schema Markup（治疗方案和医生档案）
-- Local Entity Graph（医美+城市）
-- Review & Reputation Audit
-
-### 牙医行业 (dental)
-
-**痛点洞察：**
-- 患者搜索"附近种植牙医院"时，您的诊所不在AI推荐列表
-- AI回答"最好的牙医"问题时推荐了竞争对手
-- 高价值种植客户被AI导流至竞品机构
-
-**计算基准：**
-- 月流量：25,000
-- 平均客单价：¥15,000
-- 转化率：2.5%
-
-**行动项：**
-- Deploy llms.txt for 牙医（服务目录：种植牙/隐形矫正/美白）
-- Dental Schema Markup（治疗方案和牙医档案）
-- Local Entity Graph（牙医+城市）
-- Patient Review Audit
-
-## 数据格式
-
-```json
-{
-  "url": "https://client-website.com",
-  "assessment_date": "2026-03-02",
-  "overall": {
-    "grade": "C",
-    "combined_score": 54
-  },
-  "scores": {
-    "technical_seo": {"score": 65},
-    "content_seo": {"score": 72},
-    "offsite_seo": {"score": 58},
-    "user_experience": {"score": 78},
-    "ai_visibility": {"score": 28}
-  }
-}
-```
-
-## 6页报告结构
-
-1. **封面** - 评分卡片 54 (Grade C) At Risk + 客户信息
-2. **AI Visibility Crisis** - 行业特定痛点洞察
-3. **Competitor AI Capture** - 竞品对比表（行业特定竞品名）
-4. **Revenue Leakage** - 商业损失计算（行业基准数据）
-5. **Five-Dimension** - 雷达图 + 详细评分
-6. **GEO Recovery Plan** - 行业特定行动计划 + CTA
-
-## 视觉规范
-
-- **评分卡片**: 54 (Grade C) At Risk
-- **状态标签**: 红底白字圆角标签
-- **页脚**: CONFIDENTIAL | StackMatrices Intelligence | Page X of 6
-- **色彩**: 深蓝主色 + 红/绿状态色
-
-## 示例
-
-```bash
-# 医美行业
-cd examples
-python3 medical_beauty_sample.py
-
-# 牙医行业
-python3 dental_sample.py
-```
-
-## 自定义行业
-
-在 `core/pdf_generator.py` 中添加新的行业配置：
+### Complete Parameter Structure
 
 ```python
-INDUSTRY_CONFIG = {
-    'your_industry': {
-        'name': '行业名称',
-        'keywords': '关键词1 / 关键词2',
-        'pain_points': ['痛点1', '痛点2', '痛点3'],
-        'competitors': ['竞品A', '竞品B', '竞品C'],
-        'monthly_traffic': 30000,
-        'avg_deal': 8000,
-        'conversion_rate': 0.03,
-        'geo_hooks': ['钩子1', '钩子2', '钩子3']
-    }
+content = {
+    # Basic info
+    'industry_name': 'Plastic Surgery',           # Industry display name
+    'keywords': 'Botox / Fillers / Laser',        # Service keywords
+    
+    # Pain points (3 items, list)
+    'pain_points': [
+        'Your practice is not mentioned when patients ask ChatGPT',
+        'AI recommends competitors when prospects inquire',
+        'High-intent clients cannot find your clinic on Perplexity'
+    ],
+    
+    # Competitors (3 items, list)
+    'competitors': ['Competitor A', 'Competitor B', 'Competitor C'],
+    
+    # Calculation baseline (affects revenue loss calculation)
+    'metrics': {
+        'monthly_traffic': 30000,      # Monthly traffic
+        'avg_deal': 8000,              # Average deal size
+        'conversion_rate': 0.03        # Conversion rate (0.03 = 3%)
+    },
+    
+    # GEO hooks (3 items, list)
+    'geo_hooks': [
+        'AI recommends competitor services',
+        'Your procedures are not AI-indexed',
+        'Clients are referred to competitors'
+    ],
+    
+    # Action items (4 items, optional, auto-generated by default)
+    'action_items': [
+        'Deploy llms.txt for your industry',
+        'Medical Schema Markup',
+        'Local Entity Graph',
+        'Review & Reputation Audit'
+    ]
 }
 ```
 
-## 作者
+### Parameter Priority
+
+```
+Passed content parameter > Industry default config
+```
+
+If `content` is `None`, use default template specified by `industry` parameter.
+
+## Industry Templates
+
+| Industry | industry param | Use Case |
+|----------|---------------|----------|
+| Medical Aesthetics | `medical_beauty` | Botox/fillers/laser, $8K deal size |
+| Dental | `dental` | Implants/invisible braces, $15K deal size |
+| General | `default` | SaaS tools, $5K deal size |
+
+## 6-Page Report Structure
+
+| Page | Title | Dynamic Content |
+|------|-------|----------------|
+| 1 | **Cover** | Client name, score card, status label |
+| 2 | **AI Visibility Crisis** | pain_points (3 pain points) |
+| 3 | **Competitor AI Capture** | competitors (3 competitor comparison) |
+| 4 | **Revenue Leakage** | metrics (traffic/deal/conversion → auto-calculate loss) |
+| 5 | **Five-Dimension Analysis** | data.scores (5-dimension radar chart) |
+| 6 | **GEO Recovery Plan** | geo_hooks + action_items (hooks + actions) |
+
+## Real-World Example
+
+### Case: Beverly Hills Plastic Surgery Clinic
+
+```python
+assessment_data = {
+    'url': 'https://elite-beverlyhills.com',
+    'overall': {'grade': 'C', 'combined_score': 54},
+    'scores': {
+        'technical_seo': {'score': 65},
+        'content_seo': {'score': 72},
+        'offsite_seo': {'score': 58},
+        'user_experience': {'score': 78},
+        'ai_visibility': {'score': 28}
+    }
+}
+
+content = {
+    'industry_name': 'Plastic Surgery',
+    'keywords': 'Breast Augmentation / Facelift / Rhinoplasty',
+    'pain_points': [
+        'When patients ask ChatGPT "best plastic surgeon in Beverly Hills", your practice is not mentioned',
+        'AI recommends Dr. Smith Aesthetics and Beverly Hills Clinic for "breast augmentation consultation"',
+        'High-value facelift patients are being diverted to Elite Plastic Surgery through AI referrals'
+    ],
+    'competitors': [
+        'Dr. Smith Aesthetics (AI Visibility: 82/100)',
+        'Beverly Hills Clinic (AI Visibility: 76/100)',
+        'Elite Plastic Surgery (AI Visibility: 71/100)'
+    ],
+    'metrics': {
+        'monthly_traffic': 32000,
+        'avg_deal': 18500,
+        'conversion_rate': 0.025
+    },
+    'geo_hooks': [
+        'AI recommends competitor clinics for breast augmentation procedures',
+        'Your before/after portfolio is not indexed by AI search engines',
+        'Patients asking about facelift recovery are directed to competitors'
+    ]
+}
+
+pdf_path = generate_report(
+    data=assessment_data,
+    content=content,
+    client_name="Elite Aesthetic Center",
+    output_dir="./output"
+)
+```
+
+**Output**: 6-page professional PDF with specific competitor comparison, $2.2M annual revenue loss calculation, customized recovery plan.
+
+## Batch Generation
+
+```python
+import json
+
+# Read client data from JSON file
+with open('clients.json') as f:
+    clients = json.load(f)
+
+for client in clients:
+    pdf_path = generate_report(
+        data=client['assessment_data'],
+        content=client['content'],
+        client_name=client['name'],
+        output_dir=f"./output/{client['id']}"
+    )
+    print(f"Generated: {pdf_path}")
+```
+
+## File Location
+
+```
+skills/knock-door-pdf/
+├── SKILL.md                    # This document
+├── core/
+│   ├── pdf_generator.py        # Main generator (updated for dynamic content)
+│   └── assessment.py           # Assessment helper functions
+├── examples/
+│   ├── medical_beauty_sample.py   # Medical aesthetics example
+│   ├── dental_sample.py           # Dental example
+│   └── custom_dynamic_sample.py   # Fully dynamic example ⭐NEW
+└── output/                     # PDF output directory
+```
+
+## Author
 
 StackMatrices Intelligence Team

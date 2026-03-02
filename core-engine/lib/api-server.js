@@ -858,6 +858,295 @@ async function getSubmissionsFromFile() {
   }
 }
 
+// ==========================================
+// Leads API - 潜在客户管理
+// ==========================================
+
+// 获取Leads列表
+app.get('/api/leads', authenticateToken, async (req, res) => {
+  try {
+    const { status, industry, city, priority, limit = 50, offset = 0 } = req.query;
+    
+    let query = supabase
+      .from('leads')
+      .select('*', { count: 'exact' })
+      .order('dual_score', { ascending: false })
+      .range(offset, offset + limit - 1);
+    
+    if (status) query = query.eq('status', status);
+    if (industry) query = query.eq('industry', industry);
+    if (city) query = query.ilike('city', `%${city}%`);
+    if (priority) query = query.eq('priority', priority);
+    
+    const { data, error, count } = await query;
+    
+    if (error) throw error;
+    
+    res.json({ 
+      success: true, 
+      data,
+      pagination: {
+        total: count,
+        limit: parseInt(limit),
+        offset: parseInt(offset)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取Lead详情
+app.get('/api/leads/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { data, error } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    if (!data) return res.status(404).json({ error: 'Lead not found' });
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 创建Lead（手动添加）
+app.post('/api/leads', authenticateToken, async (req, res) => {
+  try {
+    const leadData = {
+      ...req.body,
+      source_type: 'manual',
+      crawled_at: new Date().toISOString()
+    };
+    
+    const { data, error } = await supabase
+      .from('leads')
+      .insert(leadData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    res.status(201).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 更新Lead
+app.patch('/api/leads/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { data, error } = await supabase
+      .from('leads')
+      .update(req.body)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 删除Lead
+app.delete('/api/leads/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { error } = await supabase
+      .from('leads')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    
+    res.json({ success: true, message: 'Lead deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取Lead统计
+app.get('/api/leads/stats/dashboard', authenticateToken, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('lead_stats')
+      .select('*')
+      .single();
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 下载Lead PDF
+app.get('/api/leads/:id/pdf', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { data, error } = await supabase
+      .from('leads')
+      .select('pdf_url, business_name')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    if (!data || !data.pdf_url) {
+      return res.status(404).json({ error: 'PDF not found' });
+    }
+    
+    // 如果PDF是本地文件路径，发送文件
+    if (data.pdf_url.startsWith('/')) {
+      const pdfPath = path.join(__dirname, '..', data.pdf_url);
+      res.download(pdfPath, `${data.business_name}_GEO_Report.pdf`);
+    } else {
+      // 外部URL，重定向
+      res.redirect(data.pdf_url);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==========================================
+// Lead Search Configs API - 爬取配置管理
+// ==========================================
+
+// 获取搜索配置列表
+app.get('/api/lead-configs', authenticateToken, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('lead_search_configs')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 创建搜索配置
+app.post('/api/lead-configs', authenticateToken, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('lead_search_configs')
+      .insert(req.body)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    res.status(201).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 更新搜索配置
+app.patch('/api/lead-configs/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { data, error } = await supabase
+      .from('lead_search_configs')
+      .update(req.body)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 删除搜索配置
+app.delete('/api/lead-configs/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const { error } = await supabase
+      .from('lead_search_configs')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    
+    res.json({ success: true, message: 'Config deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 启动爬取任务
+app.post('/api/lead-configs/:id/crawl', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { test = false } = req.body;
+    
+    // 异步执行爬取脚本
+    const { exec } = await import('child_process');
+    const cmd = `cd ${path.join(__dirname, '..')} && node scripts/lead-crawler.js ${id} ${test ? '--test' : ''}`;
+    
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Crawl error: ${error}`);
+      }
+      console.log(stdout);
+      if (stderr) console.error(stderr);
+    });
+    
+    res.json({ 
+      success: true, 
+      message: 'Crawl started',
+      config_id: id,
+      test_mode: test
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取爬取日志
+app.get('/api/lead-configs/:id/logs', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { limit = 10 } = req.query;
+    
+    const { data, error } = await supabase
+      .from('lead_crawl_logs')
+      .select('*')
+      .eq('config_id', id)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -867,6 +1156,7 @@ app.listen(PORT, () => {
   console.log(`GEO API Server running on port ${PORT}`);
   console.log(`Storage mode: ${useDatabase ? 'Database + File' : 'File Only'}`);
   console.log(`Default admin: admin@geo.local / admin123`);
+  console.log(`Leads API: /api/leads`);
 });
 
 export default app;
