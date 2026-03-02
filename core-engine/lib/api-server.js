@@ -42,15 +42,50 @@ app.get('/api/health', (req, res) => {
 // 运行分析
 app.post('/api/analyze', authenticate, async (req, res) => {
   try {
-    const { businessName, address, industry = 'medical', services = [] } = req.body;
+    const { 
+      businessName, 
+      website,
+      address, 
+      industry = 'medical', 
+      services = [],
+      keywords = [],
+      email,
+      ...otherFields
+    } = req.body;
     
-    if (!businessName || !address) {
-      return res.status(400).json({ error: 'Missing required fields: businessName, address' });
+    // Support both old format (address required) and new format (website required)
+    const hasRequiredFields = (businessName && address) || (businessName && website);
+    
+    if (!hasRequiredFields) {
+      return res.status(400).json({ 
+        error: 'Missing required fields. Need: businessName + (address or website)' 
+      });
     }
     
     const clientId = `geo_${Date.now()}`;
     
-    // 异步执行
+    // Save client data to file
+    const clientData = {
+      clientId,
+      businessName,
+      website: website || '',
+      address: address || '',
+      industry,
+      services,
+      keywords,
+      email: email || '',
+      ...otherFields,
+      createdAt: new Date().toISOString()
+    };
+    
+    const outputDir = path.join(__dirname, '../outputs', clientId);
+    await fs.mkdir(outputDir, { recursive: true });
+    await fs.writeFile(
+      path.join(outputDir, 'client.json'),
+      JSON.stringify(clientData, null, 2)
+    );
+    
+    // 异步执行分析
     setTimeout(() => {
       console.log(`Running analysis for ${businessName}...`);
       // 这里调用实际的medical-pipeline.js
