@@ -10,6 +10,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import db from './lib/db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -297,6 +298,7 @@ Modes:
   console.log(`   Firm: ${firmName}`);
   console.log(`   Address: ${address}`);
   console.log(`   Mode: ${DEMO_MODE ? 'DEMO (simulated)' : 'LIVE (real data)'}`);
+  console.log(`   Database: ${db.isConfigured ? '✓ connected' : '✗ not configured (local only)'}`);
   console.log(`   Client ID: ${clientId}\n`);
   
   try {
@@ -315,7 +317,35 @@ Modes:
     const schema = generateSchema(placeData, geoScore);
     console.log('   ✓ Schema generated\n');
     
-    console.log('💾 Step 4: Save Outputs');
+    // Step 3.5: Save to Database (if configured)
+    if (db.isConfigured) {
+      console.log('💾 Step 4: Database Storage');
+      
+      // Save client
+      await db.createClient({
+        clientId,
+        firmName,
+        address,
+        website: placeData.website,
+        email: null
+      });
+      
+      // Save audit
+      await db.saveGeoAudit(clientId, {
+        ...geoScore,
+        breakdown: {
+          coordinatePrecision: geoScore.breakdown.coordinatePrecision,
+          parkingAccessibility: geoScore.breakdown.parkingAccessibility,
+          schemaMarkup: geoScore.breakdown.schemaMarkup,
+          localContext: geoScore.breakdown.localContext
+        },
+        rawData: placeData
+      });
+      
+      console.log('   ✓ Saved to database\n');
+    }
+    
+    console.log('📁 Step 5: Local Output');
     const outputDir = path.join(__dirname, 'outputs', `${firmName.replace(/\s+/g, '-').toLowerCase()}-${timestamp}`);
     await saveOutputs(outputDir, { clientId, firmName, placeData, geoScore, schema });
     console.log(`   ✓ Saved to: ${outputDir}\n`);
@@ -326,6 +356,7 @@ Modes:
     console.log(`║ Client ID:     ${clientId.padEnd(46)} ║`);
     console.log(`║ GEO Score:     ${String(geoScore.total + '/100').padEnd(46)} ║`);
     console.log(`║ Improvement:   ${String('+' + (geoScore.currentRank - geoScore.potentialRank) + ' positions').padEnd(46)} ║`);
+    console.log(`║ Database:      ${String(db.isConfigured ? '✓ Saved' : '✗ Not connected').padEnd(46)} ║`);
     console.log(`║ Output:        ${outputDir.replace(__dirname, '.').padEnd(46)} ║`);
     console.log('╚══════════════════════════════════════════════════════════╝\n');
     

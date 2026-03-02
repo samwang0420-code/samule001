@@ -15,6 +15,7 @@ import { execSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import db from './lib/db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -127,31 +128,31 @@ const commands = {
     console.log('║                 SYSTEM STATUS                            ║');
     console.log('╚══════════════════════════════════════════════════════════╝\n');
     
-    // Count clients
+    // Database connection
+    console.log(`💾 Database: ${db.isConfigured ? '✓ Connected' : '✗ Not configured'}`);
+    
+    if (db.isConfigured) {
+      try {
+        const stats = await db.getSystemStats();
+        console.log(`   Clients: ${stats.clients}`);
+        console.log(`   Audits: ${stats.audits}`);
+        console.log(`   Keywords: ${stats.keywords}`);
+        console.log(`   Rankings: ${stats.rankings}`);
+        console.log(`   Competitors: ${stats.competitors}`);
+      } catch (e) {
+        console.log('   ⚠️  Failed to load stats');
+      }
+    }
+    
+    console.log('');
+    
+    // Local files
     try {
       const outputDir = path.join(__dirname, 'outputs');
       const clients = await fs.readdir(outputDir);
-      console.log(`📁 Clients: ${clients.length}`);
+      console.log(`📁 Local Clients: ${clients.length}`);
     } catch (e) {
-      console.log('📁 Clients: 0');
-    }
-    
-    // Count tracked keywords
-    try {
-      const keywordsFile = path.join(__dirname, 'data', 'tracked-keywords.json');
-      const data = JSON.parse(await fs.readFile(keywordsFile, 'utf8'));
-      console.log(`📡 Keywords: ${data.keywords.length}`);
-    } catch (e) {
-      console.log('📡 Keywords: 0');
-    }
-    
-    // Count competitors
-    try {
-      const compFile = path.join(__dirname, 'data', 'competitors.json');
-      const data = JSON.parse(await fs.readFile(compFile, 'utf8'));
-      console.log(`🎯 Competitors: ${data.competitors.length}`);
-    } catch (e) {
-      console.log('🎯 Competitors: 0');
+      console.log('📁 Local Clients: 0');
     }
     
     console.log('');
