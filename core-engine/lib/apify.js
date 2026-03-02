@@ -39,7 +39,7 @@ export async function scrapeGoogleMaps(searchQuery, options = {}) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        search: searchQuery,
+        searchStringsArray: [searchQuery],
         maxCrawledPlaces: options.maxResults || 1,
         includeReviews: true,
         includeImages: false,

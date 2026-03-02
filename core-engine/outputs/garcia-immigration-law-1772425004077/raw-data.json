@@ -1,0 +1,571 @@
+{
+  "title": "The Garcia Law Firm",
+  "address": "6065 Hillcroft St Ste 501, Houston, TX 77081",
+  "location": {
+    "lat": 29.7154455,
+    "lng": -95.4970184
+  },
+  "phone": "(713) 777-4529",
+  "website": null,
+  "totalScore": 4.2,
+  "reviewsCount": 70,
+  "reviews": [
+    {
+      "text": "Buen equipo de trabajo y el Abogado Garcia muy profesional en lo que hace, se los recomiendo..🙏🏼",
+      "rating": 5,
+      "date": "2026-02-10T16:31:32.532Z"
+    },
+    {
+      "text": "Excelente servicio al cliente y información clara",
+      "rating": 5,
+      "date": "2026-02-03T23:19:37.068Z"
+    },
+    {
+      "text": "Muy mala experiencia lo caché en varias mentiras y solo dijo ya no quiero trabajar contigo ahora trabajo con un abogado nuevo me comprobó lo mal que hizo Eduardo García",
+      "rating": 1,
+      "date": "2025-12-28T15:17:58.741Z"
+    },
+    {
+      "text": null,
+      "rating": 5,
+      "date": "2025-12-19T03:35:20.008Z"
+    },
+    {
+      "text": "Exelente abogado,  se los recomiendo\nYo siempre lo recomiendo y estamos muy satisfechos con su trabajo.",
+      "rating": 5,
+      "date": "2025-11-19T17:10:37.104Z"
+    },
+    {
+      "text": null,
+      "rating": 5,
+      "date": "2025-11-12T23:32:35.667Z"
+    },
+    {
+      "text": null,
+      "rating": 5,
+      "date": "2025-11-08T19:06:49.177Z"
+    },
+    {
+      "text": "Excelente servicio, muy buen trato , la señorita Dinora siempre dispuesta a ayudar 👏🏼💐",
+      "rating": 5,
+      "date": "2025-11-04T17:29:25.902Z"
+    },
+    {
+      "text": "Buen cervicio son muy amables y me gusta todo",
+      "rating": 3,
+      "date": "2025-11-01T16:47:29.930Z"
+    },
+    {
+      "text": "Excelente servicio muy buen trabajo",
+      "rating": 5,
+      "date": "2025-05-07T13:33:22.454Z"
+    }
+  ],
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "9 AM to 7 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "Closed"
+    }
+  ],
+  "categories": [
+    "Attorney"
+  ],
+  "images": null,
+  "neighborhood": "Gulfton",
+  "placeId": "ChIJHYv0djbCQIYRNBNX7YoOda4",
+  "url": "https://www.google.com/maps/search/?api=1&query=The%20Garcia%20Law%20Firm&query_place_id=ChIJHYv0djbCQIYRNBNX7YoOda4",
+  "_raw": {
+    "title": "The Garcia Law Firm",
+    "price": null,
+    "categoryName": "Attorney",
+    "address": "6065 Hillcroft St Ste 501, Houston, TX 77081",
+    "neighborhood": "Gulfton",
+    "street": "6065 Hillcroft St Ste 501",
+    "city": "Houston",
+    "postalCode": "77081",
+    "state": "Texas",
+    "countryCode": "US",
+    "phone": "(713) 777-4529",
+    "phoneUnformatted": "+17137774529",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 29.7154455,
+      "lng": -95.4970184
+    },
+    "locatedIn": "Buena Suerta Spanish News Ppr",
+    "floor": "Floor 1",
+    "plusCode": "PG83+55 Gulfton, Houston, TX",
+    "totalScore": 4.2,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJHYv0djbCQIYRNBNX7YoOda4",
+    "categories": [
+      "Attorney"
+    ],
+    "fid": "0x8640c23676f48b1d:0xae750e8aed571334",
+    "cid": "12570969924724790068",
+    "reviewsCount": 70,
+    "reviewsDistribution": {
+      "oneStar": 11,
+      "twoStar": 0,
+      "threeStar": 5,
+      "fourStar": 4,
+      "fiveStar": 50
+    },
+    "imagesCount": 1,
+    "imageCategories": [
+      "All",
+      "Street View & 360°"
+    ],
+    "scrapedAt": "2026-03-02T04:16:55.666Z",
+    "googleFoodUrl": null,
+    "hotelAds": [],
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9 AM to 7 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [
+      {
+        "category": "People also search for",
+        "title": "The Law Offices of Eduardo Garcia",
+        "reviewsCount": 85,
+        "totalScore": 3.8
+      },
+      {
+        "category": "People also search for",
+        "title": "Alan J. Garcia & Associates, P.C.",
+        "reviewsCount": 39,
+        "totalScore": 4.7
+      },
+      {
+        "category": "People also search for",
+        "title": "Israel Garcia",
+        "reviewsCount": 44,
+        "totalScore": 3
+      },
+      {
+        "category": "People also search for",
+        "title": "Garcia Law Practice, PLLC",
+        "reviewsCount": 0,
+        "totalScore": 0
+      },
+      {
+        "category": "People also search for",
+        "title": "Alan Garcia & Associates",
+        "reviewsCount": 1,
+        "totalScore": 5
+      }
+    ],
+    "placesTags": [],
+    "reviewsTags": [
+      {
+        "title": "work",
+        "count": 11
+      },
+      {
+        "title": "price",
+        "count": 3
+      },
+      {
+        "title": "team",
+        "count": 2
+      },
+      {
+        "title": "question",
+        "count": 2
+      },
+      {
+        "title": "principle",
+        "count": 2
+      },
+      {
+        "title": "needs",
+        "count": 2
+      },
+      {
+        "title": "money",
+        "count": 2
+      }
+    ],
+    "additionalInfo": {
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=The%20Garcia%20Law%20Firm&query_place_id=ChIJHYv0djbCQIYRNBNX7YoOda4",
+    "searchPageUrl": "https://www.google.com/maps/search/Garcia%20Immigration%20Law%203505%20Westheimer%20Rd,%20Houston,%20TX?hl=en",
+    "searchString": "Garcia Immigration Law 3505 Westheimer Rd, Houston, TX",
+    "language": "en",
+    "rank": 1,
+    "isAdvertisement": false,
+    "imageUrl": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=m0mOVqLTKFqs4iKmzbZRDQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=332.8028&pitch=0&thumbfov=100",
+    "kgmid": "/g/1tdq6dbb",
+    "subTitle": null,
+    "description": null,
+    "website": null,
+    "menu": null,
+    "reserveTableUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "similarHotelsNearby": null,
+    "hotelReviewSummary": null,
+    "additionalOpeningHours": null,
+    "openingHoursBusinessConfirmationText": null,
+    "questionsAndAnswers": [],
+    "updatesFromCustomers": null,
+    "inputPlaceId": null,
+    "inputStartUrl": null,
+    "userPlaceNote": null,
+    "webResults": [],
+    "tableReservationLinks": [],
+    "bookingLinks": [],
+    "orderOnline": {
+      "pickUps": [],
+      "deliveries": []
+    },
+    "orderBy": [],
+    "restaurantData": {
+      "tableReservationProvider": null
+    },
+    "ownerUpdates": [],
+    "imageUrls": [],
+    "images": null,
+    "reviews": [
+      {
+        "reviewerId": "103761065915619224697",
+        "reviewerUrl": "https://www.google.com/maps/contrib/103761065915619224697?hl=en",
+        "name": "Nataly Valiente",
+        "reviewerNumberOfReviews": 2,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUpdxU9ouJ8U7pigLAEF-pCi2fhSydO-qoO-QwvZoriFroo9Oq2=s1920-c-rp-mo-br100",
+        "text": "Buen equipo de trabajo y el Abogado Garcia muy profesional en lo que hace, se los recomiendo..🙏🏼",
+        "textTranslated": "Great team and Attorney Garcia is very professional, I recommend them. 🙏🏼",
+        "publishAt": "2 weeks ago",
+        "publishedAtDate": "2026-02-10T16:31:32.532Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT25Rd04zcFhXbWRtTUZsNGRtMWxSMUpwVERGblIyYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25Rd04zcFhXbWRtTUZsNGRtMWxSMUpwVERGblIyYxAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOnQwN3pXWmdmMFl4dm1lR1JpTDFnR2c%7C0dXppZUiHxV%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "113188560884795547238",
+        "reviewerUrl": "https://www.google.com/maps/contrib/113188560884795547238?hl=en",
+        "name": "Javier Angel Olivo Gonzalez",
+        "reviewerNumberOfReviews": 2,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKHTSBkLN7dqa9TtCSQBnwW4ZyxqBIfrDP8f65H3Ric_UMcAg=s1920-c-rp-mo-br100",
+        "text": "Excelente servicio al cliente y información clara",
+        "textTranslated": "Excellent customer service and clear information",
+        "publishAt": "3 weeks ago",
+        "publishedAtDate": "2026-02-03T23:19:37.068Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2tGbVpUWk9NM1E0V0hoR1JHaE5VRFpyT0hOa1duYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tGbVpUWk9NM1E0V0hoR1JHaE5VRFpyT0hOa1duYxAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOkFmZTZOM3Q4WHhGRGhNUDZrOHNkWnc%7C0dVc9835wyb%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "105581578334784731028",
+        "reviewerUrl": "https://www.google.com/maps/contrib/105581578334784731028?hl=en",
+        "name": "Carlos Cruz",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKQ30LwZ0v0FAuqH71SySYXzGNuAsdAJSUNYRFIsul7oWERDQ=s1920-c-rp-mo-br100",
+        "text": "Muy mala experiencia lo caché en varias mentiras y solo dijo ya no quiero trabajar contigo ahora trabajo con un abogado nuevo me comprobó lo mal que hizo Eduardo García",
+        "textTranslated": "A very bad experience. I caught him in several lies and he just said, \"I don't want to work with you anymore, now I'm working with a new lawyer.\" It proved to me how badly Eduardo García behaved.",
+        "publishAt": "2 months ago",
+        "publishedAtDate": "2025-12-28T15:17:58.741Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xaMFlVMWtjazQ0WDJscFExUjVXa0ZvVUZoeFgyYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xaMFlVMWtjazQ0WDJscFExUjVXa0ZvVUZoeFgyYxAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOlZ0YU1kck44X2lpQ1R5WkFoUFhxX2c%7C0dJJcagAJoi%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 1,
+        "rating": null,
+        "responseFromOwnerDate": "2025-12-28T21:45:12.000Z",
+        "responseFromOwnerText": "No se quien eres y tampoco tengo un caso contigo. \n\nLlevo 20 años trabajando de abogado y todos mis clientes me recomiendan por que les digo la verdad. \n\nPero mira, dile a tu nuevo abogado si es que existe que me llame y si deveras existe tu abogado te regreso tu dinero. Pero se que no lo vas hacer, ya que no te tengo como cliente. Y ya por ultimo. Como se llama tu nuevo abogado para Yo llamarle? Te aseguro que no me vas a dar l el nombre ya que todos los abogados en Houston me respetan!  ",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "102051059250231124042",
+        "reviewerUrl": "https://www.google.com/maps/contrib/102051059250231124042?hl=en",
+        "name": "Jorge Maldonado",
+        "reviewerNumberOfReviews": 0,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocJB59dI3su_4Tp2Hf7U8eMqdGpP5QxJnrdrZ5Kh8rHzAdRuhA=s1920-c-rp-mo-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "2 months ago",
+        "publishedAtDate": "2025-12-19T03:35:20.008Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT25CdFprRkhUbmxsUlUxcVFVcDZlRVptWTBWU1NGRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25CdFprRkhUbmxsUlUxcVFVcDZlRVptWTBWU1NGRRAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOnBtZkFHTnllRU1qQUp6eEZmY0VSSFE%7C0dGBUs-X4xE%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "117992118577800330887",
+        "reviewerUrl": "https://www.google.com/maps/contrib/117992118577800330887?hl=en",
+        "name": "Mayra luna",
+        "reviewerNumberOfReviews": 18,
+        "isLocalGuide": true,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjU_GsHGD_5sy1N7gD__0LGEhYHet4RrghtFdp_m8_ShwRVSISpjng=s1920-c-rp-mo-ba2-br100",
+        "text": "Exelente abogado,  se los recomiendo\nYo siempre lo recomiendo y estamos muy satisfechos con su trabajo.",
+        "textTranslated": "Excellent lawyer, I highly recommend him.\nI always recommend him and we are very satisfied with his work.",
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-19T17:10:37.104Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2w5UWVrMWZjV3BQTkhReVlVOU5NREoyZFZwNVdHYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2w5UWVrMWZjV3BQTkhReVlVOU5NREoyZFZwNVdHYxAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOl9Qek1fcWpPNHQyYU9NMDJ2dVp5WGc%7C0d6UcC5DwqZ%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "115495869938772968788",
+        "reviewerUrl": "https://www.google.com/maps/contrib/115495869938772968788?hl=en",
+        "name": "Noel Cantarero",
+        "reviewerNumberOfReviews": 0,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUSTqBX8llVFuiLqL4AdHm-be_wNU6pgvYlYfMSih_NAygjfbbE=s1920-c-rp-mo-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-12T23:32:35.667Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2tZeWVIbG1iazloWTNkVVYzQTNibWs1UWpNMVUxRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tZeWVIbG1iazloWTNkVVYzQTNibWs1UWpNMVUxRRAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOkYyeHlmbk9hY3dUV3A3bmk5QjM1U1E%7C0d4GZIbntuv%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "107544041140212603146",
+        "reviewerUrl": "https://www.google.com/maps/contrib/107544041140212603146?hl=en",
+        "name": "Esther ordonez",
+        "reviewerNumberOfReviews": 0,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLG3U26SR5-bL8QsV3gaFo5Z-J9TIxLmPrGhrkfxChUx78tIw=s1920-c-rp-mo-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-08T19:06:49.177Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT25KM1RuQjJSMlpsYmw4MVMycFZUa0o2ZUZaQk4zYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25KM1RuQjJSMlpsYmw4MVMycFZUa0o2ZUZaQk4zYxAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOnJ3TnB2R2Zlbl81S2pVTkJ6eFZBN3c%7C0d2tI89Z49S%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "114564288250254723006",
+        "reviewerUrl": "https://www.google.com/maps/contrib/114564288250254723006?hl=en",
+        "name": "Mari Franco",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKgNtK5aNRzMh1e0kSczdspMMwBZTbOYxBFA1oOpus8LG6Y2g=s1920-c-rp-mo-br100",
+        "text": "Excelente servicio, muy buen trato , la señorita Dinora siempre dispuesta a ayudar 👏🏼💐",
+        "textTranslated": "Excellent service, very friendly, Miss Dinora was always willing to help 👏🏼💐",
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-04T17:29:25.902Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT25oUFJWcFRjRlJpUnpWMlRrdzJlWFZTVlVWblNrRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25oUFJWcFRjRlJpUnpWMlRrdzJlWFZTVlVWblNrRRAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOnhPRVpTcFRiRzV2Tkw2eXVSVUVnSkE%7C0d1YUpplFGo%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "113896712613222004333",
+        "reviewerUrl": "https://www.google.com/maps/contrib/113896712613222004333?hl=en",
+        "name": "Diana Hernandez",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocIJgXgKmiXhQ_BaxTMRBs68zVOvUJSAukQ9GNioYtQLj8SGdg=s1920-c-rp-mo-br100",
+        "text": "Buen cervicio son muy amables y me gusta todo",
+        "textTranslated": "Great service, they're very friendly and I like everything",
+        "publishAt": "4 months ago",
+        "publishedAtDate": "2025-11-01T16:47:29.930Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2tOTFQyWnRaMWxQVnpsQk5UUTJkVmQyWlhoNVFrRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tOTFQyWnRaMWxQVnpsQk5UUTJkVmQyWlhoNVFrRRAB!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CAIQACodChtycF9oOkNLT2ZtZ1lPVzlBNTQ2dVd2ZXh5QkE%7C0d0YaWrTzXi%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 3,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      },
+      {
+        "reviewerId": "105704483619942974591",
+        "reviewerUrl": "https://www.google.com/maps/contrib/105704483619942974591?hl=en",
+        "name": "Lisseth Rivas",
+        "reviewerNumberOfReviews": 4,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKDCVMqAdCOMjiqWYUZAp4d4IJFPJ60Zm_uPvr1_27A9_ypUA=s1920-c-rp-mo-br100",
+        "text": "Excelente servicio muy buen trabajo",
+        "textTranslated": "Excellent service, very good work",
+        "publishAt": "9 months ago",
+        "publishedAtDate": "2025-05-07T13:33:22.454Z",
+        "likesCount": 0,
+        "reviewId": "ChZDSUhNMG9nS0VJbUk1b0hwdHVLV0F3EAE",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJbUk1b0hwdHVLV0F3EAE!2m1!1s0x0:0xae750e8aed571334!3m1!1s2@1:CIHM0ogKEImI5oHptuKWAw%7CCgwIosLtwAYQqPDY2AE%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": null,
+        "responseFromOwnerText": null,
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "es",
+        "translatedLanguage": "en"
+      }
+    ],
+    "leadsEnrichment": []
+  }
+}

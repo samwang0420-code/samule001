@@ -1,0 +1,211 @@
+{
+  "query": "immigration lawyer houston",
+  "answer": "Based on multiple sources, immigration lawyer houston involves several key factors...",
+  "sources": [
+    {
+      "url": "https://uscis.gov/working-in-the-united-states/h-1b-specialty-occupations",
+      "domain": "uscis.gov",
+      "title": "H-1B Specialty Occupations - USCIS",
+      "authority": {
+        "score": 95,
+        "type": "government"
+      },
+      "contentAnalysis": {
+        "hasFAQ": false,
+        "hasHowTo": false,
+        "hasStatistics": true,
+        "hasSchema": false,
+        "wordCount": 1733,
+        "entityDensity": "3.1"
+      },
+      "citationProbability": 61,
+      "technical": {
+        "hasHTTPS": true,
+        "pageSpeed": 91,
+        "mobileFriendly": true,
+        "hasXMLSitemap": false
+      },
+      "freshness": {
+        "lastUpdated": "89 days ago",
+        "hasDate": false
+      }
+    },
+    {
+      "url": "https://nolo.com/legal-encyclopedia/h1b-visa-workers.html",
+      "domain": "nolo.com",
+      "title": "H-1B Visa for Specialty Occupation Workers",
+      "authority": {
+        "score": 75,
+        "type": "legal_platform"
+      },
+      "contentAnalysis": {
+        "hasFAQ": false,
+        "hasHowTo": true,
+        "hasStatistics": true,
+        "hasSchema": false,
+        "wordCount": 1261,
+        "entityDensity": "2.4"
+      },
+      "citationProbability": 86,
+      "technical": {
+        "hasHTTPS": true,
+        "pageSpeed": 89,
+        "mobileFriendly": true,
+        "hasXMLSitemap": false
+      },
+      "freshness": {
+        "lastUpdated": "252 days ago",
+        "hasDate": false
+      }
+    },
+    {
+      "url": "https://immigrationhelp.org/h1b-visa-guide",
+      "domain": "immigrationhelp.org",
+      "title": "Complete H-1B Visa Guide 2024",
+      "authority": {
+        "score": 50,
+        "type": "general"
+      },
+      "contentAnalysis": {
+        "hasFAQ": true,
+        "hasHowTo": true,
+        "hasStatistics": false,
+        "hasSchema": false,
+        "wordCount": 2021,
+        "entityDensity": "4.9"
+      },
+      "citationProbability": 95,
+      "technical": {
+        "hasHTTPS": true,
+        "pageSpeed": 97,
+        "mobileFriendly": true,
+        "hasXMLSitemap": false
+      },
+      "freshness": {
+        "lastUpdated": "346 days ago",
+        "hasDate": false
+      }
+    },
+    {
+      "url": "https://boundless.com/h-1b-visa/",
+      "domain": "boundless.com",
+      "title": "H-1B Visa Requirements and Process",
+      "authority": {
+        "score": 50,
+        "type": "general"
+      },
+      "contentAnalysis": {
+        "hasFAQ": false,
+        "hasHowTo": false,
+        "hasStatistics": false,
+        "hasSchema": true,
+        "wordCount": 1503,
+        "entityDensity": "4.4"
+      },
+      "citationProbability": 60,
+      "technical": {
+        "hasHTTPS": true,
+        "pageSpeed": 96,
+        "mobileFriendly": true,
+        "hasXMLSitemap": false
+      },
+      "freshness": {
+        "lastUpdated": "256 days ago",
+        "hasDate": true
+      }
+    },
+    {
+      "url": "https://harvard.edu/international-office/h-1b",
+      "domain": "harvard.edu",
+      "title": "H-1B Specialty Worker Visa",
+      "authority": {
+        "score": 90,
+        "type": "education"
+      },
+      "contentAnalysis": {
+        "hasFAQ": false,
+        "hasHowTo": true,
+        "hasStatistics": true,
+        "hasSchema": false,
+        "wordCount": 2191,
+        "entityDensity": "5.7"
+      },
+      "citationProbability": 90,
+      "technical": {
+        "hasHTTPS": true,
+        "pageSpeed": 89,
+        "mobileFriendly": true,
+        "hasXMLSitemap": false
+      },
+      "freshness": {
+        "lastUpdated": "339 days ago",
+        "hasDate": false
+      }
+    }
+  ],
+  "patterns": {
+    "contentStructure": {
+      "avgFAQUsage": 0.2,
+      "avgHowToUsage": 0.6,
+      "avgSchemaUsage": 0.2,
+      "avgStatisticsUsage": 0.6
+    },
+    "contentMetrics": {
+      "avgWordCount": 1742,
+      "avgEntityDensity": "4.1"
+    },
+    "authoritySignals": {
+      "avgDomainAuthority": 72,
+      "govSources": 1,
+      "eduSources": 1,
+      "legalSources": 1
+    },
+    "technicalFactors": {
+      "httpsUsage": 1,
+      "avgPageSpeed": 92,
+      "sitemapUsage": 0
+    }
+  },
+  "strategy": {
+    "requirements": [
+      "Step-by-step guides perform well",
+      "Data and statistics are frequently cited",
+      "Government sources are always cited",
+      "Fast page load is expected"
+    ],
+    "strategies": [
+      {
+        "priority": "high",
+        "action": "Structure content as How-To with numbered steps",
+        "impact": "+15% citation likelihood",
+        "implementation": "Use HowTo Schema markup"
+      },
+      {
+        "priority": "high",
+        "action": "Reference official USCIS/state.gov sources",
+        "impact": "Essential for credibility",
+        "implementation": "Link to relevant .gov pages, cite form numbers"
+      },
+      {
+        "priority": "medium",
+        "action": "Include current statistics and data points",
+        "impact": "+20% citation likelihood",
+        "implementation": "Reference USCIS data, approval rates, processing times"
+      },
+      {
+        "priority": "medium",
+        "action": "Optimize Core Web Vitals",
+        "impact": "+5% citation likelihood",
+        "implementation": "Compress images, use CDN, lazy loading"
+      },
+      {
+        "priority": "low",
+        "action": "Aim for 1742+ words",
+        "impact": "Comprehensive coverage",
+        "implementation": "Deep dive into subtopics"
+      }
+    ],
+    "estimatedProbability": 95
+  },
+  "timestamp": "2026-03-02T04:17:00.547Z"
+}

@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "##legal-service",
+      "name": "The Garcia Law Firm",
+      "description": "The Garcia Law Firm - Immigration Law Services",
+      "url": null,
+      "telephone": "(713) 777-4529",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.7154455,
+        "longitude": -95.4970184
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6065 Hillcroft St Ste 501",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Houston"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.2,
+        "reviewCount": 70
+      }
+    }
+  ]
+}
