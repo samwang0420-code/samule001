@@ -7,6 +7,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs/promises';
+import { executeGEOOptimization } from './auto-implement.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -100,6 +101,30 @@ app.get('/api/clients', authenticate, async (req, res) => {
     res.json({ success: true, data: clients });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Execute GEO optimization
+app.post('/api/execute', authenticate, async (req, res) => {
+  try {
+    const { clientId } = req.body;
+    
+    if (!clientId) {
+      return res.status(400).json({ error: 'Missing clientId' });
+    }
+    
+    // Load client data
+    const clientData = JSON.parse(
+      await fs.readFile(path.join(__dirname, '../outputs', clientId, 'client.json'), 'utf8')
+    );
+    
+    // Execute optimization
+    const result = await executeGEOOptimization(clientId, clientData);
+    
+    res.json(result);
+    
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

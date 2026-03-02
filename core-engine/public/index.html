@@ -379,7 +379,10 @@
                             <td class="py-4 px-6"><strong>${c.geoScore || '-'}/100</strong></td>
                             <td class="py-4 px-6"><span class="text-green-600 font-medium">${c.aiCitation || '-'}%</span></td>
                             <td class="py-4 px-6"><span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">${c.status || 'active'}</span></td>
-                            <td class="py-4 px-6"><button class="text-purple-600 hover:text-purple-800">View</button></td>
+                            <td class="py-4 px-6">
+                                <button onclick="executeOptimization('${c.id}')" class="text-green-600 hover:text-green-800 font-medium mr-3">Execute</button>
+                                <button class="text-purple-600 hover:text-purple-800">View</button>
+                            </td>
                         </tr>
                     `).join('');
                     
@@ -440,8 +443,31 @@
             loadClients();
         }
 
-        // Initial load
-        loadAllData();
+        // Execute optimization
+        async function executeOptimization(clientId) {
+            if (!confirm('Execute GEO optimization for this client?')) return;
+            
+            try {
+                const res = await fetch('/api/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'geo-internal-samwang0420'
+                    },
+                    body: JSON.stringify({ clientId })
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert('✅ Execution started!\nSteps completed: ' + data.summary.completed);
+                } else {
+                    alert('❌ Execution failed: ' + data.error);
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
     </script>
 </body>
 </html>
