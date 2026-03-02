@@ -11,13 +11,16 @@
     "pipeline": "./medical-pipeline.js",
     "geo-ai": "./geo-ai-pipeline.js",
     "test": "node test-suite.js",
+    "test:api": "node test-api.js",
+    "test:ssl": "node test-api.js --ssl-only",
     "check": "./production-check.sh",
     "migrate": "psql $SUPABASE_URL -f lib/database-migrations.sql",
     "schedule:daily": "./scheduler.sh daily",
     "schedule:weekly": "./scheduler.sh weekly",
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "deploy": "./deploy-to-domain.sh dashboard.gspr-hub.site"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
