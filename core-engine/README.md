@@ -1,252 +1,272 @@
-# 🏰 StackMatrices GEO - Core Engine v2.0
-
-**完整的GEO（生成式引擎优化）护城河系统**
-
----
-
-## ✅ 已完成全部功能（A-D）
-
-### A. 知识图谱 (Knowledge Graph)
-- ✅ 移民法本体（签证分类/绿卡途径/人道主义）
-- ✅ 实体关系（USCIS/DOL/关键术语）
-- ✅ Houston本地上下文（法院/地标/产业）
-- ✅ 动态Schema增强
-
-### B. 内容生成器 (Content Generator)
-- ✅ Location页面生成
-- ✅ FAQ Schema自动生成
-- ✅ GMB帖子模板（5种类型）
-- ✅ 引用概率优化建议
-
-### C. 部署上线 (Deployment)
-- ✅ 一键部署脚本 (`./deploy.sh`)
-- ✅ 环境检测和配置
-- ✅ Systemd服务配置
-- ✅ Cron定时任务
-
-### D. 监控自动化 (Monitoring)
-- ✅ 排名变化告警
-- ✅ 竞品超越检测
-- ✅ 每日/每周自动报告
-- ✅ 智能告警系统
+# StackMatrices GEO Platform v2.0
+## AI-Powered Local SEO for Medical Practices
 
 ---
 
-## 系统架构 v2.0
+## 🎯 What is GEO?
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     CORE ENGINE v2.0                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  │
-│  │  Knowledge      │  │  Citation       │  │  Perplexity     │  │
-│  │  Graph          │  │  Engine         │  │  Reverser       │  │
-│  │  ─────────      │  │  ─────────      │  │  ─────────      │  │
-│  │  • 移民法本体   │  │  • 5因子评分   │  │  • 竞品分析     │  │
-│  │  • 实体关系     │  │  • 0-100%概率  │  │  • 引用源分析   │  │
-│  │  • 动态Schema   │  │  • 优化建议     │  │  • 策略生成     │  │
-│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘  │
-│           │                    │                    │           │
-│           └────────────────────┼────────────────────┘           │
-│                                ▼                                │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                  Content Generator                       │   │
-│  │  • Location页面  • FAQ Schema  • GMB帖子               │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                │                                │
-│           ┌────────────────────┼────────────────────┐           │
-│           ▼                    ▼                    ▼           │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐     │
-│  │  Database    │    │  Monitor     │    │  Alert       │     │
-│  │  ─────────   │    │  ─────────   │    │  ─────────   │     │
-│  │  Supabase    │    │  排名追踪     │    │  智能告警     │     │
-│  │  数据持久化   │    │  历史趋势     │    │  自动通知     │     │
-│  └──────────────┘    └──────────────┘    └──────────────┘     │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+**GEO (Generative Engine Optimization)** = Being cited by AI
+
+When someone asks Perplexity or ChatGPT:
+> "What's the best med spa in Houston?"
+
+The AI's answer should **cite your clinic**.
+
+Traditional SEO = Rank on Google  
+**GEO = Be the answer AI gives**
 
 ---
 
-## 快速开始
+## ✅ What's Included
 
-### 1. 安装部署
+### Core Features
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **GEO Analysis** | Complete local SEO audit with AI citation scoring | ✅ |
+| **AI Monitoring** | Track Perplexity citations in real-time | ✅ |
+| **Content Generation** | AI-powered pages, GMB posts, FAQs | ✅ |
+| **Schema Markup** | MedicalBusiness, LocalBusiness, FAQ structured data | ✅ |
+| **Competitor Analysis** | Reverse-engineer top competitors | ✅ |
+| **Automated Reports** | Weekly email reports to clients | ✅ |
+| **API Access** | REST API for integrations | ✅ |
 
+### Medical Specialties
+- ✅ Medical Spas
+- ✅ Plastic Surgery
+- ✅ Dermatology
+- ✅ Dentistry
+- ✅ General Medical Practices
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install
 ```bash
 cd core-engine
-./deploy.sh production
+npm install
 ```
 
-### 2. 配置API Keys
-
+### 2. Configure
 ```bash
 cp .env.example .env
-# 编辑 .env 添加:
-# - APIFY_TOKEN (必需，真实数据)
-# - SUPABASE_URL & SUPABASE_KEY (推荐，数据持久化)
-# - BRIGHT_DATA_API_KEY (可选，Perplexity逆向)
+# Edit .env with your API keys
 ```
 
-### 3. 运行测试
-
+### 3. Verify
 ```bash
-# 测试数据库
-npm run test-db
-
-# 测试Apify
-npm run test-apify
-
-# 测试完整流程
-./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX"
+npm run check        # Production readiness check
+npm test             # Run test suite
 ```
 
----
-
-## 核心命令
-
+### 4. Run First Analysis
 ```bash
-# 客户接入（完整分析）
-./geo.js onboard "Firm Name" "Address"
-
-# 查看状态
-./geo.js status
-
-# 排名监控
-./geo.js monitor add "client_id" "keyword"
-./geo.js monitor run
-./geo.js monitor report "client_id"
-
-# 竞品追踪
-./geo.js competitor add "client_id" "Competitor Name" "Address"
-./geo.js competitor analyze "client_id"
-
-# 告警检查
-node lib/alert-system.js check "client_id"
-node lib/alert-system.js summary
-
-# 定时任务
-./scheduler.sh daily    # 每日检查
-./scheduler.sh weekly   # 每周报告
-./scheduler.sh now      # 立即执行
+./medical-pipeline.js "Your Clinic Name" "123 Main St, Houston, TX" "Medical Spa" "Botox" "Fillers"
 ```
 
 ---
 
-## 输出示例
+## 📊 System Architecture
 
 ```
-🔥 CORE ENGINE RUNNING
-   Firm: Garcia Immigration Law
-   Mode: LIVE (Apify real data)
-
-📡 Step 1: Data Collection
-   ✓ Real data collected from Google Maps
-
-🧠 Step 2: GEO Analysis
-   Score: 82/100
-   Current Rank: #5
-   Potential Rank: #2
-
-⚡ Step 3: Schema Generation
-   ✓ Schema generated
-
-🤖 Step 4: Citation Probability Analysis
-   Probability: 75%
-   Status: ✅ High
-
-🔍 Step 5: Perplexity Analysis
-   Analyzed 5 competitor sources
-   Target Probability: 85%
-
-💾 Step 6: Database Storage
-   ✓ Saved to database
-
-📁 Step 7: Content Generation
-   ✓ Location page generated
-   ✓ FAQ Schema created
-   ✓ GMB posts generated
-
-📁 Step 8: Local Output
-   ✓ Saved to: ./outputs/client_xxx/
-
-╔══════════════════════════════════════════════════════════╗
-║                     DELIVERY SUMMARY                     ║
-╠══════════════════════════════════════════════════════════╣
-║ Client ID:     client_1772422078887                      ║
-║ GEO Score:     82/100                                    ║
-║ Citation Prob: 75% (High)                                ║
-║ Improvement:   +3 positions                              ║
-╚══════════════════════════════════════════════════════════╝
+┌─────────────────────────────────────────────────────────────┐
+│                    GEO Platform                              │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
+│  │   Data Layer │───▶│  Analysis    │───▶│   Content    │  │
+│  │              │    │   Engine     │    │  Generator   │  │
+│  └──────────────┘    └──────────────┘    └──────────────┘  │
+│         │                   │                   │            │
+│         ▼                   ▼                   ▼            │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
+│  │  Apify       │    │  GEO Score   │    │  OpenAI      │  │
+│  │  Google Maps │    │  AI Citation │    │  Content     │  │
+│  └──────────────┘    └──────────────┘    └──────────────┘  │
+│                                                              │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              Monitoring & Reporting                  │    │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐          │    │
+│  │  │  Daily   │  │  Weekly  │  │   AI     │          │    │
+│  │  │  Checks  │  │  Reports │  │ Citations│          │    │
+│  │  └──────────┘  └──────────┘  └──────────┘          │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 输出文件
+## 💰 Pricing
 
-```
-outputs/client_xxx/
-├── client.json           # 客户信息
-├── raw-data.json         # 原始GMB数据
-├── score.json            # GEO评分详情
-├── citation.json         # 引用概率分析
-├── perplexity.json       # 竞品分析
-├── schema.json           # Schema标记
-├── content-package.json  # 生成内容包
-└── deploy.md             # 部署指南
-```
+| Package | Monthly | What's Included |
+|---------|---------|-----------------|
+| **Growth** | $500 | Monitoring + Weekly Reports + Optimization |
+| **Scale** | $1,000 | + AI Content + GMB Management |
+| **Enterprise** | $2,500 | + Multi-location + White-label |
+
+**Setup Fee:** $2,000 one-time
+
+**ROI:** 300-500% typical return
 
 ---
 
-## 技术栈
+## 🛠️ API Reference
 
-| 组件 | 技术 |
-|------|------|
-| Runtime | Node.js 18+ |
-| Database | Supabase (PostgreSQL) |
-| Data Scraping | Apify |
-| Reverse Engineering | Bright Data (可选) |
-| Automation | Cron + Systemd |
+### Analyze a Business
+```bash
+POST /api/analyze
+Content-Type: application/json
+X-API-Key: your-api-key
 
----
-
-## 成本
-
-| 环境 | 月费用 | 说明 |
-|------|--------|------|
-| Demo | $5 | 服务器 only |
-| Live | $45 | + Apify $40 |
-| Full | $50 | + Supabase免费档 |
-
----
-
-## Git
-
-```
-ca32f87 A-D全部完成: 知识图谱+内容生成器+部署脚本+监控告警系统
+{
+  "businessName": "Glow Med Spa",
+  "address": "123 Main St, Houston, TX",
+  "industry": "medical",
+  "services": ["Botox", "Fillers"],
+  "async": true,
+  "webhook": "https://your-app.com/webhook"
+}
 ```
 
----
+### Get Rankings
+```bash
+GET /api/monitoring/rankings/:clientId?days=30
+X-API-Key: your-api-key
+```
 
-## 下一步（生产就绪）
+### Generate Report
+```bash
+POST /api/reports/weekly
+X-API-Key: your-api-key
 
-1. **配置 API Keys**
-   - 获取 Apify Token
-   - 创建 Supabase 项目
-   - （可选）获取 Bright Data API
-
-2. **部署服务器**
-   - DigitalOcean $5 droplet
-   - 运行 `./deploy.sh production`
-
-3. **接入第一个客户**
-   - 运行 `./geo.js onboard "Firm Name" "Address"`
-   - 验证输出
-
-4. **设置监控**
-   - Cron自动运行
-   - 告警通知（需配置Webhook）
+{
+  "clientId": "client_123",
+  "weekData": { ... }
+}
+```
 
 ---
 
-**系统已完成，等待API配置上线。**
+## 📋 Operational Workflow
+
+### Day 0: Client Signs
+1. Collect business information
+2. Send welcome email
+3. Create client profile
+
+### Day 1: Analysis
+```bash
+./geo-ai-pipeline.js "Business" "Address" "Industry" "Service1" "Service2"
+```
+
+### Day 3-7: Implementation
+- Deploy Schema markup
+- Optimize GMB profile
+- Publish location page
+- Submit to search engines
+
+### Ongoing: Monitoring
+- **Daily:** Ranking checks (6:00 AM)
+- **Daily:** AI citation monitoring (9:00 AM)
+- **Weekly:** Report generation (Monday 8:00 AM)
+- **Monthly:** ROI analysis + strategy review
+
+---
+
+## 🔧 Configuration
+
+### Required Environment Variables
+```env
+APIFY_TOKEN=           # For data scraping
+SUPABASE_URL=          # For database
+SUPABASE_KEY=          # For database
+```
+
+### Optional (Enhanced Features)
+```env
+OPENAI_API_KEY=        # AI content generation
+BRIGHTDATA_API_TOKEN=  # Perplexity scraping
+EMAIL_SMTP_HOST=       # Report emails
+SLACK_WEBHOOK_URL=     # Alert notifications
+```
+
+---
+
+## 📊 Expected Results
+
+### 30 Days
+- ✅ Complete GEO audit delivered
+- ✅ Schema deployed on website
+- ✅ GMB fully optimized
+- ✅ Monitoring active
+
+### 60 Days
+- ✅ Google rankings improve 3-5 positions
+- ✅ First AI citations appear
+- ✅ Website traffic +30%
+- ✅ Consultation inquiries increase
+
+### 90 Days
+- ✅ 3-5 keywords on page 1
+- ✅ AI citation rate +35%
+- ✅ Positive ROI achieved
+- ✅ Sustained growth trajectory
+
+---
+
+## 🐛 Troubleshooting
+
+### Apify Connection Failed
+```bash
+node test-apify.js
+# Check APIFY_TOKEN in .env
+```
+
+### Database Errors
+```bash
+# Run schema setup
+psql $SUPABASE_URL -f ../supabase/schema-simple.sql
+```
+
+### Email Not Sending
+```bash
+# Verify SMTP settings
+# Check spam folders
+# Test with: node -e "import('./lib/email-service.js').then(e => e.sendWelcomeEmail('test@test.com', 'Test', '#'))"
+```
+
+---
+
+## 📁 Key Files
+
+| File | Purpose |
+|------|---------|
+| `medical-pipeline.js` | Main analysis pipeline |
+| `geo-ai-pipeline.js` | Full GEO + AI optimization |
+| `dashboard.js` | System status dashboard |
+| `scheduler.sh` | Daily/weekly automation |
+| `pricing.js` | Client pricing calculator |
+| `lib/api-server.js` | REST API server |
+| `lib/openai-generator.js` | AI content generation |
+| `lib/email-service.js` | Automated email reports |
+
+---
+
+## 🤝 Support
+
+- **Documentation:** `/docs` folder
+- **Issues:** Check logs in `logs/` directory
+- **Contact:** support@stackmatrices.com
+
+---
+
+## 📄 License
+
+Proprietary - StackMatrices
+
+---
+
+**Ready to dominate AI search?** 🚀
+
+Start with: `./medical-pipeline.js "Your Clinic" "Your Address"`

@@ -1,22 +1,45 @@
 {
   "name": "geo-core-engine",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "GEO Marketing Core Engine for Immigration Lawyers",
+  "description": "GEO Marketing Platform - AI-Powered Local SEO for Medical Practices",
   "scripts": {
     "start": "node geo.js",
-    "onboard": "node geo.js onboard",
+    "api": "node lib/api-server.js",
+    "dashboard": "node dashboard.js",
+    "pipeline": "./medical-pipeline.js",
+    "geo-ai": "./geo-ai-pipeline.js",
+    "test": "node test-suite.js",
+    "check": "./production-check.sh",
+    "schedule:daily": "./scheduler.sh daily",
+    "schedule:weekly": "./scheduler.sh weekly",
     "monitor": "node monitor.js",
     "competitor": "node competitor.js",
-    "test-db": "node geo.js test-db",
-    "test-apify": "node geo.js test-apify"
+    "pricing": "node pricing.js",
+    "test-db": "node test-db.js",
+    "test-apify": "node test-apify.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "node-fetch": "^3.3.2"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.7",
+    "openai": "^4.20.0"
+  },
+  "optionalDependencies": {
+    "puppeteer": "^21.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "keywords": [
+    "GEO",
+    "SEO",
+    "local-seo",
+    "AI-citation",
+    "Perplexity",
+    "medical-marketing"
+  ]
 }
