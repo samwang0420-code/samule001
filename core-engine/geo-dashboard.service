@@ -1,0 +1,16 @@
+[Unit]
+Description=GEO Dashboard API Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace-geo-arch/core-engine
+ExecStart=/usr/bin/node lib/api-server.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=/root/.openclaw/workspace-geo-arch/core-engine/.env
+
+[Install]
+WantedBy=multi-user.target
