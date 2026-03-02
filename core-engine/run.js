@@ -11,11 +11,12 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import db from './lib/db.js';
+import * as apify from './lib/apify.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Demo mode - uses simulated data when APIs not configured
-const DEMO_MODE = !process.env.APIFY_TOKEN;
+// Mode detection
+const USE_APIFY = apify.isConfigured;
 
 // Core Algorithm: Calculate GEO Score
 function calculateGeoScore(placeData) {
@@ -282,10 +283,11 @@ Example:
 
 Environment:
   APIFY_TOKEN=${process.env.APIFY_TOKEN ? '✓ configured' : '✗ not set (demo mode)'}
+  SUPABASE_URL=${process.env.SUPABASE_URL ? '✓ configured' : '✗ not set'}
 
 Modes:
-  - Demo Mode: Uses simulated data (no API costs)
-  - Live Mode: Real Google Maps scraping (requires APIFY_TOKEN)
+  - Demo Mode: Simulated data (no API costs)
+  - Live Mode: Real Google Maps + SERP data (requires APIFY_TOKEN)
 `);
     process.exit(1);
   }
@@ -297,14 +299,24 @@ Modes:
   console.log(`\n🔥 CORE ENGINE RUNNING`);
   console.log(`   Firm: ${firmName}`);
   console.log(`   Address: ${address}`);
-  console.log(`   Mode: ${DEMO_MODE ? 'DEMO (simulated)' : 'LIVE (real data)'}`);
-  console.log(`   Database: ${db.isConfigured ? '✓ connected' : '✗ not configured (local only)'}`);
+  console.log(`   Apify: ${USE_APIFY ? '✓ LIVE (real data)' : '✗ DEMO (simulated)'}`);
+  console.log(`   Database: ${db.isConfigured ? '✓ connected' : '✗ not configured'}`);
   console.log(`   Client ID: ${clientId}\n`);
   
   try {
     console.log('📡 Step 1: Data Collection');
-    const placeData = await simulateDataCollection(firmName, address);
-    console.log('   ✓ Data collected\n');
+    let placeData;
+    
+    if (USE_APIFY) {
+      console.log('   Mode: LIVE (Apify real data)');
+      const searchQuery = `${firmName} ${address}`;
+      placeData = await apify.scrapeGoogleMaps(searchQuery);
+      console.log('   ✓ Real data collected from Google Maps\n');
+    } else {
+      console.log('   Mode: DEMO (simulated data)');
+      placeData = await simulateDataCollection(firmName, address);
+      console.log('   ✓ Simulated data generated\n');
+    }
     
     console.log('🧠 Step 2: GEO Analysis');
     const geoScore = calculateGeoScore(placeData);

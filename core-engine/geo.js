@@ -16,6 +16,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import db from './lib/db.js';
+import * as apify from './lib/apify.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -190,6 +191,46 @@ const commands = {
     } catch (e) {
       process.exit(1);
     }
+  },
+  
+  // Test Apify connection
+  async testApify() {
+    console.log('Testing Apify Connection...\n');
+    await apify.testConnection();
+    
+    if (apify.isConfigured) {
+      const stats = await apify.getUsageStats();
+      if (stats) {
+        console.log('\nUsage Stats:');
+        console.log(`  User: ${stats.username}`);
+        console.log(`  Plan: ${stats.plan}`);
+      }
+    }
+  },
+  
+  // Test database connection
+  async testDb() {
+    console.log('Testing Database Connection...\n');
+    
+    if (!db.isConfigured) {
+      console.log('❌ Database not configured');
+      console.log('\nTo configure:');
+      console.log('  1. Copy .env.example to .env');
+      console.log('  2. Add your Supabase URL and key');
+      console.log('  3. Run: npm install');
+      return;
+    }
+    
+    try {
+      const stats = await db.getSystemStats();
+      console.log('✓ Database connected');
+      console.log('\nStats:');
+      console.log(`  Clients: ${stats.clients}`);
+      console.log(`  Audits: ${stats.audits}`);
+      console.log(`  Keywords: ${stats.keywords}`);
+    } catch (e) {
+      console.log('❌ Connection failed:', e.message);
+    }
   }
 };
 
@@ -219,11 +260,18 @@ Commands:
 
   status
     System overview
+    
+  test-apify
+    Test Apify connection
+    
+  test-db
+    Test database connection
 
 Examples:
   ./geo.js onboard "Garcia Law" "123 Main St, Houston, TX"
   ./geo.js report "client_1772389766088" --full
   ./geo.js status
+  ./geo.js test-apify
 `);
     process.exit(0);
   }

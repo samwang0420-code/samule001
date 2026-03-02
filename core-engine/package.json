@@ -1,6 +1,6 @@
 {
   "name": "geo-core-engine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "GEO Marketing Core Engine for Immigration Lawyers",
   "scripts": {
@@ -8,11 +8,13 @@
     "onboard": "node geo.js onboard",
     "monitor": "node monitor.js",
     "competitor": "node competitor.js",
-    "test-db": "node test-db.js"
+    "test-db": "node geo.js test-db",
+    "test-apify": "node geo.js test-apify"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
   },
   "engines": {
     "node": ">=18.0.0"
