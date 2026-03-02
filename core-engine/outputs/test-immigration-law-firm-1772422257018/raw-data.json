@@ -1,0 +1,24 @@
+{
+  "title": "Test Immigration Law Firm",
+  "address": "123 Main St, Houston, TX 77002",
+  "location": {
+    "lat": 29.770895113168724,
+    "lng": -95.33362030178326
+  },
+  "description": "Test Immigration Law Firm provides immigration legal services in Houston. Free parking available.",
+  "phone": "+1-713-555-9844",
+  "website": "https://testimmigrationlawfirm.com",
+  "totalScore": "4.4",
+  "reviewsCount": 43,
+  "reviews": [
+    {
+      "text": "Great service, easy to find parking."
+    },
+    {
+      "text": "Very professional."
+    }
+  ],
+  "openingHours": "Mon-Fri: 9:00 AM - 5:00 PM",
+  "city": "Houston",
+  "state": "TX"
+}

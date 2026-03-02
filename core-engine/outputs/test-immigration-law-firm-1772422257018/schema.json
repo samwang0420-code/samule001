@@ -1,0 +1,38 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "https://testimmigrationlawfirm.com#legal-service",
+      "name": "Test Immigration Law Firm",
+      "description": "Test Immigration Law Firm provides immigration legal services in Houston. Free parking available.",
+      "url": "https://testimmigrationlawfirm.com",
+      "telephone": "+1-713-555-9844",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.770895113168724,
+        "longitude": -95.33362030178326
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main St",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Houston"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": 43
+      },
+      "parkingFacility": {
+        "@type": "ParkingFacility",
+        "name": "On-site parking available"
+      }
+    }
+  ]
+}

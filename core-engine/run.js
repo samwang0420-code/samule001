@@ -440,7 +440,7 @@ Modes:
     
     console.log('📁 Step 5: Local Output');
     const outputDir = path.join(__dirname, 'outputs', `${firmName.replace(/\s+/g, '-').toLowerCase()}-${timestamp}`);
-    await saveOutputs(outputDir, { clientId, firmName, placeData, geoScore, schema });
+    await saveOutputs(outputDir, { clientId, firmName, placeData, geoScore, schema, citationProb, perplexityData });
     console.log(`   ✓ Saved to: ${outputDir}\n`);
     
     console.log('╔══════════════════════════════════════════════════════════╗');

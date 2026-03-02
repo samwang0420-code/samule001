@@ -10,7 +10,7 @@
  *   4. npm install @supabase/supabase-js
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,12 +19,12 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
 // Check if Supabase is configured
-const isConfigured = SUPABASE_URL && SUPABASE_KEY;
+export const isConfigured = SUPABASE_URL && SUPABASE_KEY;
 
 // Create client only if configured
 let supabase = null;
 if (isConfigured) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    supabase = createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
 }
 
 // ============================================
