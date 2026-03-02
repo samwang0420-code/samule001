@@ -1,0 +1,49 @@
+{
+  "probability": 0.68,
+  "percentage": 68,
+  "factors": {
+    "entityDensity": 0.25,
+    "structureClarity": 0.125,
+    "statisticalEvidence": 0,
+    "conversationalStyle": 0.15,
+    "freshness": 0.15
+  },
+  "breakdown": {
+    "entityDensity": {
+      "score": 0.25,
+      "max": 0.25,
+      "actual": 8,
+      "optimal": 6,
+      "status": "high"
+    },
+    "structureClarity": {
+      "score": 0.125,
+      "max": 0.25,
+      "hasFAQ": true,
+      "hasHowTo": false
+    },
+    "statisticalEvidence": {
+      "score": 0,
+      "max": 0.2,
+      "hasStats": false
+    },
+    "conversationalStyle": {
+      "score": 0.15,
+      "max": 0.15,
+      "isConversational": true
+    },
+    "freshness": {
+      "score": 0.15,
+      "max": 0.15,
+      "daysOld": 0
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "medium",
+      "factor": "statisticalEvidence",
+      "action": "Add statistics or data (approval rates, processing times)",
+      "impact": "+20% citation probability"
+    }
+  ]
+}

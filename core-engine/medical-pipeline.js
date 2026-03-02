@@ -238,14 +238,14 @@ ${JSON.stringify(plan.schema, null, 2)}
 ${plan.gmb.optimizedDescription}
 
 **Post these updates:**
-${plan.gmb.posts.map((post, i) =
+${plan.gmb.posts.map((post, i) =>
   `${i + 1}. ${post.title}\n   ${post.content.substring(0, 100)}...`
 ).join('\n\n')}
 
 ### Step 3: Medical Content Pages
 
 Deploy these service-specific landing pages:
-${plan.services.map(s =
+${plan.services.map(s =>
   `- /services/${s.toLowerCase().replace(/\s+/g, '-')}/`
 ).join('\n')}
 
@@ -285,7 +285,7 @@ function generateMedicalReport(name, clientId, plan) {
 
 ## Top Recommendations
 
-${plan.analysis.topRecommendations.map((rec, i) =
+${plan.analysis.topRecommendations.map((rec, i) =>
   `${i + 1}. **${rec.action}**\n   Impact: ${rec.impact}\n`
 ).join('\n')}
 

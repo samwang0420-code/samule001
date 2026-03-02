@@ -1,0 +1,585 @@
+{
+  "title": "Glo Laser and Med Spa",
+  "address": "6609 W Sam Houston Pkwy S #101, Houston, TX 77072",
+  "location": {
+    "lat": 29.7064403,
+    "lng": -95.5562631
+  },
+  "phone": "(713) 595-8501",
+  "website": "https://glolaserandmedspa.com/",
+  "totalScore": 4.8,
+  "reviewsCount": 38,
+  "reviews": [
+    {
+      "text": "Wonderful experience! Informative and professional. The best experience!",
+      "rating": 5,
+      "date": "2026-02-26T17:29:26.329Z"
+    },
+    {
+      "text": "This was my first time doing fillers. Dr. Li made it so natural—no one can tell, but I look fresher and younger.",
+      "rating": 5,
+      "date": "2025-11-14T20:22:24.426Z"
+    },
+    {
+      "text": "I’ve struggled with acne scars for a long time, and the Genius RF microneedling has made a noticeable difference in smoothing my skin’s texture. I’m truly happy with the results.",
+      "rating": 5,
+      "date": "2025-11-06T18:25:34.934Z"
+    },
+    {
+      "text": "My melasma has improved dramatically after PicoSure sessions here. I finally feel confident without makeup.",
+      "rating": 5,
+      "date": "2025-10-16T13:08:28.289Z"
+    },
+    {
+      "text": "The Fotona 4D treatment made my skin tighter and smoother. Friends keep telling me I look more rested. Great investment!",
+      "rating": 5,
+      "date": "2025-09-27T18:28:25.706Z"
+    },
+    {
+      "text": "Dr. Li and the GLO team are amazing! My Ultherapy treatment was comfortable and the results are natural—I look more refreshed without looking ‘done.’ Highly recommend!",
+      "rating": 5,
+      "date": "2025-09-20T19:34:36.534Z"
+    },
+    {
+      "text": null,
+      "rating": 5,
+      "date": "2025-09-10T21:58:44.440Z"
+    },
+    {
+      "text": "Great experience at Glo Laser. Dr. Li is very knowledgeable and trustworthy, I feel like I’m in very capable hands. I loved my Ultherapy results and will be back!",
+      "rating": 5,
+      "date": "2025-09-09T17:08:57.350Z"
+    },
+    {
+      "text": "I’ve been coming here for a long time. Done laser picosure, microneedling, and genesis. I am very satisfied with my long-term results. It takes time, but that’s just part of the process in order to get results. Thank you Dr. Yujing.",
+      "rating": 5,
+      "date": "2025-08-15T02:13:35.792Z"
+    },
+    {
+      "text": "Very knowledgeable doctor she know what she is doing love her\nDefinitely  will come back !",
+      "rating": 5,
+      "date": "2025-08-14T16:06:54.100Z"
+    }
+  ],
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "9 AM to 5 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "9 AM to 5 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "Closed"
+    },
+    {
+      "day": "Thursday",
+      "hours": "9 AM to 5 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "9 AM to 5 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "10 AM to 4 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "Closed"
+    }
+  ],
+  "categories": [
+    "Medical clinic"
+  ],
+  "images": null,
+  "neighborhood": "Sharpstown",
+  "placeId": "ChIJf99-_bTjQIYRW81YQTgYuNc",
+  "url": "https://www.google.com/maps/search/?api=1&query=Glo%20Laser%20and%20Med%20Spa&query_place_id=ChIJf99-_bTjQIYRW81YQTgYuNc",
+  "_raw": {
+    "title": "Glo Laser and Med Spa",
+    "price": null,
+    "categoryName": "Medical clinic",
+    "address": "6609 W Sam Houston Pkwy S #101, Houston, TX 77072",
+    "neighborhood": "Sharpstown",
+    "street": "6609 W Sam Houston Pkwy S #101",
+    "city": "Houston",
+    "postalCode": "77072",
+    "state": "Texas",
+    "countryCode": "US",
+    "website": "https://glolaserandmedspa.com/",
+    "phone": "(713) 595-8501",
+    "phoneUnformatted": "+17135958501",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 29.7064403,
+      "lng": -95.5562631
+    },
+    "totalScore": 4.8,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJf99-_bTjQIYRW81YQTgYuNc",
+    "categories": [
+      "Medical clinic"
+    ],
+    "fid": "0x8640e3b4fd7edf7f:0xd7b818384158cd5b",
+    "cid": "15544200743762840923",
+    "reviewsCount": 38,
+    "imagesCount": 13,
+    "imageCategories": [
+      "All",
+      "Latest",
+      "Videos",
+      "By owner",
+      "Street View & 360°"
+    ],
+    "scrapedAt": "2026-03-02T05:16:04.698Z",
+    "googleFoodUrl": null,
+    "hotelAds": [],
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9 AM to 5 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9 AM to 5 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "Closed"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9 AM to 5 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9 AM to 5 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 4 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [
+      {
+        "category": "People also search for",
+        "title": "Glow Medspa Houston",
+        "reviewsCount": 414,
+        "totalScore": 4.7
+      },
+      {
+        "category": "People also search for",
+        "title": "Laser & Glow",
+        "reviewsCount": 212,
+        "totalScore": 4.9
+      },
+      {
+        "category": "People also search for",
+        "title": "Glow Medical Aesthetics",
+        "reviewsCount": 232,
+        "totalScore": 4.9
+      },
+      {
+        "category": "People also search for",
+        "title": "Glow Aesthetics And Wellness",
+        "reviewsCount": 16,
+        "totalScore": 5
+      },
+      {
+        "category": "People also search for",
+        "title": "Glow N Slim Aesthetic",
+        "reviewsCount": 41,
+        "totalScore": 4.9
+      }
+    ],
+    "placesTags": [],
+    "reviewsTags": [
+      {
+        "title": "treatment",
+        "count": 10
+      },
+      {
+        "title": "skin",
+        "count": 6
+      },
+      {
+        "title": "scar",
+        "count": 2
+      },
+      {
+        "title": "communication",
+        "count": 2
+      }
+    ],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Mandarin": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Glo%20Laser%20and%20Med%20Spa&query_place_id=ChIJf99-_bTjQIYRW81YQTgYuNc",
+    "searchPageUrl": "https://www.google.com/maps/search/Glow%20Med%20Spa%20Houston%201315%20St%20Joseph%20Pkwy,%20Houston,%20TX?hl=en",
+    "searchString": "Glow Med Spa Houston 1315 St Joseph Pkwy, Houston, TX",
+    "language": "en",
+    "rank": 2,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwervUJ_g6V1QD1szbPIhhLH0Bx5LfWURfKda77tZib7Y6XVvxcxWJqU_05OdVm9RjRX-SaM4EIHQm8v1KAK2Ct-rVg5oOsooore89V_XHlvwAhr0DfsLe6pJMvBcWs0njKnhcciK=w408-h304-k-no",
+    "kgmid": "/g/11hdjsc7gv",
+    "subTitle": null,
+    "description": null,
+    "locatedIn": "Beltway 8 Medical Plaza",
+    "floor": "Floor 1",
+    "plusCode": "PC4V+HF Chinatown, Houston, TX",
+    "menu": "https://www.lscpro.net/services?utm_source=google_menu",
+    "reviewsDistribution": {
+      "oneStar": 1,
+      "twoStar": 1,
+      "threeStar": 0,
+      "fourStar": 0,
+      "fiveStar": 36
+    },
+    "reserveTableUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "similarHotelsNearby": null,
+    "hotelReviewSummary": null,
+    "additionalOpeningHours": null,
+    "openingHoursBusinessConfirmationText": null,
+    "questionsAndAnswers": [],
+    "updatesFromCustomers": null,
+    "inputPlaceId": null,
+    "inputStartUrl": null,
+    "userPlaceNote": null,
+    "webResults": [],
+    "tableReservationLinks": [],
+    "bookingLinks": null,
+    "orderOnline": {
+      "pickUps": [],
+      "deliveries": []
+    },
+    "orderBy": [],
+    "restaurantData": {
+      "tableReservationProvider": null
+    },
+    "ownerUpdates": [],
+    "imageUrls": [],
+    "images": null,
+    "reviews": [
+      {
+        "reviewerId": "107479807642135627939",
+        "reviewerUrl": "https://www.google.com/maps/contrib/107479807642135627939?hl=en",
+        "name": "Marcela Barcenas",
+        "reviewerNumberOfReviews": 3,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjVmqaGVIpwfAQ3WggtB5FTypqE9T6XUZaAZ0lNoB2QkkBzt0xYO=s1920-c-rp-mo-br100",
+        "text": "Wonderful experience! Informative and professional. The best experience!",
+        "textTranslated": null,
+        "publishAt": "3 days ago",
+        "publishedAtDate": "2026-02-26T17:29:26.329Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xKUU1UWjNhMjlHZVcwelFVOVJWVEI0YldWUVZsRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xKUU1UWjNhMjlHZVcwelFVOVJWVEI0YldWUVZsRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOlJQMTZ3a29GeW0zQU9RVTB4bWVQVlE%7C0dc7AqIdNvw%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2026-02-26T18:16:58.000Z",
+        "responseFromOwnerText": "We're glad you had a great experience with us Marcela! It was lovely meeting you and we're excited to welcome you back for your next visit!",
+        "reviewImageUrls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pt_mcp3aapZeK2QcRJQL1-gMOTKPxCsheWNgb1kWDOu9U1JXCcWbRaZWhXtdF4RV0ptQccF74XdwmLEX9TjBmGokOhXDn09GgcYX1b3efj6c4rGkbEGqeNiq5VJi1vIUPlnG9eY61QiFaM"
+        ],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "102943696844621069724",
+        "reviewerUrl": "https://www.google.com/maps/contrib/102943696844621069724?hl=en",
+        "name": "Neville Saunders",
+        "reviewerNumberOfReviews": 2,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLvcBrRSPfGfE-kPYB0EtF0A5fNodE0OknoynMmH-u6eyD30g=s1920-c-rp-mo-br100",
+        "text": "This was my first time doing fillers. Dr. Li made it so natural—no one can tell, but I look fresher and younger.",
+        "textTranslated": null,
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-14T20:22:24.426Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2pGS1NFcFRNVkJTYUhKVlMyMDVhbE40T0hKRFZFRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGS1NFcFRNVkJTYUhKVlMyMDVhbE40T0hKRFZFRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOjFKSEpTMVBSaHJVS205alN4OHJDVEE%7C0d4sy-ORKQk%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-11-14T23:44:38.000Z",
+        "responseFromOwnerText": "Thank you, Neville! We're glad to hear that you had a great experience with Dr. Li and that you love your results.",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "112066502488328277616",
+        "reviewerUrl": "https://www.google.com/maps/contrib/112066502488328277616?hl=en",
+        "name": "EE Alexandre Silva",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLF6TfTBUOV0rD0q7WZ9NnUIMbXLTGZNpgcCcOUOplNkDHhPg=s1920-c-rp-mo-br100",
+        "text": "I’ve struggled with acne scars for a long time, and the Genius RF microneedling has made a noticeable difference in smoothing my skin’s texture. I’m truly happy with the results.",
+        "textTranslated": null,
+        "publishAt": "3 months ago",
+        "publishedAtDate": "2025-11-06T18:25:34.934Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xoZlZuZENiWGx5Y1Vac04xaFRPVVpQV0ZFelIyYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xoZlZuZENiWGx5Y1Vac04xaFRPVVpQV0ZFelIyYxAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOlhfVndCbXlycUZsN1hTOUZPWFEzR2c%7C0d2DVTrfUWO%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-11-06T20:59:18.000Z",
+        "responseFromOwnerText": "Thank you for sharing your experience! We're so glad to hear that the Genius RF microneedling has made a positive impact on your skin's texture. Your happiness with the results means a lot to us!",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "105392329216197085625",
+        "reviewerUrl": "https://www.google.com/maps/contrib/105392329216197085625?hl=en",
+        "name": "Chad West",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocI6_5LoJP0ZU5I6w9bC_erV1OGF7LZFME45z0j_2tFJiElaVA=s1920-c-rp-mo-br100",
+        "text": "My melasma has improved dramatically after PicoSure sessions here. I finally feel confident without makeup.",
+        "textTranslated": null,
+        "publishAt": "4 months ago",
+        "publishedAtDate": "2025-10-16T13:08:28.289Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT25sclNUSlBjMnQxY0UwNFlqSlBaRlJVTUVrNWVFRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25sclNUSlBjMnQxY0UwNFlqSlBaRlJVTUVrNWVFRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOnlrSTJPc2t1cE04YjJPZFRUMEk5eEE%7C0cwDtBGEuzO%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-10-20T18:24:45.000Z",
+        "responseFromOwnerText": "Thank you for your review. We are glad you  skin is better",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "101258228175912373384",
+        "reviewerUrl": "https://www.google.com/maps/contrib/101258228175912373384?hl=en",
+        "name": "Alexander Jason",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocJKh73jBwnML3hZiMWrh2AqMsoa4Gfi6FdU4kf_wi3CmraOTw=s1920-c-rp-mo-br100",
+        "text": "The Fotona 4D treatment made my skin tighter and smoother. Friends keep telling me I look more rested. Great investment!",
+        "textTranslated": null,
+        "publishAt": "5 months ago",
+        "publishedAtDate": "2025-09-27T18:28:25.706Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT21samVIazROMG80TWpOSWVXMVFiVVF4V214aWJuYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21samVIazROMG80TWpOSWVXMVFiVVF4V214aWJuYxAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOmljeHk4N0o4MjNIeW1QbUQxWmxibnc%7C0cq1n8e5q5w%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-09-27T21:02:40.000Z",
+        "responseFromOwnerText": "Thank you, Alexander! We're so glad to hear you're enjoying the results and that your friends are noticing the difference. We appreciate your feedback and support!",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "113366698671433447847",
+        "reviewerUrl": "https://www.google.com/maps/contrib/113366698671433447847?hl=en",
+        "name": "Jackson",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocIiBiL_fVVSH-yMPzSbTqj7NT4NJEUjRXVJQIvTm1-tXqCnIw=s1920-c-rp-mo-br100",
+        "text": "Dr. Li and the GLO team are amazing! My Ultherapy treatment was comfortable and the results are natural—I look more refreshed without looking ‘done.’ Highly recommend!",
+        "textTranslated": null,
+        "publishAt": "5 months ago",
+        "publishedAtDate": "2025-09-20T19:34:36.534Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xKVGRXWkZURzl0WTBOcWFYbGZMVmROUjBGWVJuYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xKVGRXWkZURzl0WTBOcWFYbGZMVmROUjBGWVJuYxAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOlJTdWZFTG9tY0NqaXlfLVdNR0FYRnc%7C0cnk6BUqXS_%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-09-22T16:50:45.000Z",
+        "responseFromOwnerText": "Thank you, Jackson! We appreciate your kind words about Dr. Li and the GLO team, and we're so glad you loved your results. Your recommendation means a lot to us!",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "102813373488858710727",
+        "reviewerUrl": "https://www.google.com/maps/contrib/102813373488858710727?hl=en",
+        "name": "Nicole Ona",
+        "reviewerNumberOfReviews": 11,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjVt__WOZ08feJAqdhJV7SA-KAk24-3IMjKGhHMJbVi4geDSkiL5=s1920-c-rp-mo-br100",
+        "text": null,
+        "textTranslated": null,
+        "publishAt": "5 months ago",
+        "publishedAtDate": "2025-09-10T21:58:44.440Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xWSFlVTkZVbEZKUW1wdFZIZEJialZ6Y0UwdGVXYxAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xWSFlVTkZVbEZKUW1wdFZIZEJialZ6Y0UwdGVXYxAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOlVHYUNFUlFJQmptVHdBbjVzcE0teWc%7C0ckUHJPEPDo%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-09-12T13:01:49.000Z",
+        "responseFromOwnerText": "Thank you, Nicole, for the fantastic 5-star rating! We truly appreciate your support.",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": null,
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "101404255337353820901",
+        "reviewerUrl": "https://www.google.com/maps/contrib/101404255337353820901?hl=en",
+        "name": "Qing Fan",
+        "reviewerNumberOfReviews": 2,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocKfmJyHS0naIa9zXsklS2hxGQdqZYvO1yiXZkfxKX5O7LMtXA=s1920-c-rp-mo-br100",
+        "text": "Great experience at Glo Laser. Dr. Li is very knowledgeable and trustworthy, I feel like I’m in very capable hands. I loved my Ultherapy results and will be back!",
+        "textTranslated": null,
+        "publishAt": "5 months ago",
+        "publishedAtDate": "2025-09-09T17:08:57.350Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2kxRFZrUmZUelI0U2pWR09DMXpXa1pYVEVkM1lrRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2kxRFZrUmZUelI0U2pWR09DMXpXa1pYVEVkM1lrRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOi1DVkRfTzR4SjVGOC1zWkZXTEd3YkE%7C0ck4wdJrc-d%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-09-11T15:08:53.000Z",
+        "responseFromOwnerText": "Thank you, Qing, for your wonderful feedback! We're so glad to hear you had a great experience and appreciate your kind words about Dr. Li. We look forward to seeing you again soon!",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "107659439759817897067",
+        "reviewerUrl": "https://www.google.com/maps/contrib/107659439759817897067?hl=en",
+        "name": "Won Lee",
+        "reviewerNumberOfReviews": 1,
+        "isLocalGuide": false,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLS67mY2-S_X3OjGoAHVz63aI4eCXgHUR12E3MoaN7ERzLRkw=s1920-c-rp-mo-br100",
+        "text": "I’ve been coming here for a long time. Done laser picosure, microneedling, and genesis. I am very satisfied with my long-term results. It takes time, but that’s just part of the process in order to get results. Thank you Dr. Yujing.",
+        "textTranslated": null,
+        "publishAt": "6 months ago",
+        "publishedAtDate": "2025-08-15T02:13:35.792Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2pSaVozcHhMWFpLV1d0NmJuaGlSbWQ1VVRsQ2NFRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pSaVozcHhMWFpLV1d0NmJuaGlSbWQ1VVRsQ2NFRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOjRiZ3pxLXZKWWt6bnhiRmd5UTlCcEE%7C0cbdUEjEniu%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-08-15T14:47:26.000Z",
+        "responseFromOwnerText": "Thank you for the GLOing review! We're happy to hear you enjoyed your treatments and your results.",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      },
+      {
+        "reviewerId": "117220049105797617792",
+        "reviewerUrl": "https://www.google.com/maps/contrib/117220049105797617792?hl=en",
+        "name": "Joyce Lee",
+        "reviewerNumberOfReviews": 23,
+        "isLocalGuide": true,
+        "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocL49st1ESbniWCXAwuis9tNq9H7rFMYBrP1G-oN4DYReqQavA=s1920-c-rp-mo-ba2-br100",
+        "text": "Very knowledgeable doctor she know what she is doing love her\nDefinitely  will come back !",
+        "textTranslated": null,
+        "publishAt": "6 months ago",
+        "publishedAtDate": "2025-08-14T16:06:54.100Z",
+        "likesCount": 0,
+        "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT21kUVlpMUNaMHRyWm1ObFZIVXpYelp6TVhkM2JGRRAB",
+        "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21kUVlpMUNaMHRyWm1ObFZIVXpYelp6TVhkM2JGRRAB!2m1!1s0x0:0xd7b818384158cd5b!3m1!1s2@1:CAIQACodChtycF9oOmdQYi1CZ0trZmNlVHUzXzZzMXd3bFE%7C0cbVaT4yc0N%7C?hl=en",
+        "reviewOrigin": "Google",
+        "stars": 5,
+        "rating": null,
+        "responseFromOwnerDate": "2025-08-14T17:03:47.000Z",
+        "responseFromOwnerText": "Thank you for your review, we're glad you trust us with your face.",
+        "reviewImageUrls": [],
+        "reviewContext": {},
+        "reviewDetailedRating": {},
+        "visitedIn": null,
+        "originalLanguage": "en",
+        "translatedLanguage": null
+      }
+    ],
+    "leadsEnrichment": []
+  }
+}

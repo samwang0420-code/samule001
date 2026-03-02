@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "https://glolaserandmedspa.com/#legal-service",
+      "name": "Glo Laser and Med Spa",
+      "description": "Glo Laser and Med Spa - Immigration Law Services",
+      "url": "https://glolaserandmedspa.com/",
+      "telephone": "(713) 595-8501",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.7064403,
+        "longitude": -95.5562631
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6609 W Sam Houston Pkwy S #101",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Houston"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.8,
+        "reviewCount": 38
+      }
+    }
+  ]
+}

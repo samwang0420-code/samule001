@@ -246,7 +246,7 @@ ${gmbUpdatePackage.description.recommended}
 
 ### 2. Add GMB Posts
 
-${gmbUpdatePackage.posts.map((post, i) =
+${gmbUpdatePackage.posts.map((post, i) =>
   `${i + 1}. **${post.title}**\n   ${post.content}\n   CTA: ${post.cta}\n`
 ).join('\n')}
 
@@ -273,7 +273,7 @@ ${gmbUpdatePackage.qanda.map(qa =
 ### 4. Update Business Attributes
 
 Add/Update:
-${Object.entries(gmbUpdatePackage.attributes.add || {}).map(([k, v]) =
+${Object.entries(gmbUpdatePackage.attributes.add || {}).map(([k, v]) =>
   `- ${k}: ${v}`
 ).join('\n')}
 
