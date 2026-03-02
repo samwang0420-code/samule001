@@ -420,12 +420,21 @@ app.post('/api/analyze', authenticateApiKey, async (req, res) => {
     
     // 保存到数据库(如果可用)
     if (useDatabase && supabase) {
-      const result = await supabase
-        .from('questionnaire_submissions')
-        .insert(submissionData);
-      if (result.error) {
-        console.log('DB insert failed:', result.error.message);
+      console.log('Attempting to insert into database:', submissionId);
+      try {
+        const result = await supabase
+          .from('questionnaire_submissions')
+          .insert(submissionData);
+        if (result.error) {
+          console.error('DB insert failed:', result.error.message);
+        } else {
+          console.log('DB insert success:', submissionId);
+        }
+      } catch (dbError) {
+        console.error('DB insert exception:', dbError.message);
       }
+    } else {
+      console.log('Database not available, using file only');
     }
     
     // 同时保存到文件
