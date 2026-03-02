@@ -1,0 +1,13 @@
+# GEO Auto-Iteration Engine Cron Configuration
+# Run iteration engine every hour to check for new requirements
+
+# Check for new implementation requirements every hour
+0 * * * * root /root/.openclaw/workspace-geo-arch/core-engine/scripts/run-iteration.sh
+
+# Send daily summary at 9 AM
+0 9 * * * root /usr/bin/node /root/.openclaw/workspace-geo-arch/core-engine/scripts/send-daily-summary.js
+
+# Installation:
+# sudo cp geo-iteration.cron /etc/cron.d/geo-iteration
+# sudo chmod 644 /etc/cron.d/geo-iteration
+# sudo service cron restart

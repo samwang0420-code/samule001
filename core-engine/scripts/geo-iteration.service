@@ -1,0 +1,22 @@
+[Unit]
+Description=GEO SEO Auto-Iteration Engine
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/root/.openclaw/workspace-geo-arch/core-engine
+Environment="SUPABASE_URL=https://fixemvsckapejyfwphft.supabase.co"
+Environment="SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpeGVtdnNja2FwZWp5ZndwaGZ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTkxNDczNSwiZXhwIjoyMDg3NDkwNzM1fQ.q_mgJQlae4B0AJMv9RziN2MzjVRKylG-06WIKFoG434"
+ExecStart=/usr/bin/node /root/.openclaw/workspace-geo-arch/core-engine/scripts/auto-iteration-engine.js
+StandardOutput=append:/var/log/geo-iteration.log
+StandardError=append:/var/log/geo-iteration.log
+
+[Install]
+WantedBy=multi-user.target
+
+# Installation instructions:
+# sudo cp geo-iteration.service /etc/systemd/system/
+# sudo systemctl daemon-reload
+# sudo systemctl enable geo-iteration.service
+# sudo systemctl start geo-iteration.service
