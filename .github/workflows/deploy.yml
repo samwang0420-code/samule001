@@ -1,0 +1,68 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: core-engine/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./core-engine
+      run: npm ci
+    
+    - name: Run tests
+      working-directory: ./core-engine
+      run: npm test
+    
+    - name: Run API tests
+      working-directory: ./core-engine
+      run: |
+        npm run api &
+        sleep 5
+        npm run test:api
+      env:
+        API_KEY: test-key
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /opt/geo-dashboard
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
+          docker system prune -f
+    
+    - name: Verify deployment
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          curl -sf http://localhost:3000/health || exit 1
