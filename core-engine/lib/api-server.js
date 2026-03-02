@@ -11,6 +11,7 @@ import fs from 'fs/promises';
 import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
@@ -133,7 +134,7 @@ async function createDefaultAdmin() {
   if (!adminExists) {
     const hashedPassword = await bcrypt.hash('admin123', 10);
     fileUsers.push({
-      id: 'admin_001',
+      id: crypto.randomUUID(),  // 使用UUID而不是admin_001
       email: 'admin@geo.local',
       password_hash: hashedPassword,
       first_name: 'Admin',
@@ -414,8 +415,7 @@ app.post('/api/analyze', authenticateApiKey, async (req, res) => {
       ip_address: req.ip,
       user_agent: req.headers['user-agent'],
       created_at: new Date().toISOString(),
-      processed_at: null,
-      processed_by: req.user?.userId || null
+      processed_at: null
     };
     
     // 保存到数据库(如果可用)
