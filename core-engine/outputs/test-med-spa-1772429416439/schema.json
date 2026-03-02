@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "https://www.maxresultsmed.com/#legal-service",
+      "name": "Max Results Med Spa",
+      "description": "Max Results Med Spa - Immigration Law Services",
+      "url": "https://www.maxresultsmed.com/",
+      "telephone": "(713) 497-5563",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.7755301,
+        "longitude": -95.4012476
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "195 Yale St #400",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Houston"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.7,
+        "reviewCount": 45
+      }
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import * as medicalKnowledge from './lib/medical-knowledge.js';
 import * as medicalCitation from './lib/medical-citation.js';
-import * as medicalContent from './lib/medical-content.js';
+import * as medicalContentModule from './lib/medical-content.js';
 import { implementOptimization } from './lib/implement.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -56,7 +56,7 @@ async function medicalPipeline(practiceName, address, specialty, services) {
       phone: '(713) 555-0123'
     };
     
-    const medicalContent = medicalContent.generateMedicalLocationPage(practiceData, services);
+    const medicalContent = medicalContentModule.generateMedicalLocationPage(practiceData, services);
     
     // 医疗专用引用概率分析
     const fullContent = Object.values(medicalContent).filter(v => typeof v === 'string').join(' ');
@@ -97,9 +97,9 @@ async function medicalPipeline(practiceName, address, specialty, services) {
       gmb: {
         optimizedDescription: generateMedicalGMBDescription(practiceName, specialty, services),
         posts: [
-          medicalContent.generateMedicalGMBPost('promotion'),
-          medicalContent.generateMedicalGMBPost('education'),
-          medicalContent.generateMedicalGMBPost('testimonial')
+          medicalContentModule.generateMedicalGMBPost('promotion'),
+          medicalContentModule.generateMedicalGMBPost('education'),
+          medicalContentModule.generateMedicalGMBPost('testimonial')
         ],
         suggestedQA: generateMedicalQA(services)
       }
