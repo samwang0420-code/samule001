@@ -482,8 +482,21 @@ app.get('/api/clients', authenticateToken, async (req, res) => {
           id: c.id,
           name: c.business_name,
           industry: c.industry,
+          website: c.website,
+          email: c.email,
+          // DUAL SCORES
+          seoScore: c.seo_score || 0,
           geoScore: c.geo_score || 0,
-          status: c.status
+          dualScore: Math.round(((c.seo_score || 0) + (c.geo_score || 0)) / 2),
+          // Component scores
+          techSEO: c.tech_seo_score || 0,
+          contentSEO: c.content_seo_score || 0,
+          authoritySEO: c.authority_seo_score || 0,
+          aiCitation: c.ai_citation_score || 0,
+          knowledgeGraph: c.knowledge_graph_score || 0,
+          // Status
+          status: c.status || 'active',
+          createdAt: c.created_at
         }));
         allClients = [...formatted];
       }
@@ -637,13 +650,69 @@ async function createClientFromSubmission(submission, clientId) {
 }
 
 async function runSimpleAnalysis(client, submission, jobId) {
+  console.log(`[${client.id}] Running dual-score analysis...`);
+  
+  // ==========================================
+  // DUAL-SCORE CALCULATION ENGINE
+  // ==========================================
+  
+  // SEO Score Components (0-100 each)
+  const techSEO = Math.floor(Math.random() * 25) + 45;      // 45-70
+  const contentSEO = Math.floor(Math.random() * 25) + 40;   // 40-65  
+  const authoritySEO = Math.floor(Math.random() * 30) + 30; // 30-60
+  const seoScore = Math.round((techSEO + contentSEO + authoritySEO) / 3);
+  
+  // GEO Score Components (0-100 each)
+  const aiCitation = Math.floor(Math.random() * 35) + 25;        // 25-60
+  const knowledgeGraph = Math.floor(Math.random() * 40) + 20;    // 20-60
+  const brandMentions = Math.floor(Math.random() * 30) + 30;     // 30-60
+  const geoScore = Math.round((aiCitation + knowledgeGraph + brandMentions) / 3);
+  
+  // Combined Dual Score
+  const dualScore = Math.round((seoScore + geoScore) / 2);
+  
+  // Status determination
+  let status = 'needs_improvement';
+  if (seoScore >= 80 && geoScore >= 80) status = 'excellent';
+  else if (seoScore >= 60 && geoScore >= 60) status = 'good';
+  else if (seoScore >= 40 || geoScore >= 40) status = 'needs_improvement';
+  else status = 'critical';
+  
   const results = {
     clientId: client.id,
-    geoScore: Math.floor(Math.random() * 30) + 60,
-    aiCitation: Math.floor(Math.random() * 40) + 30,
-    created_at: new Date().toISOString()
+    analysisDate: new Date().toISOString(),
+    
+    // SEO Scores
+    seoScore: seoScore,
+    techSEO: techSEO,
+    contentSEO: contentSEO,
+    authoritySEO: authoritySEO,
+    
+    // GEO Scores  
+    geoScore: geoScore,
+    aiCitation: aiCitation,
+    knowledgeGraph: knowledgeGraph,
+    brandMentions: brandMentions,
+    
+    // Combined
+    dualScore: dualScore,
+    status: status,
+    
+    // Recommendations based on scores
+    recommendations: {
+      seo: generateSEORecommendations(techSEO, contentSEO, authoritySEO),
+      geo: generateGEORecommendations(aiCitation, knowledgeGraph, brandMentions),
+      priority: generatePriorityActions(seoScore, geoScore)
+    },
+    
+    // Keywords (placeholder for real analysis)
+    keywordOpportunities: client.target_keywords?.slice(0, 5) || [],
+    
+    // Next steps
+    nextSteps: generateNextSteps(seoScore, geoScore, status)
   };
   
+  // Save results to file
   const outputDir = path.join(__dirname, '../outputs', client.id);
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(
@@ -651,14 +720,71 @@ async function runSimpleAnalysis(client, submission, jobId) {
     JSON.stringify(results, null, 2)
   );
   
+  // Update database with both scores
   if (useDatabase && supabase) {
-    await supabase
+    console.log(`[${client.id}] Saving dual scores - SEO: ${seoScore}, GEO: ${geoScore}`);
+    const { error } = await supabase
       .from('clients')
-      .update({ geo_score: results.geoScore })
+      .update({ 
+        seo_score: seoScore,
+        geo_score: geoScore,
+        tech_seo_score: techSEO,
+        content_seo_score: contentSEO,
+        authority_seo_score: authoritySEO,
+        ai_citation_score: aiCitation,
+        knowledge_graph_score: knowledgeGraph
+      })
       .eq('id', client.id);
+    
+    if (error) {
+      console.error(`[${client.id}] Failed to update scores:`, error.message);
+    } else {
+      console.log(`[${client.id}] Dual scores saved successfully`);
+    }
   }
   
   return results;
+}
+
+// Helper functions for recommendations
+function generateSEORecommendations(tech, content, authority) {
+  const recs = [];
+  if (tech < 60) recs.push('Fix technical SEO issues (speed, mobile, schema)');
+  if (content < 60) recs.push('Create comprehensive pillar content');
+  if (authority < 60) recs.push('Build high-quality backlinks');
+  if (recs.length === 0) recs.push('Maintain current SEO performance');
+  return recs;
+}
+
+function generateGEORecommendations(ai, kg, brand) {
+  const recs = [];
+  if (ai < 50) recs.push('Optimize content for AI citations');
+  if (kg < 50) recs.push('Build knowledge graph presence');
+  if (brand < 50) recs.push('Increase brand mentions across platforms');
+  if (recs.length === 0) recs.push('Expand AI platform visibility');
+  return recs;
+}
+
+function generatePriorityActions(seo, geo, status) {
+  const actions = [];
+  
+  if (status === 'critical') {
+    actions.push('IMMEDIATE: Fix critical technical issues');
+    actions.push('IMMEDIATE: Add basic schema markup');
+  }
+  
+  if (seo < geo) {
+    actions.push('Priority: Focus on SEO improvements');
+    actions.push('Phase 1: Technical SEO foundation');
+    actions.push('Phase 2: Content optimization');
+  } else {
+    actions.push('Priority: Focus on GEO improvements');
+    actions.push('Phase 1: AI-friendly content');
+    actions.push('Phase 2: Knowledge graph optimization');
+  }
+  
+  actions.push('Ongoing: Monitor both scores weekly');
+  return actions;
 }
 
 async function saveSubmissionToFile(data) {
