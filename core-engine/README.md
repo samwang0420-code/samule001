@@ -1,156 +1,144 @@
-# 🏰 护城河核心系统 - Core Engine v1.0
+# 🏰 护城河核心系统 - Core Engine v1.1 (含数据库)
 
 ## 架构
-**CLI工具 + 自动化引擎。没有网站。没有界面。**
-
 ```
-./geo.js onboard "Firm Name" "Address"
-        ↓
+输入: 律所名称 + 地址
+    ↓
 ┌─────────────────────────────────────────────────────────┐
-│  [GEO Analysis]    Score calculation (0-100)            │
-│  [Schema Gen]      Optimized JSON-LD output             │
-│  [Rank Monitor]    Keyword tracking setup               │
-│  [Competitor]      Competition tracking                 │
+│  GEO分析引擎 (run.js)                                   │
+│    ├── 数据抓取 (Demo/Apify)                            │
+│    ├── GEO评分算法 (0-100)                              │
+│    ├── Schema生成器                                     │
+│    └── 本地输出 (outputs/)                              │
+│                                                         │
+│  数据库层 (Supabase)                                    │
+│    ├── clients (客户信息)                               │
+│    ├── geo_audits (审计记录)                            │
+│    ├── keywords (关键词)                                │
+│    ├── rankings (排名历史)                              │
+│    └── competitors (竞争对手)                           │
 └─────────────────────────────────────────────────────────┘
-        ↓
-./outputs/client_xxx/
-  ├── score.json      # GEO Score breakdown
-  ├── schema.json     # Deployable Schema markup
-  ├── deploy.md       # Action checklist
-  └── client.json     # Metadata
+    ↓
+输出: 可部署的Schema + 优化建议
 ```
 
 ## 快速开始
 
+### 1. 安装依赖
 ```bash
 cd core-engine
+npm install
+```
 
-# 1. Onboard new client
+### 2. 配置数据库 (可选但推荐)
+
+**步骤 A: 创建 Supabase 项目**
+1. 访问 https://supabase.com
+2. 创建新项目
+3. 复制 Project URL 和 anon key
+
+**步骤 B: 运行数据库脚本**
+```bash
+# 在 Supabase SQL Editor 中运行:
+../supabase/schema-v1.sql
+```
+
+**步骤 C: 配置环境变量**
+```bash
+cp .env.example .env
+# 编辑 .env,填入你的 Supabase URL 和 key
+```
+
+**步骤 D: 测试连接**
+```bash
+npm run test-db
+```
+
+### 3. 运行
+
+**Demo模式 (无数据库)**
+```bash
 ./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX 77002"
+```
 
-# 2. Check system status
-./geo.js status
-
-# 3. Generate client report
-./geo.js report "client_1772389766088"
-
-# 4. Daily monitoring (cron)
-./scheduler.sh daily
+**数据库模式 (有Supabase)**
+```bash
+# 配置 .env 后
+./geo.js onboard "Garcia Immigration Law" "1234 Main St, Houston, TX 77002"
+# 数据会自动保存到数据库
 ```
 
 ## 命令
 
 | 命令 | 用途 |
 |------|------|
-| `./geo.js onboard "Firm" "Address"` | 完整客户接入 |
+| `./geo.js onboard "Firm" "Address"` | 新客户接入 (自动保存到DB) |
+| `./geo.js status` | 系统状态 (显示DB统计) |
 | `./geo.js report "client_id"` | 生成报告 |
-| `./geo.js status` | 系统状态 |
-| `./geo.js monitor add "client" "keyword"` | 添加关键词追踪 |
-| `./geo.js competitor add "client" "name" "address"` | 添加竞品 |
-| `./monitor.js run` | 检查所有排名 |
-| `./monitor.js report "client"` | 排名报告 |
-| `./competitor.js analyze "client"` | 竞品分析 |
-| `./scheduler.sh daily` | 每日自动检查 |
-| `./scheduler.sh weekly` | 每周报告 |
+| `npm run test-db` | 测试数据库连接 |
 
-## 自动化 (Cron)
+## 数据结构
 
-```bash
-# 每日早6点检查排名
-crontab -e
-0 6 * * * cd /path/to/core-engine && ./scheduler.sh daily
+### 客户表 (clients)
+- id, client_code, firm_name, address
+- website, email, phone
+- created_at, updated_at
 
-# 每周一早8点生成报告
-0 8 * * 1 cd /path/to/core-engine && ./scheduler.sh weekly
-```
+### 审计表 (geo_audits)
+- client_id, total_score
+- coordinate_precision, parking_accessibility
+- schema_markup, local_context
+- current_rank, potential_rank
+- raw_data (JSONB)
+
+### 关键词表 (keywords)
+- client_id, keyword
+- location, search_volume, difficulty
+- is_active
+
+### 排名表 (rankings)
+- keyword_id, position, page
+- serp_features, checked_at
+
+## 特点
+
+### ✅ 渐进式集成
+- 无DB也能运行 (Demo模式)
+- 有DB自动保存
+- 零停机迁移
+
+### ✅ 数据持久化
+- 客户信息永久存储
+- 审计历史可追溯
+- 排名变化可分析
+
+### ✅ 可扩展
+- 多租户架构预留
+- RLS安全策略
+- 索引优化查询
 
 ## 成本
 
 | 组件 | 成本/月 |
 |------|---------|
-| DigitalOcean droplet | $5 |
-| Apify (SERP scraping) | $40 |
-| Supabase (DB) | $0 |
-| **总计** | **$50** |
+| DigitalOcean | $5 |
+| Supabase (免费档) | $0 |
+| Apify (按需) | ~$40 |
+| **总计** | **$45-50** |
 
-## 文件结构
+## 下一步
 
-```
-core-engine/
-├── geo.js                 # 主控命令
-├── run.js                 # GEO分析引擎
-├── monitor.js             # 排名监控
-├── competitor.js          # 竞品追踪
-├── scheduler.sh           # 定时任务
-├── scrapers/
-│   └── geo-scraper.js     # 数据抓取逻辑
-├── workflows/
-│   └── n8n-geo-onboarding.json  # n8n自动化
-├── data/                  # 运行时数据
-│   ├── tracked-keywords.json
-│   └── competitors.json
-├── outputs/               # 客户交付目录
-│   └── client_xxx/
-├── logs/                  # 日志
-└── README.md
-```
-
-## 模式
-
-### Demo模式 (默认)
-- 无需API key
-- 模拟数据
-- 测试工作流
-
-### Live模式
-```bash
-export APIFY_TOKEN=your_token
-./geo.js onboard "Firm Name" "Address"  # 使用真实数据
-```
-
-## 扩展
-
-### n8n工作流
-导入 `workflows/n8n-geo-onboarding.json` 实现:
-- 自动数据抓取
-- Slack通知
-- 数据库存储
-
-### 数据库 (Supabase)
-运行 `../supabase/schema.sql` 创建表结构
-
-## 输出示例
-
-```
-🔥 CORE ENGINE RUNNING
-   Firm: Garcia Immigration Law
-   Mode: DEMO (simulated)
-
-📊 Step 1: GEO Analysis
-   Score: 77/100
-   Current Rank: #3
-   Potential Rank: #9
-   Improvement: +6 positions
-
-⚡ Step 2: Schema Generation
-   ✓ Schema generated
-
-💾 Step 3: Save Outputs
-   ✓ Saved to: ./outputs/client_1772389766088
-```
+1. ✅ 数据库接入 (完成)
+2. ⏳ Apify真实数据接入 (等待key)
+3. ⏳ 排名监控自动化
+4. ⏳ 竞品追踪
 
 ## Git
 
 ```
-ce2b5e0 护城河核心系统文档
-d9bcb04 CORE ENGINE: standalone CLI tool
+9cd6664 数据库接入: Supabase集成,数据持久化,连接测试
 ```
 
-## 状态
+---
 
-✅ 核心引擎可运行 (Demo模式)  
-✅ 排名监控  
-✅ 竞品追踪  
-✅ 定时任务  
-✅ 统一CLI界面  
-⏳ 需要 APIFY_TOKEN 启用真实数据
+**系统已支持数据库存储。等待 APIFY_TOKEN 启用真实数据抓取。**
