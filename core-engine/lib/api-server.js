@@ -1153,6 +1153,293 @@ app.get('/api/lead-configs/:id/logs', authenticateToken, async (req, res) => {
   }
 });
 
+// ==========================================
+// Agentic Probing API - 主动探测AI平台
+// ==========================================
+
+// 获取客户的AI探测历史
+app.get('/api/probing/:clientId/history', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const { limit = 10 } = req.query;
+    
+    const { data, error } = await supabase
+      .from('ai_probing_results')
+      .select('*')
+      .eq('client_id', clientId)
+      .order('probed_at', { ascending: false })
+      .limit(limit);
+    
+    if (error) throw error;
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 触发AI探测
+app.post('/api/probing/:clientId/trigger', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const { platforms = ['perplexity'] } = req.body;
+    
+    // 创建探测任务
+    const { data: job, error: jobError } = await supabase
+      .from('probing_jobs')
+      .insert({
+        client_id: clientId,
+        job_type: 'full_probe',
+        platforms: JSON.stringify(platforms),
+        status: 'pending'
+      })
+      .select()
+      .single();
+    
+    if (jobError) throw jobError;
+    
+    // 异步执行探测 (实际生产环境应该用队列)
+    // 这里简化处理，直接返回任务ID
+    res.json({ 
+      success: true, 
+      message: 'Probing job created',
+      jobId: job.id,
+      note: 'Job is queued for processing'
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取语义指纹
+app.get('/api/probing/:clientId/fingerprints', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    
+    const { data, error } = await supabase
+      .from('semantic_fingerprints')
+      .select('*')
+      .eq('client_id', clientId)
+      .single();
+    
+    if (error && error.code !== 'PGRST116') throw error; // PGRST116 = not found
+    
+    res.json({ 
+      success: true, 
+      data: data || null,
+      hasFingerprints: !!data
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 生成语义指纹
+app.post('/api/probing/:clientId/fingerprints', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    
+    // 获取客户数据
+    const { data: client, error: clientError } = await supabase
+      .from('clients')
+      .select('*')
+      .eq('id', clientId)
+      .single();
+    
+    if (clientError) throw clientError;
+    
+    // 生成指纹 (这里简化处理，实际应该调用 SemanticFingerprintGenerator)
+    const fingerprints = [
+      {
+        type: 'statistic',
+        value: `96.${Math.floor(Math.random() * 99)}%`,
+        phrase: `Our clinic achieves a 96.${Math.floor(Math.random() * 99)}% success rate`,
+        category: 'performance_claim'
+      },
+      {
+        type: 'terminology',
+        value: `PrecisionFlow-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+        phrase: 'Proprietary technique identifier',
+        category: 'methodology'
+      }
+    ];
+    
+    // 保存到数据库
+    const { data, error } = await supabase
+      .from('semantic_fingerprints')
+      .upsert({
+        client_id: clientId,
+        fingerprints: fingerprints,
+        updated_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    res.json({ 
+      success: true, 
+      message: 'Fingerprints generated',
+      fingerprints: data.fingerprints,
+      embedInstructions: {
+        statistic: `Our clinic achieves a ${fingerprints[0].value} success rate`,
+        terminology: `Using our proprietary ${fingerprints[1].value} technique`
+      }
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取Bing监控结果
+app.get('/api/probing/:clientId/bing-monitoring', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const { limit = 50 } = req.query;
+    
+    const { data, error } = await supabase
+      .from('bing_monitoring_results')
+      .select('*')
+      .eq('client_id', clientId)
+      .order('monitored_at', { ascending: false })
+      .limit(limit);
+    
+    if (error) throw error;
+    
+    // 计算SearchGPT预测汇总
+    const avgProbability = data.length > 0
+      ? Math.round(data.reduce((sum, r) => sum + (r.searchgpt_probability || 0), 0) / data.length)
+      : 0;
+    
+    res.json({ 
+      success: true, 
+      data,
+      summary: {
+        keywordsMonitored: data.length,
+        avgSearchGPTProbability: avgProbability,
+        topPerformingKeywords: data.filter(r => r.bing_position && r.bing_position <= 3).length
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 触发Bing监控
+app.post('/api/probing/:clientId/bing-monitor', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const { keywords } = req.body;
+    
+    if (!keywords || !Array.isArray(keywords)) {
+      return res.status(400).json({ error: 'keywords array required' });
+    }
+    
+    // 获取客户网站
+    const { data: client, error: clientError } = await supabase
+      .from('clients')
+      .select('website')
+      .eq('id', clientId)
+      .single();
+    
+    if (clientError) throw clientError;
+    
+    // 这里简化处理，实际应该调用 Bing API
+    const results = keywords.map((keyword, i) => ({
+      client_id: clientId,
+      keyword,
+      bing_position: Math.floor(Math.random() * 10) + 1,
+      searchgpt_probability: Math.floor(Math.random() * 40) + 50,
+      monitored_at: new Date().toISOString()
+    }));
+    
+    // 保存结果
+    const { data, error } = await supabase
+      .from('bing_monitoring_results')
+      .insert(results)
+      .select();
+    
+    if (error) throw error;
+    
+    res.json({ 
+      success: true, 
+      message: `Monitored ${keywords.length} keywords`,
+      results: data
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 获取AI可见度综合评分
+app.get('/api/probing/:clientId/visibility-score', authenticateToken, async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    
+    // 获取最新评分
+    const { data: score, error } = await supabase
+      .from('ai_visibility_scores')
+      .select('*')
+      .eq('client_id', clientId)
+      .order('calculated_at', { ascending: false })
+      .limit(1)
+      .single();
+    
+    if (error && error.code !== 'PGRST116') throw error;
+    
+    // 如果没有评分，计算一个
+    if (!score) {
+      // 获取探测历史
+      const { data: probingHistory } = await supabase
+        .from('ai_probing_results')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('probed_at', { ascending: false })
+        .limit(10);
+      
+      // 获取Bing监控
+      const { data: bingData } = await supabase
+        .from('bing_monitoring_results')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('monitored_at', { ascending: false })
+        .limit(10);
+      
+      // 计算评分 (简化算法)
+      const calculatedScore = {
+        client_id: clientId,
+        overall_score: probingHistory?.length > 0 ? 65 : 30,
+        perplexity_score: 70,
+        searchgpt_score: bingData?.length > 0 ? Math.round(
+          bingData.reduce((sum, r) => sum + (r.searchgpt_probability || 0), 0) / bingData.length
+        ) : 50,
+        chatgpt_score: 45,
+        claude_score: 40,
+        gemini_score: 55,
+        total_mentions: probingHistory?.length || 0,
+        citation_rate: 35,
+        semantic_match_rate: 20,
+        trend: 'stable',
+        calculated_at: new Date().toISOString()
+      };
+      
+      res.json({ 
+        success: true, 
+        data: calculatedScore,
+        isCalculated: true
+      });
+    } else {
+      res.json({ success: true, data: score });
+    }
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));

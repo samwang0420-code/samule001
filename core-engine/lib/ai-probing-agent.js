@@ -169,6 +169,112 @@ async function runProbing(clientId) {
   return results;
 }
 
+/**
+ * 批量探测 - 探测多个客户
+ */
+export async function runBatchProbing(clientIds) {
+  const allResults = [];
+  
+  for (const clientId of clientIds) {
+    console.log(`\n🚀 Probing client: ${clientId}`);
+    const results = await runProbing(clientId);
+    allResults.push({ clientId, results });
+    
+    // 随机延迟，避免被封
+    await new Promise(r => setTimeout(r, 30000 + Math.random() * 30000));
+  }
+  
+  return allResults;
+}
+
+/**
+ * 生成探测报告
+ */
+export async function generateProbingReport(clientId) {
+  const { data: history } = await supabase
+    .from('ai_probing_results')
+    .select('*')
+    .eq('client_id', clientId)
+    .order('probed_at', { ascending: false })
+    .limit(30);
+  
+  if (!history || history.length === 0) {
+    return { error: 'No probing data available' };
+  }
+  
+  const latest = history[0];
+  const platforms = {};
+  
+  // 统计各平台表现
+  for (const result of latest.results) {
+    platforms[result.platform] = {
+      brandMentioned: result.hasMention,
+      citationFound: result.citationFound || false,
+      semanticScore: result.semanticScore || 0
+    };
+  }
+  
+  // 计算趋势
+  const trend = calculateProbingTrend(history);
+  
+  return {
+    clientId,
+    lastProbed: latest.probed_at,
+    platforms,
+    visibilityScore: calculateVisibilityScore(platforms),
+    trend,
+    recommendations: generateRecommendations(platforms)
+  };
+}
+
+function calculateVisibilityScore(platforms) {
+  const platformCount = Object.keys(platforms).length;
+  const mentionedCount = Object.values(platforms).filter(p => p.brandMentioned).length;
+  return Math.round((mentionedCount / platformCount) * 100);
+}
+
+function calculateProbingTrend(history) {
+  if (history.length < 2) return 'stable';
+  
+  const recent = history.slice(0, 5);
+  const older = history.slice(5, 10);
+  
+  const recentMentions = recent.reduce((sum, h) => 
+    sum + h.results.filter(r => r.hasMention).length, 0
+  );
+  const olderMentions = older.reduce((sum, h) => 
+    sum + h.results.filter(r => r.hasMention).length, 0
+  );
+  
+  if (recentMentions > olderMentions) return 'improving';
+  if (recentMentions < olderMentions) return 'declining';
+  return 'stable';
+}
+
+function generateRecommendations(platforms) {
+  const recs = [];
+  
+  if (!platforms.chatgpt?.brandMentioned) {
+    recs.push({
+      platform: 'ChatGPT',
+      action: 'Increase brand mentions in high-authority content',
+      priority: 'high'
+    });
+  }
+  
+  if (!platforms.perplexity?.citationFound) {
+    recs.push({
+      platform: 'Perplexity',
+      action: 'Optimize for question-based queries',
+      priority: 'medium'
+    });
+  }
+  
+  return recs;
+}
+
+export { AIProbingAgent, runProbing };
+
 // CLI
 const clientId = process.argv[2];
 if (!clientId) {
