@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 /**
  * PDF Generator Service - 调用knock-door-pdf生成报告
+ * FIXED VERSION - 安全修复版
  */
 
-import { execSync } from 'child_process';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
+import os from 'os';
 
+const execFileAsync = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * 生成Lead的PDF报告
+ * 生成Lead的PDF报告 - 安全修复版
  * @param {Object} lead - Lead数据
  * @param {String} outputDir - 输出目录
  * @returns {Promise<String>} - PDF文件路径
@@ -19,9 +23,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export async function generateLeadPDF(lead, outputDir = './output/leads') {
   console.log(`📄 Generating PDF for: ${lead.business_name}`);
   
+  let tempFile = null;
+  
   try {
-    // 构建Python命令
-    const scriptPath = path.join(__dirname, '../skills/knock-door-pdf/core/pdf_generator.py');
+    // 确保输出目录存在
+    await fs.mkdir(outputDir, { recursive: true });
     
     // 准备数据
     const data = {
@@ -42,33 +48,32 @@ export async function generateLeadPDF(lead, outputDir = './output/leads') {
     // 准备内容（根据行业定制）
     const content = buildContentByIndustry(lead);
     
-    // 构建Python调用
-    const pythonScript = `
-import sys
-sys.path.insert(0, '${path.join(__dirname, '../skills')}')
-from knock_door_pdf.core.pdf_generator import generate_report
-import json
-
-data = json.loads('${JSON.stringify(data).replace(/'/g, "\\'")}')
-content = json.loads('${JSON.stringify(content).replace(/'/g, "\\'")}')
-
-pdf_path = generate_report(
-    data=data,
-    content=content,
-    client_name="${(lead.business_name || 'Client').replace(/"/g, '\\"')}",
-    output_dir="${outputDir.replace(/"/g, '\\"')}"
-)
-print(pdf_path)
-`;
+    // 创建临时文件存储数据（避免命令注入）
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'pdf-gen-'));
+    tempFile = path.join(tempDir, 'data.json');
     
-    // 执行Python脚本
-    const result = execSync('python3 -c "' + pythonScript + '"', {
-      encoding: 'utf8',
-      timeout: 60000,
-      cwd: path.join(__dirname, '..')
+    const payload = {
+      data,
+      content,
+      client_name: sanitizeString(lead.business_name || 'Client'),
+      output_dir: outputDir
+    };
+    
+    await fs.writeFile(tempFile, JSON.stringify(payload), 'utf8');
+    
+    // 执行Python脚本（使用execFile避免shell注入）
+    const scriptPath = path.join(__dirname, '../skills/knock-door-pdf/core/pdf_generator_cli.py');
+    
+    // 如果cli版本不存在，使用包装器
+    const wrapperScript = path.join(__dirname, 'pdf-wrapper.py');
+    await createWrapperScript(wrapperScript);
+    
+    const { stdout } = await execFileAsync('python3', [wrapperScript, tempFile], {
+      timeout: 120000, // 2分钟超时
+      maxBuffer: 10 * 1024 * 1024 // 10MB输出限制
     });
     
-    const pdfPath = result.trim();
+    const pdfPath = stdout.trim();
     console.log(`✅ PDF generated: ${pdfPath}`);
     
     return pdfPath;
@@ -77,7 +82,74 @@ print(pdf_path)
     console.error(`❌ PDF generation failed: ${error.message}`);
     // 返回备用路径
     return `${outputDir}/${lead.id}_report.pdf`;
+  } finally {
+    // 清理临时文件
+    if (tempFile) {
+      try {
+        await fs.unlink(tempFile);
+        await fs.rmdir(path.dirname(tempFile));
+      } catch (e) {
+        // 忽略清理错误
+      }
+    }
   }
+}
+
+/**
+ * 创建Python包装器脚本
+ */
+async function createWrapperScript(scriptPath) {
+  const script = `#!/usr/bin/env python3
+import sys
+import json
+import os
+
+# 添加skills目录到路径
+sys.path.insert(0, '${path.join(__dirname, '../skills').replace(/'/g, "'\\''")}')
+
+from knock_door_pdf.core.pdf_generator import generate_report
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python3 pdf-wrapper.py <data.json>", file=sys.stderr)
+        sys.exit(1)
+    
+    # 读取JSON数据
+    with open(sys.argv[1], 'r', encoding='utf-8') as f:
+        payload = json.load(f)
+    
+    # 生成PDF
+    pdf_path = generate_report(
+        data=payload['data'],
+        content=payload['content'],
+        client_name=payload['client_name'],
+        output_dir=payload['output_dir']
+    )
+    
+    print(pdf_path)
+
+if __name__ == '__main__':
+    main()
+`;
+  
+  try {
+    await fs.writeFile(scriptPath, script, 'utf8');
+    await fs.chmod(scriptPath, 0o755);
+  } catch (e) {
+    console.error('Failed to create wrapper script:', e);
+  }
+}
+
+/**
+ * 字符串消毒 - 防止注入
+ */
+function sanitizeString(str) {
+  if (typeof str !== 'string') return 'Client';
+  // 移除控制字符和危险字符
+  return str
+    .replace(/[\x00-\x1F\x7F]/g, '') // 控制字符
+    .replace(/[\`\$\;\|\u0026\u003c\u003e]/g, '') // 危险字符 ` $ ; | & < >
+    .substring(0, 100); // 长度限制
 }
 
 /**
@@ -85,8 +157,8 @@ print(pdf_path)
  */
 function buildContentByIndustry(lead) {
   const industry = lead.industry || 'default';
-  const businessName = lead.business_name || 'Your Business';
-  const city = lead.city || 'your city';
+  const businessName = sanitizeString(lead.business_name || 'Your Business');
+  const city = sanitizeString(lead.city || 'your city');
   
   // 医美行业
   if (industry === 'medical_beauty' || industry === 'medical-spa') {

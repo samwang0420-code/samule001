@@ -49,7 +49,13 @@ let fileUsers = [];
 loadUsersFromFile().catch(() => {});
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+
+// 请求日志中间件
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
 
 // 静态文件服务 - 前端Dashboard
 app.use(express.static(path.join(__dirname, '../public')));
@@ -1157,6 +1163,31 @@ app.listen(PORT, () => {
   console.log(`Storage mode: ${useDatabase ? 'Database + File' : 'File Only'}`);
   console.log(`Default admin: admin@geo.local / admin123`);
   console.log(`Leads API: /api/leads`);
+});
+
+// 全局错误处理中间件
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  
+  // 不暴露内部错误细节给客户端
+  const message = process.env.NODE_ENV === 'production' 
+    ? 'Internal server error' 
+    : err.message;
+  
+  res.status(err.status || 500).json({
+    success: false,
+    error: message,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 404处理
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'Endpoint not found',
+    path: req.path
+  });
 });
 
 export default app;
