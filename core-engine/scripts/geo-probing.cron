@@ -1,0 +1,4 @@
+# GEO AI Probing Cron Job
+# 每4小时运行一次探测
+
+0 */4 * * * root cd /root/.openclaw/workspace-geo-arch/core-engine && /usr/bin/node lib/ai-probing-service.js --all >> /var/log/geo-probing.log 2>&1

@@ -1,0 +1,19 @@
+[Unit]
+Description=GEO AI Probing Service - 主动探测AI平台引用
+After=network.target geo-dashboard.service
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/root/.openclaw/workspace-geo-arch/core-engine
+Environment="NODE_ENV=production"
+Environment="SUPABASE_URL=https://fixemvsckapejyfwphft.supabase.co"
+Environment="SUPABASE_SERVICE_KEY=your_supabase_service_key"
+Environment="PROXY_SERVER="
+ExecStart=/usr/bin/node /root/.openclaw/workspace-geo-arch/core-engine/lib/ai-probing-service.js --all
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=geo-probing
+
+[Install]
+WantedBy=multi-user.target
